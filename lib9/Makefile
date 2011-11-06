@@ -24,6 +24,7 @@ $(LIB): $(OFILES)
 
 clean:
 	rm -rf $(OFILES)
+	rm -f $(LIB)
 
 world:;		make depend; make $(LIB)
 

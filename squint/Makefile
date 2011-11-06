@@ -67,6 +67,7 @@ install:	$(TARG)
 
 clean:
 	rm -rf $(OFILES)
+	rm -f $(TARG)
 
 world:;		make depend; make $(TARG)
 

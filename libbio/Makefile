@@ -30,6 +30,7 @@ $(LIB): $(OFILES)
 
 clean:
 	rm -rf $(TARG) $(OFILES)
+	rm -f $(LIB)
 
 world:;		make depend; make $(LIB)
 
