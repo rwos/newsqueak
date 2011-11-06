@@ -5,8 +5,6 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 
-#include "/usr/include/sys/wait.h"
-
 int
 __waitcommon(int pid, int status, struct rusage *rusage, Waitmsg *w) {
 	long utime, stime;
