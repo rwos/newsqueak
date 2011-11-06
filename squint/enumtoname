@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case $# in
+1)
+	;;
+*)
+	echo >[1=2] usage: enumtoname enumname
+	exit usage
+	;;
+esac
+
+echo 'char *'$1'name[]={'
+sed -n '/typedef.*'$1'/,/^}'$1'/p' |
+	grep '^	' |
+	sed 's/,$//;s/	\(.*\)/	"\1",/'
+echo '};'

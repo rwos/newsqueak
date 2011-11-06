@@ -1,0 +1,8 @@
+rec ack:=prog(a, b: int) of int{
+	if(a==0)
+		become b+1;
+	if(b==0)
+		become ack(a-1, 1);
+	become ack(a-1, ack(a, b-1));
+};
+ack(3,4);

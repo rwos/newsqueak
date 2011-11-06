@@ -1,0 +1,23 @@
+p:=prog(s:array of char) of int{
+	switch(s){
+	case "hello":
+		become 1;
+	case "good bye":
+		become 27;
+	default:
+		become 2;
+	}
+};
+i:int;
+eq:=prog(a:int, b:int){
+	i=i+1;
+	if(a!=b)
+		print("test ", i, " fails: ", a, "!=", b, "\n");
+};
+
+{
+eq(p("hello"), 1);
+eq(p("good bye"), 27);
+eq(p("any other string"), 2);
+}
+"ok";

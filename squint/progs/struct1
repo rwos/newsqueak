@@ -1,0 +1,38 @@
+type obj:struct of{
+	x, y, z: array of char;
+	a:array[2] of int;
+};
+s: obj=mk();
+t: obj;
+z:="a z";
+s;
+s.x="i'm x";
+s.y=mk(array of char={105, 39, 109, 32, 121});
+s.z=z;
+s.z;
+s.y;
+s.x;
+s;
+if(ref s.x!=1) print("bad ref s.x=", ref s.x, "\n");
+if(ref s.y!=1) print("bad ref s.y=", ref s.y, "\n");
+if(ref s.z!=2) print("bad ref s.z=", ref s.z, "\n");
+s.a=mk(array of int={2,3});
+t=s;
+if(ref t!=2) print("bad ref t=", ref t, "\n");
+if(ref t.x!=1) print("bad ref t.x=", ref t.x, "\n");
+if(ref t.y!=1) print("bad ref t.y=", ref t.y, "\n");
+if(ref t.z!=2) print("bad ref t.z=", ref t.y, "\n");
+if(ref t.a!=1) print("bad ref t.a=", ref t.a, "\n");
+
+t.x="i'm a new x";
+"new";
+if(ref t!=1) print("bad ref t\n");
+if(ref t.x!=1) print("bad ref t.x=", ref t.x, "\n");
+if(ref t.y!=2) print("bad ref t.y=", ref t.y, "\n");
+if(ref t.z!=3) print("bad ref t.z=", ref t.z, "\n");
+if(ref t.a!=2) print("bad ref t.a\n");
+if(ref s!=1) print("bad ref s\n");
+if(ref s.x!=1) print("bad ref s.x=", ref s.x, "\n");
+if(ref s.y!=2) print("bad ref s.y=", ref s.y, "\n");
+if(ref s.z!=3) print("bad ref s.z=", ref s.z, "\n");
+if(ref s.a!=2) print("bad ref s.a\n");

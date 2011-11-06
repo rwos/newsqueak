@@ -1,0 +1,536 @@
+include "lib.h"
+include "nspace.h"
+include "gnot.h"
+include "layer.h"
+include "lmenu.h"
+include "cursor/arrow.h"
+include "cursor/sight.h"
+include "cursor/ul.h"
+include "cursor/lr.h"
+
+type Strchan: chan of array of char;
+type Env:struct of{		# encapsulated world of a window program
+	S:	Bitmap;		# screen/window
+	M:	chan of Mouse;	# mouse (no ctl channel)
+	K:	NSIO;		# keyboard
+	CI:	Strchan;	# control in
+	CO:	Strchan;	# control out
+	dl:	int;		# told to delete; don't talk any more
+};
+type Windowprog: prog(e:Env);
+type Wargs:struct of{
+	success:int;
+	cover:	Cover;
+	R:	Rectangle;
+	e:	Env;
+};
+
+S:=getscreen();
+ground:Texture={
+	0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777,
+	0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777
+};
+
+rc:Windowprog;
+
+const WS:=0;
+const RC:=1;
+const DL:=2;
+const EX:=3;
+menu:Menu={{"new ws", "new rc", "delete", "exit"}, 0};
+
+const MARGIN:=3;
+
+frame:=prog(S:Bitmap, solid:int){
+	border(S, S.r, MARGIN, XXX);
+	if(!solid)
+		border(S, rectinset(S.r, 1, 1), MARGIN-1, 0);
+};
+
+sweep:=prog(S:Bitmap, M:chan of Mouse) of Rectangle{
+	m:Mouse;
+	cursorswitch(Cul);
+	do
+		m=<-M;
+	while(m.but==0);
+	cursorswitch(Clr);
+	ul,lr:=m.xy;
+	abort:=0;
+	while(m.but){
+		if(m.but&3 && !abort++){
+			cursorswitch(Carrow);
+			lr=ul;
+		}else if(!abort)
+			lr=m.xy;
+		m=<-M;
+	}
+	cursorswitch(Carrow);
+	become {ul, lr};
+};
+
+childofseq:=prog(child:array of Env, seq:int) of int{
+	i:int;
+	for(i=0; i<len child; i++)
+		if(child[i].S.seq==seq)
+			become i;
+	become -1;
+};
+
+which:=prog(cover:Cover, child:array of Env, p:Point) of int{
+	i:int;
+	for(i=0; i<len cover.layer; i++)
+		if(ptinrect(p, cover.layer[i].r))
+			become childofseq(child, cover.layer[i].seq);
+	become -1;
+};
+
+point:=prog(M:chan of Mouse) of Point{
+	m:Mouse;
+	cursorswitch(Csight);
+	do
+		m=<-M;
+	while(m.but==0);
+	p:=m.xy;
+	if(m.but&3)
+		p={-1,-1};
+	cursorswitch(Carrow);
+	do
+		m=<-M;
+	while(m.but);
+	become p;
+};
+
+spawn:=prog(wp:Windowprog, cover:Cover, M:chan of Mouse) of Wargs{
+	w:=mk(Wargs);
+	w.success=0;
+	w.R=sweep(S, M);
+	if(w.R.max.x>w.R.min.x+30 && w.R.max.y>w.R.min.y+30){
+		if(len cover.layer)
+			frame(cover.layer[0], 0);
+		w.cover=lalloc(cover, w.R);
+		bitblt(w.cover.cover, w.R.min, w.cover.cover, w.R, 0);
+		frame(w.cover.layer[0], 1);
+		w.e={w.cover.layer[0], mk(chan of Mouse), mkNSIO(), mk(Strchan), mk(Strchan)};
+		w.success=1;
+		begin wp(w.e);
+	}
+	become w;
+};
+
+rec
+ws:=prog(e:Env){
+	S:=e.S;
+	M:=e.M;
+	K:=e.K;
+	CI:=e.CI;
+	CO:=e.CO;
+	r:=S.r;
+	r=rectinset(r, MARGIN, MARGIN);
+	bitblt(S, r.min, S, r, 0);
+
+	cover:=mkcover(S, ground);
+	texture(S, r, ground, SRC);
+
+	const Nc:=32;
+	child:=mk(array[0] of Env);
+	ctlin:=mk(array[0] of Strchan);
+	ctlout:=mk(array[0] of Strchan);
+	cur:=-1;
+	ncur:=-1;
+	newcur:=0;
+	deleting:=0;
+
+	m:Mouse;
+	k:array of char;
+	w:Wargs;
+	i,j:int;
+	
+	for(;;){
+		select{
+		case m=<-M:
+			ncur=which(cover, child, m.xy);
+			if(m.but&1){
+				if(ncur>=0 && !newcur){
+					if(cur==ncur)
+						child[cur].M<-=m;
+					else{
+						newcur=1;
+						if(cur>=0)
+							frame(child[cur].S, 0);
+						cover=ltofront(cover, child[ncur].S.seq);
+						frame(child[ncur].S, 1);
+						cur=ncur;
+					}
+				}
+				if(newcur)
+					continue;
+			}
+			newcur=0;
+			if(cur>=0 && ncur==cur && !child[cur].dl){
+				child[cur].M<-=m;
+				continue;
+			}
+			if((m.but&4)==0)
+				continue;
+
+			i=menuhit(cover, M, m, menu, 4);
+			if(i>=0)
+				menu.last=i;
+			switch(i){
+			case -1:
+				continue;
+			case WS:
+				w=spawn(ws, cover, M);
+			case RC:
+				w=spawn(rc, cover, M);
+			case DL:
+				i=which(cover, child, point(M));
+				if(i>=0){
+					child[i].dl=1;
+					child[i].CI<-="Delete";
+				}
+				continue;
+			case EX:
+				abort("exit");
+			}
+			if(w.success){
+				cover=w.cover;
+				child=mk(array[1] of Env=w.e) cat child;
+				ctlin=mk(array[1] of Strchan=w.e.CI) cat ctlin;
+				ctlout=mk(array[1] of Strchan=w.e.CO) cat ctlout;
+				cur=0;
+			}
+		case k=<-K.rdata:
+			if(cur>=0 && !child[cur].dl)
+				child[cur].K.rdata<-=k;
+		case k=<-ctlout[i=]:
+			switch(k){
+			case "Delete":
+				cover=lfree(cover, child[i].S.seq);
+				ctlout=(ctlout del (i-len ctlout)) cat (ctlout del i+1);
+				ctlin=(ctlin del (i-len ctlin)) cat (ctlin del i+1);
+				child=(child del (i-len child)) cat (child del i+1);
+				if(len child==0 && deleting){
+					CO<-="Delete";
+					become unit;
+				}
+				if(i==cur){
+					cur=-1;
+					if(len child)
+						cur=childofseq(child, cover.layer[0].seq);
+					if(cur>=0)
+						frame(cover.layer[0], 1);
+				}
+			default:
+				suspend("unknown message child");
+			}
+		case k=<-CI:
+			switch(k){
+			case "Delete":
+				if(len child==0){
+					CO<-="Delete";
+					become unit;
+				}
+				deleting=1;
+				for(i=0; i<len child; i++){
+					child[i].CI<-="Delete";
+					child[i].dl=1;
+				}
+			default:
+				suspend("unknown message CI");
+			}
+		}
+	}
+};
+
+rec{
+rcM:=prog(n:NSIO, M:chan of Mouse, ctl:Strchan, m:Mouse){	# closed
+	a:array of char;
+	for(;;)
+		select{
+		case m=<-M:
+			;
+		case a=<-n.rctl:
+			if(a=="open")
+				become rcM1(n, M, ctl, m);
+		case <-ctl:
+			n.wctl<-="remove";
+			become unit;
+		}
+};
+
+rcM1:=prog(n:NSIO, M:chan of Mouse, ctl:Strchan, m:Mouse){	# open, data avail
+	a:array of char;
+	for(;;)
+		select{
+		case m=<-M:
+			;
+		case n.wdata<-=MousetoA(m):
+			become rcM2(n, M, ctl, m);
+		case a=<-n.rctl:
+			if(a=="close")
+				become rcM(n, M, ctl, m);
+		case <-n.rdata:
+			;	# thank you
+		case <-ctl:
+			n.wctl<-="remove";
+			become unit;
+		}
+};
+
+rcM2:=prog(n:NSIO, M:chan of Mouse, ctl:Strchan, m:Mouse){	# open, no data
+	a:array of char;
+	for(;;)
+		select{
+		case m=<-M:
+			become rcM1(n, M, ctl, m);
+		case a=<-n.rctl:
+			if(a=="close")
+				become rcM(n, M, ctl, m);
+		case <-n.rdata:
+			;	# thank you
+		case <-ctl:
+			n.wctl<-="remove";
+			become unit;
+		}
+};
+};
+
+rcP:=prog(S:Bitmap, out:NSIO){
+	r:=rectinset(S.r, MARGIN+1, MARGIN+1);
+	p:=r.min;
+	a:array of char;
+	lineout:=mk(Strchan);
+	tabout:=mk(Strchan);
+	linectl:=mk(Strchan);
+	ctl:=mk(Strchan);
+	begin prog(){
+		a:array of char;
+		i:int;
+		for(;;){
+			select{
+			case <-out.rctl:
+				linectl<-="shutdown";
+				become unit;
+			case a=<-out.rdata:
+				;
+			}
+			while((i=strchr(a, '\n'))!=-1){
+				if(i==len a)
+					break;
+				i++;
+				lineout<-=a del (i-len a);
+				a=a del i;
+			}
+			lineout<-=a;
+		}
+	}();
+	begin prog(){
+		a:array of char;
+		i:int;
+		col:=0;
+		for(;;){
+			select{
+			case <-linectl:
+				ctl<-="shutdown";
+				become unit;
+			case a=<-lineout:
+				;
+			}
+			while((i=strchr(a, '\t'))!=-1){
+				if(i==len a)
+					break;
+				i++;
+				tabout<-=a del (i-len a-1);
+				col=col+i-1;
+				tabout<-="        " del (col&7);
+				col=(col|7)+1;
+				a=a del i;
+			}
+			tabout<-=a;
+			if(len a && a[len a-1]=='\n')
+				col=0;
+		}
+	}();
+	for(;;){
+		select{
+		case <-ctl:
+			become unit;
+		case a=<-tabout:
+			;
+		}
+		if(len a==0)
+			continue;
+		if(a=="\b"){
+			if(p.x>r.min.x){
+				p.x=p.x-strsize(defont, " ").x;
+				string(S, p, defont, " ", SRC);
+			}
+			continue;
+		}
+		string(S, p, defont, a, SRC);
+		p.x=p.x+strsize(defont, a).x;
+		if(a[len a-1]=='\n'){
+			p.x=r.min.x;
+			if(p.y>=r.max.y-2*14){
+				r1:=r;
+				r1.min.y=r.min.y+14;
+				bitblt(S, r.min, S, r1, SRC);
+				r1.min=p;
+				bitblt(S, p, S, r1, 0);
+			}else
+				p.y=p.y+14;
+		}
+	}
+};
+
+rcK:=prog(in:NSIO, out,echo:Strchan, rawc:chan of int){
+	i,c:int;
+	a,buf:="";
+	raw:=0;
+	for(;;){
+		select{
+		case <-in.rctl:
+			become unit;
+		case a=<-in.rdata:
+			;
+		case raw=<-rawc:
+			if(raw && len buf){
+				out<-=buf;
+				buf="";
+			}
+			continue;
+		}
+		if(raw){
+			out<-=a;
+			continue;
+		}
+		while((i=strchr(a, '\r'))!=-1)
+			a[i]='\n';
+		echo<-=a;
+		while(len a){
+			c=a[0];
+			a=a del 1;
+			if(c==0x04){
+				out<-=buf;
+				buf="";
+				continue;
+			}
+			if(c=='\n'){
+				out<-=buf cat "\n";
+				buf="";
+				continue;
+			}
+			if(c=='\b'){
+				if(len buf>0)
+					buf=buf del -1;
+				continue;
+			}
+			buf=buf cat mk(array of char=c);
+		}
+	}
+};
+
+rc=prog(e:Env){
+	screen:=BitmaptoA(e.S);
+	rcns:=nsnew();
+	screenc:=nsbindctl(rcns, "screen", 1, 0444);
+	mousec:=nsbindctl(rcns, "dmouse", 2, 0666);
+	rcc:=nsbindctl(rcns, "cons", 2, 0666);
+	rcrc:=nsbindctl(rcns, "rcons", 2, 0666);
+	begin nsproc(rcns, {"/bin/rc", "-c", "mount /mnt/ns/screen /dev/screen; mount /mnt/ns/dmouse /dev/dmouse; mount /mnt/ns/cons /dev/cons; mount /mnt/ns/rcons /dev/rcons; unmount /mnt/ns; exec rc </dev/cons >/dev/cons >[2]/dev/cons"});
+
+	stopM:=mk(Strchan);
+	begin rcM(mousec, e.M, stopM, {0,{0,0}});
+
+	stopK:=mk(Strchan);
+	fromK:=mk(Strchan);
+	echoK:=mk(Strchan);
+	rawK:=mk(chan of int);
+	begin rcK({e.K.rdata, stopK}, fromK, echoK, rawK);
+
+	stopP:=mk(Strchan);
+	toP:=mk(Strchan);
+	begin rcP(e.S, {toP, stopP});
+
+	a:array of char;
+	m:Mouse;
+	raw:=0;
+	inhib:=0;
+
+	for(;;)
+	select{
+	case a=<-echoK:
+		toP<-=a;
+	case a=<-fromK:
+		if(raw)
+			rcrc.wdata<-=a;
+		else
+			rcc.wdata<-=a;
+	case a=<-rcc.rdata:
+		toP<-=a;
+	case a=<-rcrc.rdata:
+		toP<-=a;
+	case screenc.wdata<-=screen:
+		;
+	case a=<-e.K.rctl:
+		if(a=="close")
+			toP<-="shutdown keyboard\n";
+	case <-screenc.rctl:
+		;	# don't care
+	case a=<-rcrc.rctl:
+		switch(a){
+		case "open":
+			raw=1;
+			rawK<-=1;
+		case "close":
+			raw=0;
+			rawK<-=0;
+		}
+	case a=<-rcc.rctl:
+		if(a=="close"){
+			while(--inhib>=0)
+				mousectl(Cursorallow);
+			rcc.wctl<-=rcrc.wctl<-=screenc.wctl<-="remove";
+			stopM<-=stopK<-=stopP<-="shutdown";
+			e.CO<-="Delete";
+			become unit;
+		}
+	case a=<-e.CI:
+		if(a=="Delete"){
+			while(--inhib>=0)
+				mousectl(Cursorallow);
+			rcc.wctl<-=rcrc.wctl<-=screenc.wctl<-="remove";
+			stopM<-=stopK<-=stopP<-="shutdown";
+			e.CO<-="Delete";
+			become unit;
+		}
+		suspend("unknown CI mesg");
+	}
+};
+
+gnotiosrv:=prog(ns:int){
+	nsproc(ns, {"/bin/rc", "-c", "exec cat < /dev/dmouse > /mnt/ns/mousein"});
+	nsproc(ns, {"/bin/rc", "-c", "exec cat < /dev/rcons > /mnt/ns/kbdin"});
+};
+
+{
+gnotions:=nsnew();
+M:=mk(chan of Mouse);
+K:=nsbind(gnotions, "kbdin", 0, 0666);
+MA:=nsbind(gnotions, "mousein", 0, 0666);
+begin gnotiosrv(gnotions);
+
+begin prog(){
+	a:array of char;
+	for(;;){
+		a=<-MA.rdata;
+		M<-=AtoMouse(a);
+	}
+		
+}();
+CI:=mk(Strchan);
+CO:=mk(Strchan);
+frame(S, 1);
+begin ws({S, M, K, CI, CO});
+}

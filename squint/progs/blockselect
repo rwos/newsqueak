@@ -1,0 +1,25 @@
+i:int;
+type S: struct of { req, dat: chan of int; };
+c:=prog(c1: array[2] of S){
+	j:int;
+	for(;;)select{
+	case j=<-c1[0].req:	print("1\n");
+	case j=<-c1[1].req:	print("2\n");
+	}
+};
+cc:=mk(array[2] of S);
+cc[0]=mk();
+cc[0].req=mk();
+cc[0].dat=mk();
+cc[1]=mk();
+cc[1].req=mk();
+cc[1].dat=mk();
+begin prog(){
+cc[1].req<-=5;
+cc[0].req<-=5;
+}();
+begin c(cc);
+{
+cc[1].req<-=5;
+cc[0].req<-=5;
+}

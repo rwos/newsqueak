@@ -1,0 +1,397 @@
+#ifdef YYDEBUG
+char *yytoknames[] = {
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," !",
+0,0,0," %",
+" &",
+0,0,0," *",
+" +",
+0," -",
+" .",
+" /",
+0,0,0,0,0,0,0,0,0,0,0,0," <",
+" =",
+" >",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," [",
+0,0," ^",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0," |",
+0," ~",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"ID",
+"NUM",
+"STRING",
+"UNIT",
+"INT",
+"CHAR",
+"CONST",
+"BUILTIN",
+"ARRAY",
+"OF",
+"CHAN",
+"STRUCT",
+"PROG",
+"TYPE",
+"IF",
+"ELSE",
+"FOR",
+"WHILE",
+"DO",
+"SELECT",
+"SWITCH",
+"CASE",
+"DEFAULT",
+"PRINT",
+"REC",
+"BEGIN",
+"BECOME",
+"RESULT",
+"MK",
+"LEN",
+"REF",
+"DEF",
+"BREAK",
+"CONTINUE",
+"VAL",
+"ANDAND",
+"OROR",
+"CAT",
+"DEL",
+"EQ",
+"NE",
+"LE",
+"GE",
+"LSH",
+"RSH",
+"UMINUS",
+"ARROW",
+"SND",
+"RCV",
+"DEC",
+"INC",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+char *yystates[] = {
+"", /*0*/
+"program.$end\n", /*1*/
+"", /*2*/
+"", /*3*/
+"", /*4*/
+"sdecl.; \n", /*5*/
+"", /*6*/
+"", /*7*/
+"expr.OP expr\nexpr.OP\n", /*8*/
+"BEGIN.call()\n", /*9*/
+"BECOME.expr or BECOME.{init}\n", /*10*/
+"RESULT.expr\n", /*11*/
+"BREAK.\n", /*12*/
+"CONTINUE.", /*13*/
+"DO.stmt WHILE(expr)\n", /*14*/
+"", /*15*/
+"IF.(expr) stmt\n", /*16*/
+"WHILE.(expr) stmt\n", /*17*/
+"FOR.(expr;expr;expr) stmt\n", /*18*/
+"SWITCH.(expr) {caselist}\n", /*19*/
+"SELECT.{caselist}\n", /*20*/
+"", /*21*/
+"stclass.ncdecl\nstclass.stclass decl\n", /*22*/
+"TYPE.idlist: type\n", /*23*/
+"REC.decl\n", /*24*/
+"", /*25*/
+"", /*26*/
+"", /*27*/
+"PRINT.(expr)\n", /*28*/
+"", /*29*/
+"ARROW.expr\n", /*30*/
+"LEN.expr\n", /*31*/
+"REF.expr\n", /*32*/
+"DEF.expr\n", /*33*/
+"DEC.expr\n", /*34*/
+"-.expr\n", /*35*/
+"!.expr\n", /*36*/
+"~.expr\n", /*37*/
+"", /*38*/
+"", /*39*/
+"MK.(type)\n", /*40*/
+"VAL.{stmt}\n", /*41*/
+"{.stmtlist}\n", /*42*/
+"idlist.: (rest of decl)", /*43*/
+"", /*44*/
+"", /*45*/
+"(.expr)\n", /*46*/
+"", /*47*/
+"", /*48*/
+"", /*49*/
+"PROG.(formals) [of type] {stmt}\n", /*50*/
+"", /*51*/
+"", /*52*/
+"expr +.expr\n", /*53*/
+"expr -.expr\n", /*54*/
+"expr *.expr\n", /*55*/
+"expr /.expr\n", /*56*/
+"expr %.expr\n", /*57*/
+"expr &.expr\n", /*58*/
+"expr |.expr\n", /*59*/
+"expr ^.expr\n", /*60*/
+"expr ANDAND.expr\n", /*61*/
+"expr OROR.expr\n", /*62*/
+"expr CAT.expr\n", /*63*/
+"expr DEL.expr\n", /*64/
+"expr EQ.expr\n", /*65*/
+"expr NE.expr\n", /*66*/
+"expr <.expr\n", /*67*/
+"expr >.expr\n", /*68*/
+"expr LE.expr\n", /*69*/
+"expr GE.expr\n", /*70*/
+"expr LSH.expr\n", /*71*/
+"expr RSH.expr\n", /*72*/
+"", /*73*/
+"", /*74*/
+"expr[.expr]\n", /*75*/
+"expr..ID\n", /*76*/
+"", /*77*/
+"", /*78*/
+"", /*79*/
+"expr.OP expr\nexpr.OP\n", /*80*/
+"expr.OP expr\nexpr.OP\n", /*81*/
+"BECOME {.exprlist}; \n", /*82*/
+"expr.OP expr\nexpr.OP\n", /*83*/
+"", /*84*/
+"", /*85*/
+"DO stmt.WHILE (expr)\n", /*86*/
+"IF(.expr) stmt\n", /*87*/
+"WHILE(.expr) stmt\n", /*88*/
+"", /*89*/
+"SWITCH(.expr) {caselist}\n", /*90*/
+"SELECT{.caselist}\n", /*91*/
+"", /*92*/
+"", /*93*/
+"", /*94*/
+"sdecl :  TYPE idlist.: type\nidlist :  idlist., ID\n", /*95*/
+"", /*96*/
+"cdecl:  REC {.decllist }\n", /*97*/
+"sdecl:  REC.sdecl\n", /*98*/
+"expr:  PRINT (.exprlist )\n", /*99*/
+"call:  expr1 (.)\ncall :  expr1 (.initexprlist )\n", /*100*/
+"", /*101*/
+"", /*102*/
+"", /*103*/
+"", /*104*/
+"", /*105*/
+"", /*106*/
+"", /*107*/
+"", /*108*/
+"lval=.expr\nlval=.{exprlist}\n", /*109*/
+"MK(.type)\nMK(.type=expr )\n", /*110*/
+"", /*111*/
+"", /*112*/
+"stmtlist.stmt\n{stmtlist.}\n", /*113*/
+"", /*114*/
+"idlist:. (rest of decl)\n", /*115*/
+"idlist,.ID\n", /*116*/
+"expr.OP expr\nexpr.OP\n(expr.)\n", /*117*/
+"", /*118*/
+"", /*119*/
+"", /*120*/
+"", /*121*/
+"", /*122*/
+"", /*123*/
+"", /*124*/
+"", /*125*/
+"", /*126*/
+"", /*127*/
+"", /*128*/
+"", /*129*/
+"", /*130*/
+"", /*131*/
+"", /*132*/
+"", /*133*/
+"", /*134*/
+"", /*135*/
+"", /*136*/
+"", /*137*/
+"", /*138*/
+"expr ARROW =.expr\n", /*139*/
+"expr.OP expr\n", /*140*/
+"", /*141*/
+"", /*142*/
+"", /*143*/
+"initexprlist., expr\n", /*144*/
+"", /*145*/
+"{.initexprlist }\n", /*146*/
+"", /*147*/
+"DO execstmt WHILE.(expr)\n", /*148*/
+"expr.OP expr\nexpr.OP\nIF(expr.) stmt\n", /*149*/
+"expr.OP expr\nexpr.OP\nWHILE( expr.) stmt\n", /*150*/
+"FOR(expr.; expr; expr) stmt\n", /*151*/
+"", /*152*/
+"expr.OP expr\nexpr.OP\nSWITCH(expr.) {caselist}\n", /*153*/
+"SELECT {caselist.}\caselist.label stmtlist\n", /*154*/
+"commlabel.execstmtlist\commlabel.CASE commexpr:\n", /*155*/
+"CASE.commexpr:\n", /*156*/
+"TYPE idlist :.type\n", /*157*/
+"REC { decllist.} \ndecllist:  decllist.sdecl ; \ndecllist:  decllist.cdecl \n", /*158*/
+"sdecl.; \n", /*159*/
+"", /*160*/
+"PRINT ( exprlist.) \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*161*/
+"", /*162*/
+"expr1 ( exprlist.) \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*163*/
+"", /*164*/
+"lval = MK.( ) \nexpr:  MK.( type ) \nexpr:  MK.( type = initexpr ) \n", /*165*/
+"lval = {.exprlist } \n", /*166*/
+"MK ( type.) \nexpr:  MK ( type.= initexpr ) \n", /*167*/
+"", /*168*/
+"", /*169*/
+"CHAN.OF type \n", /*170*/
+"STRUCT.OF { elemlist } \n", /*171*/
+"PROG.( formals ) oftype \n", /*172*/
+"", /*173*/
+"", /*174*/
+"", /*175*/
+"", /*176*/
+"", /*177*/
+"", /*178*/
+"", /*179*/
+"idlist: =.initexpr \n", /*180*/
+"", /*181*/
+"", /*182*/
+"PROG(formals.) [of type] {}\n", /*183*/
+"", /*184*/
+"idlist., ID\nidlist.: type\n", /*185*/
+"", /*186*/
+"", /*187*/
+"exprlist ,.expr\nexprlist ,.{ exprlist }\n", /*188*/
+"BECOME {exprlist}.;\n", /*189*/
+"{exprlist.}\nexprlist., expr\nexprlist., { exprlist}\n", /*190*/
+"DO stmt WHILE (.expr )\n", /*191*/
+"IF(expr).stmt\n", /*192*/
+"WHILE(expr).stmt\n", /*193*/
+"", /*194*/
+"SWITCH(expr).{caselist}\n", /*195*/
+"", /*196*/
+"commcaselist commlabel.execstmtlist\ncommlabel.CASE commexpr :\n", /*197*/
+"", /*198*/
+"commlabel CASE.commexpr:\n", /*199*/
+"", /*200*/
+"CASE commexpr.:\n", /*201*/
+"ARROW.expr\n\n", /*202*/
+"", /*203*/
+"expr.OP expr\nexpr.OP\n", /*204*/
+"", /*205*/
+"", /*206*/
+"decllist decl.;\n", /*207*/
+"", /*208*/
+"", /*209*/
+"", /*210*/
+"", /*211*/
+"MK(.)\nMK(.type)\nMK(.type=initexpr )\n", /*212*/
+"{exprlist.}\nexprlist., expr\nexprlist., {exprlist}\n", /*213*/
+"", /*214*/
+"MK(type=.initexpr)\n", /*215*/
+"ARRAY arraysize.OF type\n", /*216*/
+"[.expr]\n", /*217*/
+"CHAN OF.type\n", /*218*/
+"STRUCT OF.{elemlist}\n", /*219*/
+"", /*220*/
+"idlist : type =.initexpr\nidlist : type =.MK()\n", /*221*/
+"", /*222*/
+"", /*223*/
+"{.exprlist }\n", /*224*/
+"", /*225*/
+"typevarlist ,.idlist : type\n", /*226*/
+"idlist :.type\n", /*227*/
+"", /*228*/
+"exprlist , {.exprlist}\n", /*229*/
+"", /*230*/
+"", /*231*/
+"expr.OP expr\nexpr.OP\nDO execstmt WHILE ( expr.) ;\n", /*232*/
+"", /*233*/
+"", /*234*/
+"FOR(expr; expr.; expr )stmt\n", /*235*/
+"SWITCH(expr) {.caselist }\n", /*236*/
+"", /*237*/
+"", /*238*/
+"commlabel CASE commexpr.:\n", /*239*/
+"", /*240*/
+"", /*241*/
+"lval=.expr\nlval=.MK()\nlval=.{exprlist}\nlval=.ARROW expr\nlval=.ARROW expr[save]\n", /*242*/
+"", /*243*/
+"", /*244*/
+"", /*245*/
+"", /*246*/
+"", /*247*/
+"MK(type=initexpr.)\n", /*248*/
+"ARRAY arraysize OF.type\n", /*249*/
+"[expr.]\nexpr.OP expr\nexpr.OP\n", /*250*/
+"", /*251*/
+"STRUCT OF {.elemlist}\n", /*252*/
+"PROG ( formals.)\n", /*253*/
+"", /*254*/
+"MK.()\n", /*255*/
+"{exprlist.}\nexprlist., expr\nexprlist., {exprlist}\n", /*256*/
+"PROG(formals) [of type].{}\n", /*257*/
+"OF.type\n", /*258*/
+"idlist., ID\ntypevarlist, idlist.: type\n", /*259*/
+"", /*260*/
+"exprlist., expr\nexprlist., {exprlist}\nexprlist, {exprlist.}\n", /*261*/
+"DO stmt WHILE(expr).;\n", /*262*/
+"IF(expr) stmt ELSE.stmt\n", /*263*/
+"", /*264*/
+"SWITCH(expr) {caselist.}\ncaselist.label stmtlist\n", /*265*/
+"label.stmtlist\nlabel.CASE expr:\n", /*266*/
+"CASE.expr:\n", /*267*/
+"DEFAULT.:\n", /*268*/
+"", /*269*/
+"", /*270*/
+"ARROW.expr\n", /*271*/
+"expr ARROW =.expr\n", /*272*/
+"expr[save.] ARROW=expr\n", /*273*/
+"", /*274*/
+"", /*275*/
+"", /*276*/
+"", /*277*/
+"STRUCT OF {elemlist.}\nelemlist.idlist: type\n", /*278*/
+"idlist., ID\nidlist.: type\n", /*279*/
+"", /*280*/
+"idlist: type=MK(.)\nMK(.type)\nMK(.type=initexpr)\n", /*281*/
+"", /*282*/
+"", /*283*/
+"", /*284*/
+"typevarlist, idlist:.type\n", /*285*/
+"", /*286*/
+"", /*287*/
+"", /*288*/
+"FOR(expr; expr ; expr.) stmt\n", /*289*/
+"", /*290*/
+"caselist label.execstmtlist\nlabel.CASE expr:\n", /*291*/
+"", /*292*/
+"label CASE.expr:\n", /*293*/
+"expr.OP expr\nexpr.OP\nCASE expr.:\n", /*294*/
+"", /*295*/
+"ARROW expr[save.]\n", /*296*/
+"", /*297*/
+"", /*298*/
+"expr[save].ARROW = expr\n", /*299*/
+"", /*300*/
+"", /*301*/
+"idlist., ID\nelemlist idlist.: type\n", /*302*/
+"idlist:.type;\n", /*303*/
+"", /*304*/
+"", /*305*/
+"", /*306*/
+"FOR(expr; expr; expr).stmt\n", /*307*/
+"", /*308*/
+"expr.OP expr\nexpr.OP\nlabel CASE expr.:\n", /*309*/
+"", /*310*/
+"", /*311*/
+"", /*312*/
+"expr[save] ARROW.= expr\n", /*313*/
+"elemlist idlist :.type\n", /*314*/
+"idlist: type.;\n", /*315*/
+"", /*316*/
+"", /*317*/
+"lval=ARROW expr[save.]\n", /*318*/
+"expr [save] ARROW=.expr\n", /*319*/
+"elemlist idlist: type.;\n", /*320*/
+"", /*321*/
+"", /*322*/
+"", /*323*/
+"", /*324*/
+};
+#endif

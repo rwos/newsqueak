@@ -1,0 +1,19 @@
+rec ack:=prog(a: array of int, b: array of int) of
+array of int{
+	if(len a==0){
+		bb:array[len b+1] of int=mk();
+		become bb;
+	}
+	if(len b==0){
+		aa:array[len a-1] of int=mk();
+		b:array[1] of int=mk();
+		become ack(aa, b);
+	}
+	bb:array[len b-1] of int=mk();
+	b=ack(a, bb);
+	aa:array[len a-1] of int=mk();
+	become ack(aa, b);
+};
+x:array[3] of int=mk();
+y:array[4] of int=mk();
+len ack(x, y);

@@ -1,0 +1,22 @@
+rec type List: struct of { i:int; next:List;};
+
+
+insert:=prog(l: List, i: int) of List{
+	become mk(List={i, l});
+};
+
+rec delete:=prog(l: List, i: int) of List{
+	if(i==l.i)
+		become l.next;
+	if(def l.next)
+		l.next=delete(l.next, i);
+	become l;
+};
+
+list:=mk(List);
+i:int;
+for(i=0; i<5; i++)
+	list=insert(list, i);
+list;
+list=delete(list, 3);
+list;

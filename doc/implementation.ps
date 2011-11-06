@@ -1,0 +1,1982 @@
+%!PS
+%%Version: 3.3.2
+%%DocumentFonts: (atend)
+%%Pages: (atend)
+%%EndComments
+%
+% Version 3.3.2 prologue for troff files.
+%
+
+/#copies 1 store
+/aspectratio 1 def
+/formsperpage 1 def
+/landscape false def
+/linewidth .3 def
+/magnification 1 def
+/margin 0 def
+/orientation 0 def
+/resolution 720 def
+/rotation 1 def
+/xoffset 0 def
+/yoffset 0 def
+
+/roundpage true def
+/useclippath true def
+/pagebbox [0 0 612 792] def
+
+/R  /Times-Roman def
+/I  /Times-Italic def
+/B  /Times-Bold def
+/BI /Times-BoldItalic def
+/H  /Helvetica def
+/HI /Helvetica-Oblique def
+/HB /Helvetica-Bold def
+/HX /Helvetica-BoldOblique def
+/CW /Courier def
+/CO /Courier def
+/CI /Courier-Oblique def
+/CB /Courier-Bold def
+/CX /Courier-BoldOblique def
+/PA /Palatino-Roman def
+/PI /Palatino-Italic def
+/PB /Palatino-Bold def
+/PX /Palatino-BoldItalic def
+/Hr /Helvetica-Narrow def
+/Hi /Helvetica-Narrow-Oblique def
+/Hb /Helvetica-Narrow-Bold def
+/Hx /Helvetica-Narrow-BoldOblique def
+/KR /Bookman-Light def
+/KI /Bookman-LightItalic def
+/KB /Bookman-Demi def
+/KX /Bookman-DemiItalic def
+/AR /AvantGarde-Book def
+/AI /AvantGarde-BookOblique def
+/AB /AvantGarde-Demi def
+/AX /AvantGarde-DemiOblique def
+/NR /NewCenturySchlbk-Roman def
+/NI /NewCenturySchlbk-Italic def
+/NB /NewCenturySchlbk-Bold def
+/NX /NewCenturySchlbk-BoldItalic def
+/ZD /ZapfDingbats def
+/ZI /ZapfChancery-MediumItalic def
+/S  /S def
+/S1 /S1 def
+/GR /Symbol def
+
+/inch {72 mul} bind def
+/min {2 copy gt {exch} if pop} bind def
+
+/show {{//show} 0 get exec} bind def	% so later references don't bind
+/widthshow {{//widthshow} 0 get exec} bind def
+/stringwidth {{//stringwidth} 0 get exec} bind def
+
+/setup {
+	counttomark 2 idiv {def} repeat pop
+
+	landscape {/orientation 90 orientation add def} if
+	/scaling 72 resolution div def
+	linewidth setlinewidth
+	1 setlinecap
+
+	pagedimensions
+	xcenter ycenter translate
+	orientation rotation mul rotate
+	width 2 div neg height 2 div translate
+	xoffset inch yoffset inch neg translate
+	margin 2 div dup neg translate
+	magnification dup aspectratio mul scale
+	scaling scaling scale
+
+	addmetrics
+	0 0 moveto
+} def
+
+/pagedimensions {
+	useclippath userdict /gotpagebbox known not and {
+		/pagebbox [clippath pathbbox newpath] def
+		roundpage currentdict /roundpagebbox known and {roundpagebbox} if
+	} if
+	pagebbox aload pop
+	4 -1 roll exch 4 1 roll 4 copy
+	landscape {4 2 roll} if
+	sub /width exch def
+	sub /height exch def
+	add 2 div /xcenter exch def
+	add 2 div /ycenter exch def
+	userdict /gotpagebbox true put
+} def
+
+/addmetrics {
+	/Symbol /S null Sdefs cf
+	/Times-Roman /S1 StandardEncoding dup length array copy S1defs cf
+} def
+
+/pagesetup {
+	/page exch def
+	currentdict /pagedict known currentdict page known and {
+		page load pagedict exch get cvx exec
+	} if
+} def
+
+/decodingdefs [
+	{counttomark 2 idiv {y moveto show} repeat}
+	{neg /y exch def counttomark 2 idiv {y moveto show} repeat}
+	{neg moveto {2 index stringwidth pop sub exch div 0 32 4 -1 roll widthshow} repeat}
+	{neg moveto {spacewidth sub 0.0 32 4 -1 roll widthshow} repeat}
+	{counttomark 2 idiv {y moveto show} repeat}
+	{neg setfunnytext}
+] def
+
+/setdecoding {/t decodingdefs 3 -1 roll get bind def} bind def
+
+/w {neg moveto show} bind def
+/m {neg dup /y exch def moveto} bind def
+/done {/lastpage where {pop lastpage} if} def
+
+/f {
+	dup /font exch def findfont exch
+	dup /ptsize exch def scaling div dup /size exch def scalefont setfont
+	linewidth ptsize mul scaling 10 mul div setlinewidth
+	/spacewidth ( ) stringwidth pop def
+} bind def
+
+/changefont {
+	/fontheight exch def
+	/fontslant exch def
+	currentfont [
+		1 0
+		fontheight ptsize div fontslant sin mul fontslant cos div
+		fontheight ptsize div
+		0 0
+	] makefont setfont
+} bind def
+
+/sf {f} bind def
+
+/cf {
+	dup length 2 idiv
+	/entries exch def
+	/chtab exch def
+	/newencoding exch def
+	/newfont exch def
+
+	findfont dup length 1 add dict
+	/newdict exch def
+	{1 index /FID ne {newdict 3 1 roll put}{pop pop} ifelse} forall
+
+	newencoding type /arraytype eq {newdict /Encoding newencoding put} if
+
+	newdict /Metrics entries dict put
+	newdict /Metrics get
+	begin
+		chtab aload pop
+		1 1 entries {pop def} for
+		newfont newdict definefont pop
+	end
+} bind def
+
+%
+% A few arrays used to adjust reference points and character widths in some
+% of the printer resident fonts. If square roots are too high try changing
+% the lines describing /radical and /radicalex to,
+%
+%	/radical	[0 -75 550 0]
+%	/radicalex	[-50 -75 500 0]
+%
+% Move braceleftbt a bit - default PostScript character is off a bit.
+%
+
+/Sdefs [
+	/bracketlefttp		[201 500]
+	/bracketleftbt		[201 500]
+	/bracketrighttp		[-81 380]
+	/bracketrightbt		[-83 380]
+	/braceleftbt		[203 490]
+	/bracketrightex		[220 -125 500 0]
+	/radical		[0 0 550 0]
+	/radicalex		[-50 0 500 0]
+	/parenleftex		[-20 -170 0 0]
+	/integral		[100 -50 500 0]
+	/infinity		[10 -75 730 0]
+] def
+
+/S1defs [
+	/underscore		[0 80 500 0]
+	/endash			[7 90 650 0]
+] def
+%
+% Tries to round clipping path dimensions, as stored in array pagebbox, so they
+% match one of the known sizes in the papersizes array. Lower left coordinates
+% are always set to 0.
+%
+
+/roundpagebbox {
+    7 dict begin
+	/papersizes [8.5 inch 11 inch 14 inch 17 inch] def
+
+	/mappapersize {
+		/val exch def
+		/slop .5 inch def
+		/diff slop def
+		/j 0 def
+		0 1 papersizes length 1 sub {
+			/i exch def
+			papersizes i get val sub abs
+			dup diff le {/diff exch def /j i def} {pop} ifelse
+		} for
+		diff slop lt {papersizes j get} {val} ifelse
+	} def
+
+	pagebbox 0 0 put
+	pagebbox 1 0 put
+	pagebbox dup 2 get mappapersize 2 exch put
+	pagebbox dup 3 get mappapersize 3 exch put
+    end
+} bind def
+
+%%EndProlog
+%%BeginSetup
+mark
+/linewidth 0.5 def
+/#copies 1 store
+/landscape false def
+/resolution 720 def
+%
+% Encoding vector and redefinition of findfont for the ISO Latin1 standard.
+% The 18 characters missing from ROM based fonts on older printers are noted
+% below.
+%
+
+/ISOLatin1Encoding [
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/space
+	/exclam
+	/quotedbl
+	/numbersign
+	/dollar
+	/percent
+	/ampersand
+	/quoteright
+	/parenleft
+	/parenright
+	/asterisk
+	/plus
+	/comma
+	/minus
+	/period
+	/slash
+	/zero
+	/one
+	/two
+	/three
+	/four
+	/five
+	/six
+	/seven
+	/eight
+	/nine
+	/colon
+	/semicolon
+	/less
+	/equal
+	/greater
+	/question
+	/at
+	/A
+	/B
+	/C
+	/D
+	/E
+	/F
+	/G
+	/H
+	/I
+	/J
+	/K
+	/L
+	/M
+	/N
+	/O
+	/P
+	/Q
+	/R
+	/S
+	/T
+	/U
+	/V
+	/W
+	/X
+	/Y
+	/Z
+	/bracketleft
+	/backslash
+	/bracketright
+	/asciicircum
+	/underscore
+	/quoteleft
+	/a
+	/b
+	/c
+	/d
+	/e
+	/f
+	/g
+	/h
+	/i
+	/j
+	/k
+	/l
+	/m
+	/n
+	/o
+	/p
+	/q
+	/r
+	/s
+	/t
+	/u
+	/v
+	/w
+	/x
+	/y
+	/z
+	/braceleft
+	/bar
+	/braceright
+	/asciitilde
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/dotlessi
+	/grave
+	/acute
+	/circumflex
+	/tilde
+	/macron
+	/breve
+	/dotaccent
+	/dieresis
+	/.notdef
+	/ring
+	/cedilla
+	/.notdef
+	/hungarumlaut
+	/ogonek
+	/caron
+	/space
+	/exclamdown
+	/cent
+	/sterling
+	/currency
+	/yen
+	/brokenbar		% missing
+	/section
+	/dieresis
+	/copyright
+	/ordfeminine
+	/guillemotleft
+	/logicalnot
+	/hyphen
+	/registered
+	/macron
+	/degree			% missing
+	/plusminus		% missing
+	/twosuperior		% missing
+	/threesuperior		% missing
+	/acute
+	/mu			% missing
+	/paragraph
+	/periodcentered
+	/cedilla
+	/onesuperior		% missing
+	/ordmasculine
+	/guillemotright
+	/onequarter		% missing
+	/onehalf		% missing
+	/threequarters		% missing
+	/questiondown
+	/Agrave
+	/Aacute
+	/Acircumflex
+	/Atilde
+	/Adieresis
+	/Aring
+	/AE
+	/Ccedilla
+	/Egrave
+	/Eacute
+	/Ecircumflex
+	/Edieresis
+	/Igrave
+	/Iacute
+	/Icircumflex
+	/Idieresis
+	/Eth			% missing
+	/Ntilde
+	/Ograve
+	/Oacute
+	/Ocircumflex
+	/Otilde
+	/Odieresis
+	/multiply		% missing
+	/Oslash
+	/Ugrave
+	/Uacute
+	/Ucircumflex
+	/Udieresis
+	/Yacute			% missing
+	/Thorn			% missing
+	/germandbls
+	/agrave
+	/aacute
+	/acircumflex
+	/atilde
+	/adieresis
+	/aring
+	/ae
+	/ccedilla
+	/egrave
+	/eacute
+	/ecircumflex
+	/edieresis
+	/igrave
+	/iacute
+	/icircumflex
+	/idieresis
+	/eth			% missing
+	/ntilde
+	/ograve
+	/oacute
+	/ocircumflex
+	/otilde
+	/odieresis
+	/divide			% missing
+	/oslash
+	/ugrave
+	/uacute
+	/ucircumflex
+	/udieresis
+	/yacute			% missing
+	/thorn			% missing
+	/ydieresis
+] def
+
+/NewFontDirectory FontDirectory maxlength dict def
+
+%
+% Apparently no guarantee findfont is defined in systemdict so the obvious
+%
+%	systemdict /findfont get exec
+%
+% can generate an error. So far the only exception is a VT600 (version 48.0).
+%
+
+userdict /@RealFindfont known not {
+	userdict begin
+		/@RealFindfont systemdict begin /findfont load end def
+	end
+} if
+
+/findfont {
+	dup NewFontDirectory exch known not {
+		dup
+		%dup systemdict /findfont get exec	% not always in systemdict
+		dup userdict /@RealFindfont get exec
+		dup /Encoding get StandardEncoding eq {
+			dup length dict begin
+				{1 index /FID ne {def}{pop pop} ifelse} forall
+				/Encoding ISOLatin1Encoding def
+				currentdict
+			end
+			/DummyFontName exch definefont
+		} if
+		NewFontDirectory 3 1 roll put
+	} if
+	NewFontDirectory exch get
+} bind def
+
+setup
+2 setdecoding
+%%EndSetup
+%%Page: 1 1
+/saveobj save def
+mark
+1 pagesetup
+12 B f
+(The Implementation of Newsqueak)3 1798 1 1981 1230 t
+10 I f
+(Rob Pike)1 363 1 2698 1550 t
+10 R f
+(AT&T Bell Laboratories)2 993 1 2383 1790 t
+(Murray Hill, New Jersey 07974)4 1267 1 2246 1950 t
+10 I f
+(ABSTRACT)2643 2410 w
+10 R f
+( concurrent applicative language Newsqueak has several)6 2278(The implementation of the)3 1072 2 1330 2710 t
+( interpreter,)1 467( The)1 207(unusual features.)1 678 3 1080 2870 t
+10 CW f
+(squint)2459 2870 w
+10 R f
+( scheme to manage stor\255)4 974(, uses a copy\255on\255write)3 887 2 2819 2870 t
+( is no)2 223( There)1 285(age honoring Newsqueak's strictly applicative \(by\255value\) semantics for data.)8 3092 3 1080 3030 t
+( ran\255)1 188( the execution of processes is interleaved very finely, but)9 2309( Instead,)1 367(explicit scheduler.)1 736 4 1080 3190 t
+( the interpreter's main)3 887(domly, by an efficient scheme that integrates process switching into)9 2713 2 1080 3350 t
+( implementation of)2 801(loop. The)1 428 2 1080 3510 t
+10 CW f
+(select)2354 3510 w
+10 R f
+( communica\255)1 543(, the non\255deterministic, multi\255way)3 1423 2 2714 3510 t
+(tions operator, exploits details in the implementation of processes.)8 2648 1 1080 3670 t
+( describes much of the interpreter but explains only small aspects of the)12 2922(This paper)1 428 2 1330 3866 t
+( detail about the language may be found in the references.)10 2308(language. Further)1 729 2 1080 4026 t
+10 B f
+(Storage)720 4506 w
+10 R f
+( good start\255)2 465(Since the management of storage is central to the implementation of any language, it is a)15 3605 2 970 4702 t
+( especially pertinent for Newsqueak)4 1483( it is)2 199( But)1 208(ing point for the description of the Newsqueak interpreter.)8 2430 4 720 4862 t
+(because the design of the language hinges on its strictly by\255value \(applicative\) management of data.)14 3984 1 720 5022 t
+( ability to send messages on)5 1169( The)1 215( other.)1 265(Concurrent and applicative programming complement each)5 2421 4 970 5218 t
+( shared data helps keep concurrent pro\255)6 1609(channels provides I/O without side effects, while the avoidance of)9 2711 2 720 5378 t
+( is an applicative concurrent language based on the concurrent composi\255)10 2922( Newsqueak)1 518(cesses from colliding.)2 880 3 720 5538 t
+( computations share a)3 886( Two)1 239(tion of processes communicating on synchronous channels [Pike 89, McIl 89].)10 3195 3 720 5698 t
+( assignment of values to objects)5 1299( All)1 183( a variable.)2 450(value only if they share)4 953 4 720 5858 t
+10 S1 f
+(\320)3635 5858 w
+10 R f
+(including function return, bind\255)3 1275 1 3765 5858 t
+( to functions and processes, and passing values on channels)9 2410(ing of parameters)2 708 2 720 6018 t
+10 S1 f
+(\320)3867 6018 w
+10 R f
+(is done by making a copy)5 1044 1 3996 6018 t
+( conve\255)1 298( Newsqueak permits global variables, programming without them is)8 2725( Although)1 429(of the assigned value.)3 868 4 720 6178 t
+( language promotes independent functions and processes operating in)8 2805( The)1 209( implicitly encouraged.)2 932(nient and)1 374 4 720 6338 t
+( those parameters may include communication)5 1871( Since)1 274( their parameters.)2 699(environments defined exclusively by)3 1476 4 720 6498 t
+(channels, the language feels considerably different from traditional applicative languages.)9 3589 1 720 6658 t
+( its implementation copy values in an assignment, but the behavior)10 2738(Newsqueak does not require that)4 1332 2 970 6854 t
+( Newsqueak interpreter,)2 961( The)1 208(must be as though the value were copied.)7 1675 3 720 7014 t
+10 CW f
+(squint)3592 7014 w
+10 R f
+(, combines reference\255count)2 1088 1 3952 7014 t
+( result is similar to)4 753( The)1 207( long as possible.)3 695(garbage collection with a lazy copying scheme to defer copying as)10 2665 4 720 7174 t
+(copy\255on\255write page management schemes in operating systems.)6 2548 1 720 7334 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 1 1
+%%Page: 2 2
+/saveobj save def
+mark
+2 pagesetup
+10 R f
+(\255 2 \255)2 166 1 2797 480 t
+( was \(correctly\))2 671( It)1 134( 73].)1 206(Reference counting was chosen because it is easy to implement [Knuth)10 3059 4 970 880 t
+( when the language was)4 1001( Moreover,)1 480(expected that storage management would not dominate performance.)7 2839 3 720 1040 t
+( would eventually be run on, so it seemed pru\255)9 1898(being designed there were several candidates for the CPU it)9 2422 2 720 1200 t
+(dent to use simple, inherently portable techniques.)6 2009 1 720 1360 t
+( a single word containing the address of a data struc\255)10 2161(Each object in Newsqueak is represented using)6 1909 2 970 1556 t
+( language itself has no)4 893( \(The)1 238( the object, except for integers, which are just stored in the word.)12 2592(ture describing)1 597 4 720 1716 t
+( data structure begins with a header)6 1467( The)1 214( implementation uses pointers extensively.\))4 1771(pointer types, but the)3 868 4 720 1876 t
+( the size and layout of the object, which simplifies copy\255)10 2271(that includes a reference count and a description of)8 2049 2 720 2036 t
+( requires no run\255time checking of the type of objects, but the)11 2561( static type system)3 772( \(The)1 250(ing the structures.)2 737 4 720 2196 t
+( in arrays of characters and integers)6 1423( data contained)2 608( The)1 207(interpreter uses a single routine to copy all objects.\))8 2082 4 720 2356 t
+( of non\255integral objects are represented recursively by stor\255)8 2392( Arrays)1 325( immediately after the header.)4 1210(are stored)1 393 4 720 2516 t
+( the)1 166( defined using)2 606( Records,)1 422(ing an array of pointers to the component objects after the initial header.)12 3126 4 720 2676 t
+10 CW f
+(struct)720 2836 w
+10 R f
+( at the beginning of the data part of the)9 1658(keyword, are stored using a hybrid scheme; a bit array)9 2266 2 1116 2836 t
+(object indicates which elements of the structure are represented by pointers.)10 3029 1 720 2996 t
+( the number of references to it goes to zero, which can occur when)13 2666(An object is freed \(collected\) when)5 1404 2 970 3192 t
+(a link to the object is broken by assignment or when a variable pointing to the object is released at the end)21 4320 1 720 3352 t
+( are followed and their refer\255)5 1193( an object is freed, pointers contained within it)8 1920( When)1 296(of an executing block.)3 911 4 720 3512 t
+( these counts go to zero, the algorithm continues recursively.)9 2427( When)1 288(ence counts are decremented.)3 1173 3 720 3672 t
+( compo\255)1 336( when a)2 320( However,)1 445(When an object is assigned to a variable, its reference count is increased.)12 2969 4 970 3868 t
+( if the containing object has)5 1107(nent of an object is updated, the resulting assignment may be done in place only)14 3213 2 720 4028 t
+( the isolated assignments)3 997( Consider)1 411( not, the object must first be copied.)7 1435( If)1 116(a reference count of one.)4 987 5 720 4188 t
+9 CW f
+(A = somearray)2 702 1 1008 4398 t
+(B = A)2 270 1 1008 4548 t
+(A[i] = p.)2 486 1 1008 4698 t
+10 R f
+(After the second assignment, the array pointed to by)8 2184 1 720 4918 t
+10 CW f
+(A)2941 4918 w
+10 R f
+(and)3039 4918 w
+10 CW f
+(B)3221 4918 w
+10 R f
+( To)1 174(has a reference count of at least two.)7 1547 2 3319 4918 t
+(assign)720 5078 w
+10 CW f
+(p)999 5078 w
+10 R f
+(to)1088 5078 w
+10 CW f
+(A[i])1195 5078 w
+10 R f
+(,)1435 5078 w
+10 CW f
+(A)1489 5078 w
+10 R f
+(is copied, the old array's reference count is decremented \()9 2345 1 1578 5078 t
+10 CW f
+(A)3923 5078 w
+10 R f
+( points to it, but)4 644(no longer)1 384 2 4012 5078 t
+10 CW f
+(B)720 5238 w
+10 R f
+( same)1 235(still does\), all its component objects' reference counts are incremented \(the new array points to the)15 3996 2 809 5238 t
+(components\), and)1 713 1 720 5398 t
+10 CW f
+(A)1461 5398 w
+10 R f
+( The)1 208( new object has a reference count of one.)8 1654( This)1 231(is made to point to the new object.)7 1398 4 1549 5398 t
+(original object pointed to by)4 1145 1 720 5558 t
+10 CW f
+(A[i])1893 5558 w
+10 R f
+(and)2162 5558 w
+10 CW f
+(B[i])2335 5558 w
+10 R f
+(has its reference count decremented \(after assignment)6 2167 1 2604 5558 t
+10 CW f
+(A[i])4800 5558 w
+10 R f
+( it but)2 254(will not point to)3 676 2 720 5718 t
+10 CW f
+(B[i])1685 5718 w
+10 R f
+(will\), and)1 393 1 1960 5718 t
+10 CW f
+(A[i])2388 5718 w
+10 R f
+(may finally be pointed at)4 1039 1 2663 5718 t
+10 CW f
+(p)3737 5718 w
+10 R f
+(, whose reference count incre\255)4 1243 1 3797 5718 t
+( the implementation to)3 924( must be taken in)4 707( Care)1 244( these operations occur as a single atomic action.)8 1997(ments. All)1 448 5 720 5878 t
+(guarantee that assignments such as)4 1392 1 720 6038 t
+9 CW f
+(A[i] = A[i])2 594 1 1008 6248 t
+10 R f
+( the method is not)4 745( But)1 202( a channel.)2 443(work properly, even when disguised, for example by communication on)9 2930 4 720 6468 t
+( passing an array to a function that)7 1448(hard to implement, and is beneficial for many common cases such as)11 2872 2 720 6628 t
+(examines it but does not change it.)6 1385 1 720 6788 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 2 2
+%%Page: 3 3
+/saveobj save def
+mark
+3 pagesetup
+10 R f
+(\255 3 \255)2 166 1 2797 480 t
+10 B f
+(Processes and scheduling)2 1073 1 720 880 t
+10 R f
+(The unusual handling of processes and scheduling in)7 2181 1 970 1076 t
+10 CW f
+(squint)3186 1076 w
+10 R f
+( approached the same)3 894(is most easily)2 565 2 3581 1076 t
+( interpreters represent the tar\255)4 1195( Many)1 287( basic interpreter.)2 703(way it was developed: by successive refinement of a)8 2135 4 720 1236 t
+( as an array of function pointers, each of which represents pseudo\255instructions in a simulated)14 3827(get program)1 493 2 720 1396 t
+( end of the program is indicated by a)8 1488( The)1 208( those functions.)2 664(CPU, and use a program counter to step through)8 1960 4 720 1556 t
+( code in)2 320( The)1 207( returns zero \(false\); non\255terminal pseudo\255instructions return one \(true\).)8 2873(pseudo\255instruction that)1 920 4 720 1716 t
+(C looks like:)2 512 1 720 1876 t
+9 CW f
+( \(*Inst\)\(void\);)1 1026(typedef int)1 594 2 1008 2086 t
+(Inst *pc;)1 648 1 1008 2386 t
+(Inst program[];)1 972 1 1008 2536 t
+(compile\(\);)1008 2836 w
+(pc=program;)1008 2986 w
+(while\(\(**pc++\)\(\)\))1008 3286 w
+(;)1440 3436 w
+10 R f
+( as a stack pointer, and some associated data,)8 1884(As well, there are often some global pseudo\255registers, such)8 2436 2 720 3656 t
+( are manipulated by the pseudo\255instructions to push variables on the)10 2739( global variables)2 666( These)1 291(such as a stack.)3 624 4 720 3816 t
+(stack and perform other low\255level operations.)5 1818 1 720 3976 t
+( \(real\) process in a C program, we)7 1392( the implementation is a single)5 1245( Since)1 276(Newsqueak needs processes.)2 1157 4 970 4172 t
+( various Newsqueak programs in a single)6 1779(need to simulate processes by interleaving the execution of)8 2541 2 720 4332 t
+( in a)2 186( a \(simulated\) process is not actively executing, its state can be held)12 2776( When)1 294(instance of the basic loop.)4 1064 4 720 4492 t
+(data structure such as)3 856 1 720 4652 t
+10 S1 f
+(\320)1601 4652 w
+10 R f
+(schematically at least)2 854 1 1726 4652 t
+10 S1 f
+(\320)2605 4652 w
+9 CW f
+(typedef struct{)1 810 1 1008 4862 t
+( program counter */)3 1026( /*)1 540(Inst *pc;)1 648 3 1224 5012 t
+( stack pointer */)3 918( /*)1 540(int *sp;)1 648 3 1224 5162 t
+( stack storage */)3 918( /*)1 270(int stack[N];)1 918 3 1224 5312 t
+(}Proc;)1008 5462 w
+10 R f
+( approach at this point would be to use the)9 1744(A typical operating systems)3 1128 2 720 5682 t
+10 CW f
+(Proc)3623 5682 w
+10 R f
+(structure to hold the)3 820 1 3894 5682 t
+10 CW f
+(pc)4745 5682 w
+10 R f
+(and)4896 5682 w
+10 CW f
+(sp)720 5842 w
+10 R f
+( with the global variables when the process is enabled again.)10 2475(of a suspended process and to swap them)7 1693 2 872 5842 t
+(\(The stack storage in the)4 1001 1 720 6002 t
+10 CW f
+(Proc)1751 6002 w
+10 R f
+( execution loop might)3 890( The)1 210(structure could be used as is, without copying.\))7 1919 3 2021 6002 t
+(then become)1 507 1 720 6162 t
+9 CW f
+(while\(a process can run\){)3 1350 1 1008 6372 t
+(while\(randomtimer\(\)!=0 && \(**pc++\)\(\)\))2 1998 1 1440 6522 t
+(;)1872 6672 w
+(swap\(schedule\(\)\);)1440 6822 w
+(})1008 6972 w
+10 R f
+(where)720 7192 w
+10 CW f
+(schedule)991 7192 w
+10 R f
+(selects a process \(i.e., a)4 945 1 1499 7192 t
+10 CW f
+(Proc)2473 7192 w
+10 R f
+(pointer\) to run and)3 758 1 2742 7192 t
+10 CW f
+(swap)3529 7192 w
+10 R f
+(exchanges the globals with the)4 1242 1 3798 7192 t
+( the)1 157( this is a CPU\255like model; the timer represents some sort of clock that drives)14 3207( Again,)1 330(named process.)1 626 4 720 7352 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 3 3
+%%Page: 4 4
+/saveobj save def
+mark
+4 pagesetup
+10 R f
+(\255 4 \255)2 166 1 2797 480 t
+( interrupt set a flag, or just)6 1069( might be implemented by having a software)7 1791( It)1 112(preemptive scheduling algorithm.)2 1348 4 720 880 t
+(by running a counter.)3 854 1 720 1040 t
+( communica\255)1 528(Of course, these processes should be communicating, so some scheduling can be tied to)13 3542 2 970 1236 t
+( a sending process, say A, detects \(through a data structure representing a channel,)13 3312( example, when)2 635(tion. For)1 373 3 720 1396 t
+( to receive its message, A)5 1050(which will be described in the next section\) that another process, say B, is ready)14 3270 2 720 1556 t
+(can execute)1 467 1 720 1716 t
+9 CW f
+(swap\(B\))1008 1926 w
+10 R f
+( general, though, this approach does not)6 1670( In)1 146( of control to the receiving process.)6 1489(thereby passing the flow)3 1015 4 720 2146 t
+( not communicate often, it may never get run.)8 1833( a process does)3 607( If)1 118(obviate the need for preemptive scheduling.)5 1762 4 720 2306 t
+( lan\255)1 203( Concurrent)1 522(Worse, tying the scheduling to communication makes the system very deterministic.)10 3595 3 720 2466 t
+( Sequential Processes \(CSP\) [Hoare 78],)5 1614(guages, particularly those originating with Hoare's Communicating)6 2706 2 720 2626 t
+( combination of Dijkstra's guarded commands [Dijk 76])7 2264(have a tradition of non\255determinism derived from a)7 2056 2 720 2786 t
+( classes of live\255)3 639( also has the advantage of avoiding certain)7 1755( Non\255determinism)1 763(and distributed computation.)2 1163 4 720 2946 t
+( be non\255)2 367( therefore should)2 714( Newsqueak)1 534(lock that can occur when communicating with a chatty process.)9 2705 4 720 3106 t
+( provide)1 335( To)1 166(deterministic when scheduling and when choosing between multiple potential communicators.)9 3819 3 720 3266 t
+( structure for the interpreter)4 1150(non\255deterministic scheduling without interrupting timers, we need a different)8 3170 2 720 3426 t
+(loop.)720 3586 w
+10 CW f
+(Squint)970 3782 w
+10 R f
+( the state of all)4 624( Instead,)1 372( scheduler and no global program counter or stack pointer.)9 2415(has no)1 266 4 1363 3782 t
+(processes is described only by the)5 1366 1 720 3942 t
+10 CW f
+(Proc)2113 3942 w
+10 R f
+( hardware microtasking [Thack)3 1252(structures, using a model related to)5 1408 2 2380 3942 t
+( than running the pseudo\255)4 1105( Rather)1 337( miniature operating system [ODell 87] [Mas 76].)7 2133(79] and the HUB)3 745 4 720 4102 t
+(instructions by executing)2 1005 1 720 4262 t
+9 CW f
+(\(**pc++\)\(\))1008 4472 w
+10 CW f
+(squint)720 4692 w
+10 R f
+(executes)1105 4692 w
+9 CW f
+(\(**proc\255>pc++\)\(proc\))1008 4902 w
+10 R f
+(where)720 5122 w
+10 CW f
+(proc)997 5122 w
+10 R f
+( pseudo\255instruction needs the)3 1198( Each)1 259( a queue of active processes.)5 1185(points to the head of)4 852 4 1271 5122 t
+10 CW f
+(Proc)4800 5122 w
+10 R f
+( indirections may cost)3 916( These)1 300( stack and registers.)3 823(pointer of the current process to access the appropriate)8 2281 4 720 5282 t
+( process)1 326(some execution time, of course, but the hope is to gain some back by not having to save and restore)19 3994 2 720 5442 t
+( all that is required is to change)7 1286( not saving state when scheduling,)5 1401( By)1 173(state when scheduling.)2 919 4 720 5602 t
+10 CW f
+(proc)4529 5602 w
+10 R f
+(to run)1 241 1 4799 5602 t
+( inexpensive enough to do after every pseudo\255instruction, if we can cycle through)12 3317( is)1 96( That)1 237(the new process.)2 670 4 720 5762 t
+( a process queue and a)5 894( Given)1 294(the process queue cheaply.)3 1069 3 720 5922 t
+10 CW f
+(next)3002 5922 w
+10 R f
+(pointer in each)2 593 1 3267 5922 t
+10 CW f
+(Proc)3885 5922 w
+10 R f
+(the code becomes:)2 737 1 4150 5922 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 4 4
+%%Page: 5 5
+/saveobj save def
+mark
+5 pagesetup
+10 R f
+(\255 5 \255)2 166 1 2797 480 t
+9 CW f
+( \(*Inst\)\(Proc*\);)1 1080(typedef int)1 594 2 1008 870 t
+( head of process queue */)5 1350( /*)1 216(Proc *proc;)1 756 3 1008 1170 t
+( /* tail of process queue */)6 1512(Proc *ptail;)1 810 2 1008 1320 t
+(while\(proc\){)1008 1620 w
+(while\(\(**proc\255>pc++\)\(proc\)\){)1440 1770 w
+(ptail\255>next = proc;)2 1026 1 1872 1920 t
+( append proc to tail */)5 1242( /*)1 702(ptail = proc;)2 702 3 1872 2070 t
+( delete proc from head */)5 1350( /*)1 432(proc = proc\255>next;)2 972 3 1872 2220 t
+(})1440 2370 w
+(})1008 2520 w
+10 R f
+( in the common)3 664( Nonetheless,)1 576( manipulation succeeds even if the queue has only one process.)10 2650(The queue)1 430 4 720 2740 t
+( leaving the queue alone if)5 1106(case that only a single process is running, we can improve the loop by)13 2939 2 720 2900 t
+10 CW f
+(proc)4800 2900 w
+10 R f
+(equals)720 3060 w
+10 CW f
+(ptail)1000 3060 w
+10 R f
+(:)1300 3060 w
+9 CW f
+(while\(proc\){)1008 3270 w
+(while\(\(**proc\255>pc++\)\(proc\)\){)1440 3420 w
+(if\(proc != ptail\){)2 972 1 1872 3570 t
+(ptail\255>next = proc;)2 1026 1 2304 3720 t
+( append proc to tail */)5 1242( /*)1 702(ptail = proc;)2 702 3 2304 3870 t
+( delete proc from head */)5 1350( /*)1 432(proc = proc\255>next;)2 972 3 2304 4020 t
+(})1872 4170 w
+(})1440 4320 w
+(})1008 4470 w
+10 R f
+( process is running, the scheduling overhead is one comparison per pseudo\255instruction, plus the)13 3874(If only one)2 446 2 720 4690 t
+( pointer \(which may be negligible; it depends on the)9 2210(cost of accessing the simulated registers through a)7 2110 2 720 4850 t
+( several processes are active, though,)5 1536( If)1 128( the real CPU\).)3 635(architecture of)1 589 4 720 5010 t
+10 CW f
+(proc)3645 5010 w
+10 R f
+(is not equal to)3 600 1 3922 5010 t
+10 CW f
+(ptail)4559 5010 w
+10 R f
+(and)4896 5010 w
+( over)1 205( can do better by amortizing the cost)7 1484( We)1 192(each execution of the loop accesses several global variables.)8 2439 4 720 5170 t
+( being statistical rather than absolute in deciding how)8 2251( By)1 182(several instructions, by scheduling less often.)5 1887 3 720 5330 t
+(often, we have an opportunity to introduce non\255determinism into the scheduler.)10 3168 1 720 5490 t
+(To randomize the interleaving of the processes, we need an extremely cheap way to decide how to)16 4070 1 970 5686 t
+( does not have to be good, it just)8 1337( It)1 116( requirement is a cheap random number generator.)7 2046( first)1 192(interleave. The)1 629 5 720 5846 t
+( generator, courtesy)2 799( following)1 418( The)1 209(needs to be good enough that programs cannot exploit any correlations.)10 2894 4 720 6006 t
+( shift register to derive a random enough number in a handful of)12 2586(of Jim Reeds, uses a 31\255bit linear feedback)7 1734 2 720 6166 t
+(minor instructions on most 32\255bit computers:)5 1809 1 720 6326 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 5 5
+%%Page: 6 6
+/saveobj save def
+mark
+6 pagesetup
+10 R f
+(\255 6 \255)2 166 1 2797 480 t
+9 CW f
+(long x = 0xFFFFFFFFL;)3 1134 1 1008 870 t
+(x += x;)2 378 1 1008 1170 t
+(if\(x < 0\))2 486 1 1008 1320 t
+(x ^= 0x88888EEFL;)2 918 1 1440 1470 t
+(n = x&MASK;)2 594 1 1008 1620 t
+10 R f
+(\(The)720 1840 w
+10 CW f
+(&)938 1840 w
+10 R f
+( and;)1 203(operator is bitwise)2 748 2 1028 1840 t
+10 CW f
+(^)2010 1840 w
+10 R f
+( resulting)1 381( The)1 211(is bitwise exclusive or.\))3 967 3 2101 1840 t
+10 CW f
+(n)3691 1840 w
+10 R f
+(is a random number between 0)5 1258 1 3782 1840 t
+(and)720 2000 w
+10 CW f
+(MASK)889 2000 w
+10 R f
+(;)1129 2000 w
+10 CW f
+(MASK)1182 2000 w
+10 R f
+(is 15 in)2 295 1 1447 2000 t
+10 CW f
+(squint.)1767 2000 w
+10 R f
+(With the generator in the loop, the result is:)8 1740 1 2212 2000 t
+9 CW f
+(while\(proc\){)1008 2210 w
+(x += x;)2 378 1 1440 2360 t
+(if\(x < 0\))2 486 1 1440 2510 t
+(x ^= 0X88888EEFL;)2 918 1 1872 2660 t
+(n = x&MASK;)2 594 1 1440 2810 t
+(while\(\255\255n>=0 && \(**proc\255>pc++\)\(proc\)\))2 1998 1 1440 2960 t
+(;)1872 3110 w
+(if\(proc != ptail\){)2 972 1 1440 3260 t
+(ptail\255>next = proc;)2 1026 1 1872 3410 t
+( append proc to tail */)5 1242( /*)1 702(ptail = proc;)2 702 3 1872 3560 t
+( delete proc from head */)5 1350( /*)1 432(proc = proc\255>next;)2 972 3 1872 3710 t
+(})1440 3860 w
+(})1008 4010 w
+10 R f
+(With)720 4230 w
+10 CW f
+(x)946 4230 w
+10 R f
+(and)1032 4230 w
+10 CW f
+(n)1202 4230 w
+10 R f
+( runs insignificantly slower than the non\255random one on a VAX\25511 with)11 2910(in registers, this loop)3 842 2 1288 4230 t
+( requires)1 350( also offers non\255determinism and)4 1340( It)1 116(a single process, and about 40% faster with several processes.)9 2514 4 720 4390 t
+( only remaining problem is to work in the scheduling requirements of inter\255process communi\255)13 3754( The)1 205(no timer.)1 361 3 720 4550 t
+(cation, the subject of the next section.)6 1509 1 720 4710 t
+(Newsqueak provides a process creation operator \()6 2024 1 970 4906 t
+10 CW f
+(begin)2994 4906 w
+10 R f
+( destruction opera\255)2 762(\) but no explicit process)4 984 2 3294 4906 t
+( that converts what would be its top\255level)7 1686( a process is instantiated, it is wrapped in an envelope)10 2204(tor. When)1 430 3 720 5066 t
+( decrementing reference counts)3 1275(function return into the sequence that releases the function's resources \(by)10 3045 2 720 5226 t
+( collection does the)3 792( Garbage)1 393( top\255level data structures\) and removes the process from the run queue.)11 2898(of the)1 237 4 720 5386 t
+(rest.)720 5546 w
+10 B f
+(Communication)720 5866 w
+10 R f
+(Consider a process)2 754 1 970 6062 t
+10 CW f
+(S)1749 6062 w
+10 R f
+(sending an integer)2 732 1 1834 6062 t
+10 CW f
+(i)2591 6062 w
+10 R f
+(to a process)2 471 1 2676 6062 t
+10 CW f
+(R)3172 6062 w
+10 R f
+(, using a channel)3 671 1 3232 6062 t
+10 CW f
+(c)3928 6062 w
+10 R f
+(.)3988 6062 w
+10 CW f
+(S)4063 6062 w
+10 R f
+(executes)4148 6062 w
+9 CW f
+(c<\255 = i)2 378 1 1008 6272 t
+10 R f
+(and)720 6492 w
+10 CW f
+(R)889 6492 w
+10 R f
+(executes)974 6492 w
+9 CW f
+(v = <\255c)2 378 1 1008 6702 t
+10 R f
+(to save the value in)4 775 1 720 6922 t
+10 CW f
+(v)1521 6922 w
+10 R f
+( in Newsqueak is synchronous, which means that both)8 2175(. Communication)1 721 2 1581 6922 t
+10 CW f
+(S)4503 6922 w
+10 R f
+(and)4589 6922 w
+10 CW f
+(R)4759 6922 w
+10 R f
+(must)4845 6922 w
+(be ready to communicate before either can do so; if, for instance,)11 2728 1 720 7082 t
+10 CW f
+(S)3485 7082 w
+10 R f
+( a channel when no)4 814(tries to send on)3 644 2 3582 7082 t
+( until a receiver, here)4 880(receiver is ready, it suspends execution)5 1603 2 720 7242 t
+10 CW f
+(R)3237 7242 w
+10 R f
+( a)1 78( If)1 125(, tries to read from the same channel.)7 1540 3 3297 7242 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 6 6
+%%Page: 7 7
+/saveobj save def
+mark
+7 pagesetup
+10 R f
+(\255 7 \255)2 166 1 2797 480 t
+( it uses a)3 350(process is prepared to communicate on a set of channels,)9 2285 2 720 880 t
+10 CW f
+(select)3381 880 w
+10 R f
+(statement, which announces the)3 1273 1 3767 880 t
+( and then executes a sequence of statements labeled by the single communica\255)12 3145(possibility of communication)2 1175 2 720 1040 t
+( example,)1 388( For)1 189(tion that finally proceeds.)3 1021 3 720 1200 t
+9 CW f
+(select{)1008 1410 w
+(case i = <\255c1:)3 756 1 1224 1560 t
+(a = 1;)2 324 1 1440 1710 t
+(case c2<\255 = i:)3 756 1 1224 1860 t
+(a = 2;)2 324 1 1440 2010 t
+(})1008 2160 w
+10 R f
+(sets)720 2380 w
+10 CW f
+(a)901 2380 w
+10 R f
+(to 1 if the process receives a value from channel)9 1979 1 992 2380 t
+10 CW f
+(c1)3002 2380 w
+10 R f
+( 2 if the process sends a value on)8 1370(, or to)2 248 2 3122 2380 t
+10 CW f
+(c2)4772 2380 w
+10 R f
+(. If)1 148 1 4892 2380 t
+(neither)720 2540 w
+10 CW f
+(c1)1030 2540 w
+10 R f
+(nor)1183 2540 w
+10 CW f
+(c2)1349 2540 w
+10 R f
+( both can, a non\255deterministic)4 1218( If)1 123(can communicate, the process suspends until one can.)7 2198 3 1501 2540 t
+( semantics of these operations, but not the syntax, is taken from CSP [Hoare 78] and)15 3476( The)1 212(choice is made.)2 632 3 720 2700 t
+(Occam [INMOS 84].)2 845 1 720 2860 t
+(Assume that)1 503 1 970 3056 t
+10 CW f
+(S)1504 3056 w
+10 R f
+(reaches the communication point \(rendezvous\) first.)5 2114 1 1595 3056 t
+10 CW f
+(S)3766 3056 w
+10 R f
+(must wait)1 399 1 3858 3056 t
+10 S1 f
+(\320)4289 3056 w
+10 R f
+(suspend execu\255)1 619 1 4421 3056 t
+(tion)720 3216 w
+10 S1 f
+(\320)915 3216 w
+10 R f
+(until)1054 3216 w
+10 CW f
+(R)1277 3216 w
+10 R f
+(arrives, and when)2 734 1 1376 3216 t
+10 CW f
+(R)2149 3216 w
+10 R f
+(does arrive)1 453 1 2248 3216 t
+10 CW f
+(S)2739 3216 w
+10 R f
+( channel)1 348( The)1 218(must resume execution.)2 972 3 2837 3216 t
+10 CW f
+(c)4413 3216 w
+10 R f
+(has a pair of)3 529 1 4511 3216 t
+(queues of processes,)2 817 1 720 3376 t
+10 CW f
+(sendq)1562 3376 w
+10 R f
+(and)1887 3376 w
+10 CW f
+(rcvq)2056 3376 w
+10 R f
+(, to which processes append themselves while awaiting rendezvous.)8 2706 1 2296 3376 t
+( sequence, structured as pseudo\255instructions executed by)6 2295(The following)1 574 2 970 3572 t
+10 CW f
+(S)3870 3572 w
+10 R f
+(and)3961 3572 w
+10 CW f
+(R)4136 3572 w
+10 R f
+( num\255)1 242( Each)1 255(, ensues.)1 347 3 4196 3572 t
+( the process that executes it, except that steps 1, 5, and 7)12 2249(bered step is a single pseudo\255instruction, labeled by)7 2071 2 720 3732 t
+( Steps)1 278( a more complex example.)4 1100(may be many pseudo\255instructions in)4 1489 3 720 3892 t
+10 CW f
+(S)3623 3892 w
+7 R f
+(3)3694 3912 w
+10 R f
+(and)3773 3892 w
+10 CW f
+(R)3953 3892 w
+7 R f
+(3)4024 3912 w
+10 R f
+(are executed implicitly)2 937 1 4103 3892 t
+( of the details in the sequence allow)7 1582( Some)1 301(and described in the text.)4 1093 3 720 4052 t
+10 CW f
+(select)3743 4052 w
+10 R f
+(to work, and will be)4 890 1 4150 4052 t
+( are executing, that the queues)5 1248( described, these actions assume that no other processes)8 2282( As)1 168(explained later.)1 622 4 720 4212 t
+( so on, but the sequence works \(implements first\255in\255first\255out rendezvous and com\255)11 3366(are initially empty, and)3 954 2 720 4372 t
+( Assume)1 383(munication\) when arbitrarily many processes are communicating in arbitrary order.)9 3425 2 720 4532 t
+10 CW f
+(S)4564 4532 w
+10 R f
+(arrives at)1 380 1 4660 4532 t
+(the rendezvous first:)2 815 1 720 4692 t
+(1.)720 4888 w
+10 CW f
+(S)820 4888 w
+7 R f
+(1)891 4908 w
+10 R f
+(: \255Evaluate)1 568 1 934 4888 t
+10 CW f
+(c)1527 4888 w
+10 R f
+(.)1587 4888 w
+(The channel is now on)4 904 1 1120 5048 t
+10 CW f
+(S)2049 5048 w
+10 R f
+('s stack.)1 327 1 2109 5048 t
+(2.)720 5244 w
+10 CW f
+(S)820 5244 w
+7 R f
+(2)891 5264 w
+10 R f
+(: \255Examine)1 574 1 934 5244 t
+10 CW f
+(c)1533 5244 w
+10 R f
+(, notice that)2 469 1 1593 5244 t
+10 CW f
+(c.rcvq)2087 5244 w
+10 R f
+(is empty.)1 367 1 2472 5244 t
+(\255Append)1120 5404 w
+10 CW f
+(S)1494 5404 w
+10 R f
+(to)1579 5404 w
+10 CW f
+(c.sendq)1682 5404 w
+10 R f
+(.)2102 5404 w
+(\255Suspend execution.)1 810 1 1120 5564 t
+(If)1120 5724 w
+10 CW f
+(c.rcvq)1214 5724 w
+10 R f
+(had an entry,)2 524 1 1602 5724 t
+10 CW f
+(R)2154 5724 w
+10 R f
+(would have arrived first, and the order of execution between)9 2446 1 2243 5724 t
+10 CW f
+(S)4718 5724 w
+10 R f
+(and)4807 5724 w
+10 CW f
+(R)4980 5724 w
+10 R f
+( since the queue is empty,)5 1042( But)1 197(would be mirrored.)2 772 3 1120 5884 t
+10 CW f
+(S)3158 5884 w
+10 R f
+(announces in)1 526 1 3245 5884 t
+10 CW f
+(c.sendq)3798 5884 w
+10 R f
+( waiting for)2 468(that it is)2 327 2 4245 5884 t
+( At)1 168( suspends execution by returning zero \(false\) from this pseudo\255instruction.)9 3135(a receiver, and)2 617 3 1120 6044 t
+(some later time,)2 641 1 1120 6204 t
+10 CW f
+(R)1786 6204 w
+10 R f
+(reaches the rendezvous.)2 949 1 1871 6204 t
+(3.)720 6400 w
+10 CW f
+(R)820 6400 w
+7 R f
+(1)891 6420 w
+10 R f
+(: \255Evaluate)1 568 1 934 6400 t
+10 CW f
+(c)1527 6400 w
+10 R f
+(.)1587 6400 w
+(The channel is now on)4 904 1 1120 6560 t
+10 CW f
+(R)2049 6560 w
+10 R f
+('s stack.)1 327 1 2109 6560 t
+(4.)720 6756 w
+10 CW f
+(R)820 6756 w
+7 R f
+(2)891 6776 w
+10 R f
+(: \255Examine)1 574 1 934 6756 t
+10 CW f
+(c)1533 6756 w
+10 R f
+(, notice that)2 469 1 1593 6756 t
+10 CW f
+(c.sendq)2087 6756 w
+10 R f
+(has an entry.)2 507 1 2532 6756 t
+(\255Therefore remove the head \(that is,)5 1434 1 1120 6916 t
+10 CW f
+(S)2579 6916 w
+10 R f
+(\) from)1 252 1 2639 6916 t
+10 CW f
+(c.sendq.)2916 6916 w
+10 R f
+(\255Execute)1120 7076 w
+10 CW f
+(S)1499 7076 w
+7 R f
+(3)1570 7096 w
+10 R f
+(for)1638 7076 w
+10 CW f
+(S)1779 7076 w
+10 R f
+(\(see text\).)1 393 1 1864 7076 t
+(\255Place)1120 7236 w
+10 CW f
+(R)1394 7236 w
+10 R f
+(and)1479 7236 w
+10 CW f
+(c)1648 7236 w
+10 R f
+(on)1733 7236 w
+10 CW f
+(S)1858 7236 w
+10 R f
+('s stack.)1 327 1 1918 7236 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 7 7
+%%Page: 8 8
+/saveobj save def
+mark
+8 pagesetup
+10 R f
+(\255 8 \255)2 166 1 2797 480 t
+(\255Skip)1120 880 w
+10 CW f
+(R)1362 880 w
+7 R f
+(3)1433 900 w
+10 R f
+(by incrementing)1 652 1 1501 880 t
+10 CW f
+(R\255>pc)2178 880 w
+10 R f
+(.)2478 880 w
+(\255Enable)1120 1040 w
+10 CW f
+(S)1455 1040 w
+10 R f
+(by placing)1 419 1 1540 1040 t
+10 CW f
+(S)1984 1040 w
+10 R f
+(in the queue of running processes.)5 1364 1 2069 1040 t
+(\255Suspend)1120 1200 w
+10 CW f
+(R)1517 1200 w
+10 R f
+(.)1577 1200 w
+10 CW f
+(R)1120 1360 w
+10 R f
+(finds)1211 1360 w
+10 CW f
+(S)1442 1360 w
+10 R f
+(in)1533 1360 w
+10 CW f
+(c.sendq)1643 1360 w
+10 R f
+(and prepares to communicate with it.)5 1516 1 2095 1360 t
+10 CW f
+(R)3668 1360 w
+10 R f
+(must tell)1 355 1 3760 1360 t
+10 CW f
+(S)4147 1360 w
+10 R f
+(who is receiving its)3 801 1 4239 1360 t
+( communication succeeded in a)4 1281(data; the channel data structure \(to identify which)7 2038 2 1120 1520 t
+10 CW f
+(select)4471 1520 w
+10 R f
+(\) and)1 209 1 4831 1520 t
+(the pointer to)2 533 1 1120 1680 t
+10 CW f
+(R)1678 1680 w
+10 R f
+(are now placed on)3 728 1 1763 1680 t
+10 CW f
+(S)2516 1680 w
+10 R f
+('s stack.)1 327 1 2576 1680 t
+(Because)1120 1840 w
+10 CW f
+(R)1480 1840 w
+10 R f
+( the process to remove the queued process)7 1710(arrives second at the rendezvous, it must be)7 1762 2 1568 1840 t
+(\()1120 2000 w
+10 CW f
+(S)1153 2000 w
+10 R f
+( does this by executing)4 928( It)1 114(\) from the channel's queue.)4 1106 3 1213 2000 t
+10 CW f
+(S)3424 2000 w
+7 R f
+(3)3495 2020 w
+10 R f
+(\(that is,)1 303 1 3566 2000 t
+10 CW f
+(\(**S\255>pc++\)\(S\))3896 2000 w
+10 R f
+(\) which)1 304 1 4736 2000 t
+( interpreter has generated to remove)5 1502(is a single pseudo\255instruction the)4 1364 2 1120 2160 t
+10 CW f
+(S)4024 2160 w
+10 R f
+(from)4122 2160 w
+10 CW f
+(c.sendq)4354 2160 w
+10 R f
+(. This)1 266 1 4774 2160 t
+( should another pro\255)3 810(must be done before allowing any other process to execute, to avoid conflicts)12 3110 2 1120 2320 t
+( to communicate using)3 929(cess be attempting)2 750 2 1120 2480 t
+10 CW f
+(c)2831 2480 w
+10 R f
+( than just unqueueing)3 879(. Rather)1 348 2 2891 2480 t
+10 CW f
+(S)4150 2480 w
+10 R f
+(,)4210 2480 w
+10 CW f
+(R)4267 2480 w
+10 R f
+(temporarily calls)1 681 1 4359 2480 t
+(upon)1120 2640 w
+10 CW f
+(S)1357 2640 w
+10 R f
+(because)1453 2640 w
+10 CW f
+(S)1804 2640 w
+10 R f
+(may be in a)3 496 1 1900 2640 t
+10 CW f
+(select)2432 2640 w
+10 R f
+( next pseudo\255)2 560( The)1 216(and have more bookkeeping to do.)5 1436 3 2828 2640 t
+(instruction in)1 537 1 1120 2800 t
+10 CW f
+(R)1688 2800 w
+10 R f
+('s stream,)1 394 1 1748 2800 t
+10 CW f
+(R)2208 2800 w
+7 R f
+(3)2279 2820 w
+10 R f
+( remove)1 331(, would)1 306 2 2322 2800 t
+10 CW f
+(R)2991 2800 w
+10 R f
+(from)3083 2800 w
+10 CW f
+(c.rcvq)3309 2800 w
+10 R f
+(, and would be called by)5 1011 1 3669 2800 t
+10 CW f
+(S)4712 2800 w
+10 R f
+(had)4804 2800 w
+10 CW f
+(S)4980 2800 w
+10 R f
+( Since)1 272(arrived second.)1 609 2 1120 2960 t
+10 CW f
+(R)2026 2960 w
+10 R f
+(did, the operation is just skipped.)5 1325 1 2111 2960 t
+(5.)720 3156 w
+10 CW f
+(S)820 3156 w
+7 R f
+(4)891 3176 w
+10 R f
+(: \255Evaluate)1 568 1 934 3156 t
+10 CW f
+(i)1527 3156 w
+10 R f
+(.)1587 3156 w
+10 CW f
+(S)1120 3316 w
+10 R f
+( evaluates)1 400(now wakes up and)3 749 2 1208 3316 t
+10 CW f
+(i)2386 3316 w
+10 R f
+( value to be sent may, of course, be)8 1440( The)1 209(, placing it on its stack.)5 945 3 2446 3316 t
+( will return to this subject below.)6 1319( We)1 188(an arbitrary expression, even one involving communication.)6 2402 3 1120 3476 t
+(6.)720 3672 w
+10 CW f
+(S)820 3672 w
+7 R f
+(5)891 3692 w
+10 R f
+(: \255Remove)1 552 1 934 3672 t
+10 CW f
+(R)1511 3672 w
+10 R f
+(from stack.)1 449 1 1596 3672 t
+(\255Place)1120 3832 w
+10 CW f
+(i)1394 3832 w
+10 R f
+(on)1479 3832 w
+10 CW f
+(R)1604 3832 w
+10 R f
+('s stack.)1 327 1 1664 3832 t
+(\255Resume)1120 3992 w
+10 CW f
+(R)1500 3992 w
+10 R f
+(.)1560 3992 w
+10 CW f
+(S)1120 4152 w
+10 R f
+( the receiving process and value to be sent in)9 1905( With)1 263(now completes its half of the exchange.)6 1655 3 1217 4152 t
+(hand, all that remains is to hand off the value and resume)11 2340 1 1120 4312 t
+10 CW f
+(R)3489 4312 w
+10 R f
+(by appending it to the queue of run\255)7 1462 1 3578 4312 t
+(ning processes.)1 610 1 1120 4472 t
+(7.)720 4668 w
+10 CW f
+(R)820 4668 w
+7 R f
+(4)891 4688 w
+10 R f
+(: \255Continue.)1 611 1 934 4668 t
+10 CW f
+(R)1120 4828 w
+10 R f
+(now has the value on its stack and can proceed with that value by normal execution.)15 3355 1 1205 4828 t
+( of the independently developed, abstract model by Cardelli [Card 84],)10 2853(This sequence is an expansion)4 1217 2 970 5024 t
+(which does not integrate the communications operations into an interpreter.)9 3018 1 720 5184 t
+( process, say)2 521(If a)1 141 2 970 5380 t
+10 CW f
+(S)1664 5380 w
+10 R f
+(, is executing a)3 620 1 1724 5380 t
+10 CW f
+(select)2376 5380 w
+10 R f
+(, the sequence remains essentially the same but the indi\255)9 2304 1 2736 5380 t
+(vidual operations)1 691 1 720 5540 t
+10 CW f
+(S)1436 5540 w
+10 R f
+( Whether)1 393(executes are more involved.)3 1119 2 1521 5540 t
+10 CW f
+(S)3058 5540 w
+10 R f
+(is selecting is invisible to)4 1012 1 3143 5540 t
+10 CW f
+(R)4180 5540 w
+10 R f
+(.)4240 5540 w
+(Imagine that)1 504 1 970 5736 t
+10 CW f
+(S)1501 5736 w
+10 R f
+( step)1 189( In)1 135(is executing a select.)3 832 3 1588 5736 t
+10 CW f
+(S)2772 5736 w
+7 R f
+(1)2843 5756 w
+10 R f
+(, the process evaluates all channels involved, pushing)7 2154 1 2886 5736 t
+( our)1 166( \(Although)1 469( recording which are being used to send and which to receive.)11 2554(all of them on its stack and)6 1131 4 720 5896 t
+(process is)1 391 1 720 6056 t
+10 CW f
+(S)1136 6056 w
+10 R f
+(, it may be sending in a)6 930 1 1196 6056 t
+10 CW f
+(select)2151 6056 w
+10 R f
+( of course,)2 420( may,)1 222( This)1 228(that also has receiving communications.\))4 1634 4 2536 6056 t
+( step)1 191( In)1 138(take many pseudo\255instructions.)2 1256 3 720 6216 t
+10 CW f
+(S)2335 6216 w
+7 R f
+(2)2406 6236 w
+10 R f
+(,)2449 6216 w
+10 CW f
+(S)2503 6216 w
+10 R f
+( are two possibilities: no)4 994( There)1 286(looks at all channels at once.)5 1168 3 2592 6216 t
+( this example, we assume none may, so)7 1727( In)1 155(communication may proceed, or some may.)5 1860 3 720 6376 t
+10 CW f
+(S)4510 6376 w
+10 R f
+(atomically)4618 6376 w
+( and suspends execution.)3 1050(appends itself to all appropriate queues for channels mentioned in the select,)11 3270 2 720 6536 t
+(When)720 6696 w
+10 CW f
+(R)995 6696 w
+10 R f
+(arrives at the rendezvous, it finds)5 1385 1 1092 6696 t
+10 CW f
+(S)2514 6696 w
+10 R f
+(in)2611 6696 w
+10 CW f
+(c.sendq)2726 6696 w
+10 R f
+(. When)1 325 1 3146 6696 t
+10 CW f
+(R)3508 6696 w
+10 R f
+(then executes)1 553 1 3606 6696 t
+10 CW f
+(\(S\255>pc++\)\(S\))4197 6696 w
+10 R f
+(,)4917 6696 w
+10 CW f
+(S)4980 6696 w
+10 R f
+( which it has attempted communication.)5 1624(removes itself from all queues on)5 1364 2 720 6856 t
+10 CW f
+(R)3763 6856 w
+10 R f
+('s arrival chooses which com\255)4 1217 1 3823 6856 t
+(munication proceeds.)1 854 1 720 7016 t
+(Newsqueak allows)1 751 1 970 7212 t
+10 CW f
+(select)1746 7212 w
+10 R f
+( an array)2 348( Given)1 294(to be applied to arrays of channels.)6 1394 3 2131 7212 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 8 8
+%%Page: 9 9
+/saveobj save def
+mark
+9 pagesetup
+10 R f
+(\255 9 \255)2 166 1 2797 480 t
+9 CW f
+(a: array[N] of chan of int;)5 1458 1 1008 870 t
+10 R f
+(the statement)1 530 1 720 1090 t
+9 CW f
+(select{)1008 1300 w
+(case <\255a[]:)1 594 1 1224 1450 t
+(i = 1;)2 324 1 1440 1600 t
+(})1008 1750 w
+10 R f
+(is identical in behavior to the statement)6 1571 1 720 1970 t
+9 CW f
+(select{)1008 2180 w
+(case <\255a[0]:)1 648 1 1224 2330 t
+(i = 1;)2 324 1 1440 2480 t
+(case <\255a[1]:)1 648 1 1224 2630 t
+(i = 1;)2 324 1 1440 2780 t
+(...)1008 2930 w
+(case <\255a[N\2551]:)1 756 1 1224 3080 t
+(i = 1;)2 324 1 1440 3230 t
+(};)1008 3380 w
+10 R f
+( selections are easy to)4 890( Array)1 287( the selection.)2 562(in other words, each element of the array participates equally in)10 2581 4 720 3600 t
+( to post each element as a potentially communicating channel, that is,)11 2772(implement; all that needs to be done is)7 1548 2 720 3760 t
+(to perform at run\255time the rewriting above.)6 1716 1 720 3920 t
+(A complicating factor is that)4 1183 1 970 4116 t
+10 CW f
+(S)2188 4116 w
+10 R f
+( know)1 258(needs to)1 340 2 2283 4116 t
+10 I f
+(which)2917 4116 w
+10 R f
+(channel communicated, so it can execute the)6 1848 1 3192 4116 t
+( is why the channel is passed from)7 1373( This)1 228(appropriate subsequent statements.)2 1395 3 720 4276 t
+10 CW f
+(R)3741 4276 w
+10 R f
+(to)3826 4276 w
+10 CW f
+(S)3929 4276 w
+10 R f
+(during the rendezvous.)2 912 1 4014 4276 t
+(The rest of the execution is straightforward.)6 1749 1 970 4472 t
+( make)1 243(Some of the details of the execution sequence are necessary to)10 2498 2 970 4668 t
+10 CW f
+(select)3738 4668 w
+10 R f
+(work, and in particular)3 915 1 4125 4668 t
+( unaware of its partner's participation in a)7 1720(to keep a process)3 708 2 720 4828 t
+10 CW f
+(select)3180 4828 w
+10 R f
+( largest effect of this)4 848(statement. The)1 620 2 3572 4828 t
+( selecting, sending process must not evaluate the communicated)8 2611( A)1 128(constraint is in the order of evaluation.)6 1581 3 720 4988 t
+( inappropriate if a dif\255)4 885(value before the rendezvous, as the evaluation may involve side effects that would be)13 3435 2 720 5148 t
+( the)1 172(ferent communication in)2 1030 2 720 5308 t
+10 CW f
+(select)1972 5308 w
+10 R f
+( therefore specifies that the rendezvous)5 1684(proceeded. Newsqueak)1 974 2 2382 5308 t
+( example, in the expres\255)4 956( For)1 189( has some subtle effects.)4 973(occurs before the transmitted value is evaluated, which)7 2202 4 720 5468 t
+(sion)720 5628 w
+9 CW f
+(c1<\255 = <\255c2)2 594 1 1008 5838 t
+10 R f
+(\(send on)1 341 1 720 6058 t
+10 CW f
+(c1)1086 6058 w
+10 R f
+(the value received on)3 850 1 1231 6058 t
+10 CW f
+(c2)2106 6058 w
+10 R f
+(\), the)1 205 1 2226 6058 t
+10 CW f
+(c1)2456 6058 w
+10 R f
+(rendezvous happens before the)3 1232 1 2601 6058 t
+10 CW f
+(c2)3858 6058 w
+10 R f
+(rendezvous.)4003 6058 w
+( the possibility of nondeterminism: a process must choose which of a set of ready)14 3294(Selection brings up)2 776 2 970 6254 t
+(channels should communicate and, similarly, which of a set of cases corresponding to the same channel)15 4320 1 720 6414 t
+( latter issue is exemplified in the code fragment:)8 1925( This)1 228(should be executed.)2 790 3 720 6574 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 9 9
+%%Page: 10 10
+/saveobj save def
+mark
+10 pagesetup
+10 R f
+(\255 10 \255)2 216 1 2772 480 t
+9 CW f
+(select{)1008 870 w
+(case <\255c:)1 486 1 1224 1020 t
+(i = 1;)2 324 1 1440 1170 t
+(case <\255c:)1 486 1 1224 1320 t
+(i = 2;)2 324 1 1440 1470 t
+(})1008 1620 w
+10 R f
+( addressed efficiently by applying the following little\255known single\255)8 2789(Both of these problems may be)5 1281 2 970 1876 t
+( an array of integers)4 821( Given)1 300( algorithm.)1 445(pass choice)1 464 4 720 2036 t
+10 CW f
+(a)2781 2036 w
+10 R f
+(of known length, but containing an unknown number)7 2168 1 2872 2036 t
+( following algorithm leaves)3 1108( The)1 207( the problem is to choose, fairly, one non\255zero element.)9 2225(of non\255zero entries,)2 780 4 720 2196 t
+10 CW f
+(c)720 2356 w
+10 R f
+( If)1 116(set to the index of the chosen element.)7 1531 2 805 2356 t
+10 CW f
+(c)2477 2356 w
+10 R f
+(is)2562 2356 w
+10 CW f
+(\2551)2654 2356 w
+10 R f
+(after the loop, no non\255zero elements exist.)6 1680 1 2799 2356 t
+9 CW f
+(int a[N])1 432 1 1008 2566 t
+(n = 1)2 270 1 1008 2716 t
+(c = \2551)2 324 1 1008 2866 t
+(for\(i=0 to N\){)2 756 1 1008 3016 t
+(if\(a[i])1440 3166 w
+9 S f
+(\271)1872 3166 w
+9 CW f
+(0\){)1976 3166 w
+(if\(\(random\(\) mod n\) == 0\))4 1350 1 1872 3316 t
+(c = i)2 270 1 2304 3466 t
+(n = n+1)2 378 1 1872 3616 t
+(})1440 3766 w
+(})1008 3916 w
+10 R f
+( the first non\255zero element is found,)6 1464(Proof by induction: When)3 1056 2 720 4136 t
+10 CW f
+(n)3271 4136 w
+10 R f
+(is one so)2 362 1 3362 4136 t
+10 CW f
+(\(random\(\) mod n\))2 960 1 3755 4136 t
+10 R f
+(is zero,)1 294 1 4746 4136 t
+(and)720 4296 w
+10 CW f
+(c)897 4296 w
+10 R f
+( If)1 123( current element.)2 687(records the)1 448 3 990 4296 t
+10 CW f
+(n\2551)2280 4296 w
+10 R f
+(elements have been found, when the)5 1487 1 2492 4296 t
+10 CW f
+(n)4011 4296 w
+10 R f
+(th element is found, the)4 969 1 4071 4296 t
+( the choice so far is)5 923(probability that the current element should replace)6 2187 2 720 4496 t
+10 CW f
+(n)3910 4566 w
+10 R f
+(1)3915 4436 w
+10 S1 f
+(_ _)1 90 1 3895 4466 t
+10 R f
+(, which is simulated by)4 1045 1 3995 4496 t
+10 CW f
+(\(random\(\) mod n\)==0)2 1140 1 720 4706 t
+10 R f
+(where)1891 4706 w
+10 CW f
+(random\(\))2164 4706 w
+10 R f
+(generates integers much larger than)4 1438 1 2674 4706 t
+10 CW f
+(n)4142 4706 w
+10 R f
+( this algorithm,)2 619(. For)1 219 2 4202 4706 t
+10 CW f
+(squint)720 4866 w
+10 R f
+( the ANSI C standard [K&R 88],)6 1408(uses the simple congruential random number generator from)7 2513 2 1119 4866 t
+(except that it includes the modulus calculation:)6 1882 1 720 5026 t
+9 CW f
+(int)1008 5236 w
+(nrand\(int n\))1 648 1 1008 5386 t
+({)1008 5536 w
+(static unsigned long next=1;)3 1512 1 1440 5686 t
+(next = next*1103515245 + 12345;)4 1674 1 1440 5836 t
+(return \(next/65536\) mod n;)3 1404 1 1440 5986 t
+(})1008 6136 w
+10 R f
+( are advantages of testability and portability to including the)9 2433(A better generator would be overkill, and there)7 1887 2 720 6356 t
+(generator in the program rather than calling upon a library function.)10 2708 1 720 6516 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 10 10
+%%Page: 11 11
+/saveobj save def
+mark
+11 pagesetup
+10 R f
+(\255 11 \255)2 216 1 2772 480 t
+10 B f
+(Discussion)720 880 w
+10 R f
+( in the Newsqueak interpreter allows for fine\255grained non\255)8 2471(The implementation of processes used)4 1599 2 970 1076 t
+( process switching is almost free,)5 1356( Because)1 389(deterministic interleaving without resort to interrupts or timers.)7 2575 3 720 1236 t
+( [McIl 89],)2 441( McIlroy demonstrates)2 908( As)1 163(there is negligible penalty for using many processes in an application.)10 2808 4 720 1396 t
+( Applications)1 566( intended to handle.)3 803(the interpreter's performance is acceptable for the jobs the language was)10 2951 3 720 1556 t
+( time comparable to the same pro\255)6 1388(that may profitably be written as sets of communicating processes run in)11 2932 2 720 1716 t
+( a VAX 8550, a simple test program executes about)9 2135( On)1 181(grams expressed using more traditional methods.)5 2004 3 720 1876 t
+(8000 transactions per second on a)5 1435 1 720 2036 t
+10 CW f
+(chan of int)2 624 1 2197 2036 t
+10 R f
+( creditable but not spectacular performance.)5 1840( is)1 109(. This)1 270 3 2821 2036 t
+( interpreter, however, communication is very cheap relative to more traditional cal\255)11 3323(Because the system is an)4 997 2 720 2196 t
+( simple computations would execute more quickly but)7 2203( the interpreter were instead a compiler,)6 1611(culations. If)1 506 3 720 2356 t
+(the communications operators would probably not run much faster, which might cancel some of the charm)15 4320 1 720 2516 t
+( programs \(there would be temptations to improve performance by optimizing)10 3188(of using communications in)3 1132 2 720 2676 t
+(out communications\).)1 872 1 720 2836 t
+( reference\255count garbage collection for reasons of simplicity and porta\255)9 2893(Although the interpreter uses)3 1177 2 970 3032 t
+( it makes copy\255on\255write storage management possi\255)6 2099(bility, the greatest benefit of reference counting is that)8 2221 2 720 3192 t
+( a completely by\255value language are)5 1508( philosophical advantages of efficient array management in)7 2448(ble. The)1 364 3 720 3352 t
+( will tend)2 386( Newsqueak programs, which can contain no pointer cycles and which)10 2863( For)1 194(clear and worthwhile.)2 877 4 720 3512 t
+( methods are unnecessary and may in fact not gain)9 2114(to use arrays rather than lists, sophisticated collection)7 2206 2 720 3672 t
+( ease of porting the interpreter was also an)8 1738( The)1 211(much performance over copy\255on\255write reference counting.)5 2371 3 720 3832 t
+( storage manage\255)2 689( because)1 343( Partly)1 292( collection schemes often involve low\255level implementations.)6 2474(issue. Fancy)1 522 5 720 3992 t
+( the rest of the Newsqueak interpreter, is implemented entirely in C, the system has been com\255)16 3910(ment, like)1 410 2 720 4152 t
+(piled and run successfully without change on half a dozen architectures.)10 2874 1 720 4312 t
+( complete program, including parser, type checker, interpreter and)8 2744( The)1 218(Finally, a word about size.)4 1108 3 970 4508 t
+( is a comfortable size for an experimen\255)7 1608( This)1 231( thousand lines of C code.)5 1053(run\255time libraries, is fewer than ten)5 1428 4 720 4668 t
+(tal language, small enough to encourage experimentation with the language and its implementation.)12 3984 1 720 4828 t
+10 B f
+(References)720 5148 w
+10 R f
+( model of rendezvous communication,'')4 1648([Card 84] Cardelli, L., ``An implementation)5 1814 2 720 5344 t
+10 I f
+(Proc. of NSF\255SERC)2 821 1 4219 5344 t
+(Seminar on Concurrency,)2 1029 1 720 5504 t
+10 R f
+( by Springer\255Verlag.)2 823( Published)1 445(CMU, 1984.)1 503 3 1774 5504 t
+([Dijk 76] Dijkstra, E.W.,)3 996 1 720 5700 t
+10 I f
+(A Discipline of Programming,)3 1211 1 1741 5700 t
+10 R f
+(Prentice Hall, Englewood Cliffs, NJ, 1976.)5 1718 1 2977 5700 t
+( C.A.R., ``Communicating Sequential Processes,'')4 2102([Hoare 78] Hoare,)2 767 2 720 5896 t
+10 I f
+(Comm. ACM)1 543 1 3635 5896 t
+10 B f
+(21)4224 5896 w
+10 R f
+(\(8\), pp. 666\255678,)2 716 1 4324 5896 t
+(1978.)720 6056 w
+([INMOS 84])1 513 1 720 6252 t
+10 I f
+(Occam Programming Manual,)2 1229 1 1258 6252 t
+10 R f
+(Prentice Hall International, Englewood Cliffs, NJ, 1984.)6 2253 1 2512 6252 t
+([Knuth 73])1 460 1 720 6448 t
+10 I f
+( 1, Second Edition,)3 818(The Art of Computer Programming, Volume)5 1867 2 1224 6448 t
+10 R f
+(pg. 412, Addison\255Wesley,)2 1086 1 3954 6448 t
+(Reading, MA, 1973.)2 819 1 720 6608 t
+([K&R 88])1 408 1 720 6804 t
+10 I f
+(The C Programming Language, Second Edition,)5 1936 1 1153 6804 t
+10 R f
+(Prentice Hall, Englewood Cliffs, NJ, 1988.)5 1718 1 3114 6804 t
+( of Illinois at)3 544([Mas 76] Masamoto, K., ``Implementation of HUB Processor,'' Master's Thesis, University)10 3776 2 720 7000 t
+(Champagne\255Urbana, 1976.)1 1078 1 720 7160 t
+([ODell 87] O'Dell, M. D., ``The HUB: A Lightweight Object Substrate,'')10 3098 1 720 7356 t
+10 I f
+(Proc. of EUUG Conference,)3 1182 1 3858 7356 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 11 11
+%%Page: 12 12
+/saveobj save def
+mark
+12 pagesetup
+10 R f
+(\255 12 \255)2 216 1 2772 480 t
+(Dublin, Autumn, 1987)2 906 1 720 880 t
+([McIl 89] McIlroy, M. D., ``Squinting at Power Series,'' Bell Labs, 1989)11 2927 1 720 1076 t
+( language for communicating with mice,'')5 1861([Pike 89] Pike, R., ``Newsqueak: A)5 1590 2 720 1272 t
+10 I f
+(Computing Science)1 809 1 4231 1272 t
+(Technical Report 143,)2 891 1 720 1432 t
+10 R f
+(AT&T Bell Laboratories, Murray Hill, New Jersey, 1989)7 2285 1 1636 1432 t
+( F., and Boggs, D. R., ``Alto: A)7 1292([Thack 79] Thacker, C. P., McCreight, E. M., Lampson, B. W., Sproull, R.)12 3028 2 720 1628 t
+(Personal Computer,'' Xerox Palo Alto Research Center, Palo Alto, CA, 1979.)10 3116 1 720 1788 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 12 12
+%%Trailer
+done
+%%Pages: 12
+%%DocumentFonts: Times-Roman Times-Bold Times-Italic Times-Roman Symbol Courier

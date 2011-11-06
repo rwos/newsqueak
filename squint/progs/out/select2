@@ -1,0 +1,1 @@
+(case 2 111111)(case 4)(rcv 222222)(case 3)(rcv 222222)(case 3)(rcv 222222)(case 4)(rcv 222222)(rcv 222222)(case 3)(case 2 111111)(case 3)(rcv 222222)(case 3)(rcv 222222)(case 1 111111)(case 2 111111)(case 3)(rcv 222222)(case 1 111111)(case 4)(rcv 222222)(rcv 222222)(case 4)(case 2 111111)(case 1 111111)(case 2 111111)(case 2 111111)(case 1 111111)

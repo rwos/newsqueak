@@ -1,0 +1,14 @@
+a:array[2] of int = mk();
+a[0]=100;
+a[1]=200;
+prog(x:array of int){
+	print("2==", ref x, "\n");
+	x[0]=12345;
+	print("1==", ref x, "\n");
+	print("12345==", x[0], "\n");
+	print("1==", ref a, "\n");
+	print("100==", a[0], "\n");
+}(a);
+ref a;
+a[0];
+ref a;

@@ -1,0 +1,7 @@
+include "fio.h"
+F:=fopen("include/fio.h", 0);
+a:array of char;
+do{
+	a=<-F.in;
+	print(a);
+}while(len a);

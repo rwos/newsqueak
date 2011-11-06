@@ -1,0 +1,125 @@
+# dch is a "demand channel".  The producer will not
+# begin computing a datum until the consumer has sent
+# a request for one.  Requests come into .req, values are
+# sent back to the requester on .dat.
+
+# For debugging each channel contains an identifying .nam field,
+# and requests are assigned sequence numbers.  No attempt
+# is made to eliminate races in maintaining debug info
+
+type dch: struct of {req:chan of int;dat:chan of item; nam:char;}; 
+type dch2: array[2] of dch;
+
+chnames:="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+chnameserial:=-1;
+mkdch:=prog() of dch{
+	chnameserial:=(chnameserial+1)%len(chnames);
+	become mk(dch = {mk(chan of int),mk(chan of item),
+		         chnames[chnameserial]});
+};
+mkdch2:=prog() of dch2{
+	become mk(dch2 = {mkdch(),mkdch()});
+};
+seqno:=0;
+
+# split reads a single demand channel and replicates its
+# output onto two, which may be read at different rates.
+# A process is created at first demand for an item and dies
+# after the item has been sent to both outputs.
+
+# When multiple generations of split exist, the newest
+# will service requests on one channel, which is
+# always renamed to be out[0]; the oldest will service
+# requests on the other channel, out[1].  All generations but the
+# newest hold queued data that has already been sent to
+# out[0].  When data has finally been sent to out[1],
+# a signal on the release-wait channel tells the next newer
+# generation to begin servicing out[1].
+
+rec dosplit:= prog(in:dch, out:dch2, wait:chan of int ){
+	t:dch;
+	both:=0;	# do not service both channels
+	select {
+	case <-out[0].req:
+		;
+	case <-wait:
+		both = 1;
+		select {
+		case <-out[0].req:
+			;
+		case <-out[1].req:
+			t=out[0]; out[0]=out[1]; out[1]=t;
+		};
+	};
+	in.req <-= seqno=seqno+1;
+	release:=mk(chan of int);
+	begin dosplit(in,out,release);
+	dat := <-in.dat;
+	out[0].dat <-= dat;
+	if(both==0) <-wait;
+	<-out[1].req;
+	out[1].dat <-= dat;
+	release <-= 0;
+};
+
+split:=prog(in:dch,out:dch2){
+	release:=mk(chan of int);
+	begin dosplit(in,out,release);
+	release <-= 0;
+};
+
+put:=prog(dat:item,out:dch){
+	<-out.req;
+	out.dat <-= dat;
+};
+
+get:=prog(in:dch)of item{
+	in.req <-= seqno=seqno+1;
+	become <-in.dat;
+};
+
+# Get one item from each of n demand channels
+
+getn:= prog(in:array of dch) of array of item {
+	n:=len(in);
+	dumreq:=mk(chan of int);
+	dumdat:=mk(chan of item);
+	req:=mk(array[n] of chan of int);
+	dat:=mk(array[n] of chan of item);
+	out:=mk(array[n] of item);
+	i:int;
+	it:item;
+	for(i=0;i<n;i=i+1) {
+		req[i] = in[i].req;
+		dat[i] = dumdat;
+	}
+	for(n=2*n; n>0; n=n-1) {
+		seqno = seqno+1;
+		select{
+		case req[i=] <-= seqno:
+			dat[i] = in[i].dat;
+			req[i] = dumreq;
+		case it = <-dat[i=]:
+			out[i] = it;
+			dat[i] = dumdat;
+		}
+	}
+	become out;
+};
+
+# Get one item from each of 2 demand channels
+
+get2:= prog(in0:dch,in1:dch) of array[2] of item{
+	become getn(mk(array[2] of dch ={in0,in1}));
+};
+
+copy:=prog(in:dch,out:dch){
+	for(;;) {
+		<-out.req;
+		out.dat<-=get(in);
+	}
+};
+
+repeat:=prog(dat:item,out:dch){
+	for(;;) put(dat,out);
+};

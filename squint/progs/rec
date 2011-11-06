@@ -1,0 +1,35 @@
+rec{
+	x:int=y+1;
+	y:int=x-1;
+}
+x;
+y;
+
+p:=prog(){
+	rec{
+		a:int=b+1;
+		b:int=a-1;
+	};
+	print(a, "\n");
+	print(b, "\n");
+}();
+
+rec f:=prog(n:int) of int{
+	if(n==0)
+		become 1;
+	become n*f(n-1);
+};
+
+f(4);
+
+rec{
+	type T: struct of{ i:int; x: T;};
+}
+
+help:T=mk();
+help;
+help.i=1;
+help.x=mk(T={7,mk(T)});
+help;
+help.x=help;
+help;

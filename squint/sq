@@ -1,0 +1,290 @@
+-text
+
+#	to end of line is a comment
+include "file"
+include may appear anywhere an identifier is legal
+if file is not found locally, and does not begin with a / or . ,
+it is looked for in /usr/rob/squint/include.
+
+-basic types
+
+unit	a type with exactly one entry, called unit.
+int	integer (32 bits)
+char	unsigned character (8 bits)
+
+-type constructors
+
+array	array of objects.  0-indexed, fixed length
+		array[size] of <type>
+	the index must be an int or char.  the size is not part of the type.
+	a unary operator ('len', e.g. len a) yields the number of elements of
+	an array. character strings do not have a terminal null.
+	if an array is a parameter or has its size determined by an assignment,
+	the [size] may be left off the declaration.  if a [size] is needed and
+	none is given [0] is used (this is not C).
+chan	bufferless communication channel, csp-like, transmitting
+	a predetermined type of object.
+		chan of <type>
+struct	data structure.
+		struct of { <list of tag declarations> }
+	where tag declarations look like normal declarations.
+prog	program with args (arg list may be empty) returning a type
+		prog(<type1>, <type2>) of <type>
+	if the "of <type>" is left off, the type is by default unit.
+
+-declarations
+
+declaring an object o:
+		o: <type>;
+declaring two objects:
+		o1, o2: <type>;
+declaring a constant object c:
+		const c: <type>;
+declaring a type t:
+		type t: <type>
+t is then a synonym for <type>.
+declarations may appear anywhere a statement may appear.
+identifier names are as in C
+
+-definitions
+
+things are defined by giving them an initial value.
+objects may be defined only once, but non-constant objects' values
+may be modified by ordinary assignments (see expressions, below).
+everything is by value, so using an object without a value is an error.
+(actually, uninitialized integers work fine, and are zero (grotty
+implementation detail))
+
+defining an initial value for an object (type of o already known):
+		o = <expression>
+to define both type and value (semicolons are `statement' terminators):
+		o: <type>; o = <expression>;
+	may be abbreviated
+		o: <type> = <expression>;
+	may be abbreviated
+		o:= <expression>;
+the type will be inferred from <expression>.
+
+progs:
+	prog(<formals>) of <type> {<body>}
+where formals is a list of declarations (but with only one identifier per type)
+is an expression, thus
+		p:=prog(<formals>){<body>};
+defines a program p, that can be called:
+		p(<actuals>)
+will yield the same as
+		prog(<formals>){<body>}(<actuals>)
+
+-rec
+recursive definitions use rec:
+	rec{
+		x: chan of int = f(x, y);
+		y: chan of int = g(x, y);
+	};
+defines x and y in terms of each other.  similarly, recursive functions may
+be defined using rec
+	rec f:=prog(a:int) {.... f(a-1)... };
+type definitions can also be recursive; a binary tree might be defined by
+	rec type T: struct of { type:int; left, right: T; };
+
+-scope
+
+progs and anything defined outside {} are global.
+parameters and things defined inside {} are local to the {}.
+(that is, {} define blocks for scope as well as execution.)
+the only exceptions are that no scope is inferred from rec statements,
+switch statements and select statements.
+the declaration of an object declares the object from that point on,
+but not earlier in the current scope.
+
+-expressions
+
+the operators are the usual.
+i'll fill in the operators when it's important to do so.  they're basically
+everything in c except op= and ?: operators.
+++ is postfix only, -- is prefix only, and they apply to ints only.
+in compensation, they are atomic operators.
+strings may be compared with the logical operators.
+
+-val
+
+there is a way to compute a value:
+	val{ <stmtlist> }
+is an expression whose value is that of the first result statement executed
+when running the commands in stmtlist.  thus min(a,b) is
+	val { if(a<b) result a; else result b; }
+
+-communications
+
+like csp, but the operators are different; in fact, there's only one:  <-  .
+prefix it's a receipt, postfix it's a send.
+		<- chan
+is an expression that receives the next value from chan.
+		chan<- = value
+(if the value is of unit type, "= value" may be elided.)
+is like an assignment; it sends the value to chan.  chan<- is meaningless
+and illegal.  thus
+		c2<- = <-c1;
+copies a value from c1 to c2.
+
+when two processes communicate, via c<-=expr and <-c,
+both processes block until the communication is complete; it's a rendezvous.
+
+
+selections:
+		select{
+			case <communication> : <executable-stmt-list>
+			...
+		}
+	or
+		switch(<expression>){
+			case <expression> : <executable-stmt-list>
+			...
+			default: <executable-stmt-list>		# optional
+		}
+<executable-stmt-list> is a list of statements excluding declarations;
+if you need declarations, you must create a scope for the
+resulting variables with {}.
+<communication> is either a simple send, a simple
+receipt, or a simple receipt assigned to an object.
+the communications are examined as a set,
+and the entire select blocks until one of the communications can proceed.
+the first that can proceed does so.
+if more than one can proceed, one of those is chosen at random.
+as a special case, select accepts in a <communication> channels of the form
+		a[]
+where a is an array of channels.  this means 'all of the channels in a'.
+in the subscript may appear the lhs of an assignment and an =, as in
+		a[i=]
+the effect of this is, if one of the channels in a is selected, to assign
+to i the index in a of the channel selected.
+the precise semantics of a select is:
+	1. evaluate all the channels to be examined, in order presented.
+	2. examine all the channels in order
+	3. if zero channels are ready, wait for at least one to become ready,
+		and return to 2.
+	4. choose at random one of the ready channels, and complete the
+		communication for that channel (at this point, if the form
+		is case a<-=x, evaluate x)
+
+in the switch, the <expression> is compared
+top-to-bottom with the case expressions, and the first that matches causes
+its body to be executed.
+these expressions are dynamic (as opposed to C cases), and may
+be of type int or array of char.
+only those expressions that need to be evaluated are evaluated.
+of course, a case expression may do communication.
+
+conditionals:
+		if(expression)
+			<executable-stmt-list>
+		else
+			<executable-stmt-list>
+the else clause may be elided.
+
+loop:
+		for(;;)
+			<executable-stmt-list>
+	or
+		while(<expr>)
+			<executable-stmt-list>
+	or
+		do <executable-stmt-list> ';' while(<expr>);
+
+become:
+		become <expression>
+returns a value to the caller of the prog.  the type of the expression
+must match that of the prog.
+if the value is a process invocation, as in
+		become p()
+become replaces the current body with a fresh instance of the named prog
+with stated args, etc.
+unlike a return statement in most languages,
+the calling context is always lost; a return holds the context
+until its expression is evaluated.
+
+process invocation:
+		begin <prog-call>
+starts a new process.  if communication channels are not shared with the
+process, you won't be able to talk to it.  unlike with become, execution
+continues in the current process.
+
+-storage
+
+object constructor:
+	mk(<type>)
+builds an uninitialized object of the type, so
+	o: array[10] of int = mk(array[10] of int)
+allocates the storage (and leaves its elements of undefined value).
+this is sweetened to
+	o: array[10] of int = mk()
+or may also be written by the above rules as
+	o:=mk(array[10] of int);
+to declare an integer i with value 10,
+	i:=10;
+then chans are easy:
+	c: chan of int;
+declares it;
+	c:=mk(chan of int);
+defines it.
+
+generally, the = operator allocates new storage to hold the rhs
+expression, implicitly using mk(),
+and assigns the value when one is specified.
+thus, in "o:= 3" the mk happens and the number 3 is stored there.
+
+mk can also be given values:
+	mk(array[2] of int = {2,3})
+creates the obvious array. the obvious sweetening happens in definitions:
+	a: array[2] of int = {2,3}
+or even
+	a: array of int = {2,3}
+mk only makes the top level of the object:
+	a:=mk(array[2] of array[2] of int)
+gives storage to a, but not to a[0] or a[1].
+
+in assignments (=, binding of function parameters, become, and initializations)
+the type can often be inferred from context, and will be if not specified.
+thus given
+	type p: struct of{ x, y: int; };
+the following are legal
+	become {2,3};		# in a p-valued function
+	f({2,3})		# if the argument to f has type p
+	x={2,3}			# if x has type p
+	z:r={{2,3},{3,4}};	# if r is a pair of p's (struct or array)
+
+
+the semantics of memory usage is strictly by-value. there is no
+sharing; passing an array to a procedure causes a (lazily created)
+copy of the array to be passed.  whatever is done inside the procedure
+to the contents of the array cannot affect the outside world.
+chan and prog variables are names so chans and progs passed to procedures
+are copies of the name, and therefore name the same object.
+
+the operator def tells whether an object is defined, so
+	a:=mk(array[2] of chan of int);
+	def a;
+yields 1;
+	def a[0];
+yields 0;
+
+
+bugs:
+-this program causes problems:
+	prog(a:int){
+		p:=prog(){ print(a); };
+		begin p();
+	}
+ because the inner a is not imported properly.
+ these two examples do work, though:
+	prog(a:int){
+		p:=prog(a:int){ print(a); };
+		begin p(a);
+	}
+	prog(a:int){
+		begin prog(){ print(a); }();
+	}
+ the former because it explicitly imports a, the latter because
+ the interpreter can see how to import it for you.
+ the interpreter reports 'inaccessible scope' if it can't
+ solve the problem.

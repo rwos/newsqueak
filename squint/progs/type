@@ -1,0 +1,12 @@
+q:int;
+type r: int;
+r=1;
+
+p:=prog(){
+	type q: chan of int;
+	c: q;
+	c=mk();
+	q=1;
+};
+
+q="hi";

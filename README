@@ -1,0 +1,40 @@
+/*
+ * Rob Pike, January 2000
+ *
+ * Bell Labs, Lucent Technologies.
+ * Libraries ported by Sape Mullender.
+ *
+ * This software is placed in the public domain provided this author notice is retained.
+ */
+
+This package builds squint, the Newsqueak interpreter, on Linux.
+It should be easy to get to work on other Unix variants.
+It has no graphics support, although vestiges exist in the source.
+The package also includes a small subset of the Plan 9 C library
+because it was easier to include it than to remove squint's
+dependency on the installable print format stuff.
+
+BUILDING
+
+Run `make all' in this directory.  Everything should compile
+without warnings.
+
+TESTING
+
+After building, cd squint and try
+	squint progs/sieve2
+You should see some prime numbers.
+
+DOCUMENTATION
+
+The man directory contains information about the print library.
+The doc directory contains a reference manual and a paper
+about implementation, taken from 
+
+	The Implementation of Newsqueak
+	    Rob Pike
+	    Software - Practice and Experience, Jul 1990
+	    Vol 20 #7, pp 649-659
+
+That same issue has a paper by Doug McIlroy that is necessary reading,
+but I don't have a .ps version of the paper.

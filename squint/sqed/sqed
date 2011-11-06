@@ -1,0 +1,51 @@
+#!/usr/rob/bin/mips/squint
+include "lib.h"
+include "gnot.h"
+include "nspace.h"
+#include "gnotio.h"
+include "layer.h"
+include "arrow.h"
+include "whitearrow.h"
+include "box.h"
+include "sight.h"
+include "fio.h"
+include "bitmapio.h"
+include "menu.h"
+
+Sc	:= getscreen();	# screen Bitmap, global
+gnotions:= nsnew();
+
+include "types.h"
+include "other.h"
+include "list.h"
+include "disp.h"
+include "frames.h"
+include "devices.h"
+include "parser.h"
+
+main:=prog()
+{	Ms_evt:=mk(chan of Mouse);		# mouse events output channel
+	Dh_req:=mk(chan of Dcomm);		# display handler input
+	Kb_evt:=mk(chan of Keyboard);		# keyboard output channel
+	Cw_req:=mk(chan of char);		# command window input channel
+	Cw_ctl:=mk(chan of Token);		# command window control channel
+	L_to_P:=mk(chan of Token);		# connects lex to parse
+
+	begin d_handler(Dh_req);		# display handler
+	begin msrv(Ms_evt, Dh_req, Kb_evt);	# mouse server
+	begin ksrv(Kb_evt, Cw_req);		# keyboard server
+	r := rectinset(Sc.r, 8, 8);
+	r.max.x = r.min.x + (r.max.x - r.min.x)/4;
+	r.max.y = r.min.y + (r.max.y - r.min.y)/4;
+	begin disp(r, Dh_req, Cw_ctl, Cw_req);	# command window
+	begin lex(Kb_evt, L_to_P);
+	begin parse(L_to_P, Ms_evt, Dh_req, Cw_req);
+
+	strout("~~sqed~~\n", Cw_req);		# identify command window
+};
+
+{
+	rc := rectinset(Sc.r, 3, 3);
+	bitblt(Sc, rc.min, Sc, rc, 0);
+	begin main();
+}

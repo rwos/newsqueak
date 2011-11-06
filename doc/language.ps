@@ -1,0 +1,2402 @@
+%!PS
+%%Version: 3.3.2
+%%DocumentFonts: (atend)
+%%Pages: (atend)
+%%EndComments
+%
+% Version 3.3.2 prologue for troff files.
+%
+
+/#copies 1 store
+/aspectratio 1 def
+/formsperpage 1 def
+/landscape false def
+/linewidth .3 def
+/magnification 1 def
+/margin 0 def
+/orientation 0 def
+/resolution 720 def
+/rotation 1 def
+/xoffset 0 def
+/yoffset 0 def
+
+/roundpage true def
+/useclippath true def
+/pagebbox [0 0 612 792] def
+
+/R  /Times-Roman def
+/I  /Times-Italic def
+/B  /Times-Bold def
+/BI /Times-BoldItalic def
+/H  /Helvetica def
+/HI /Helvetica-Oblique def
+/HB /Helvetica-Bold def
+/HX /Helvetica-BoldOblique def
+/CW /Courier def
+/CO /Courier def
+/CI /Courier-Oblique def
+/CB /Courier-Bold def
+/CX /Courier-BoldOblique def
+/PA /Palatino-Roman def
+/PI /Palatino-Italic def
+/PB /Palatino-Bold def
+/PX /Palatino-BoldItalic def
+/Hr /Helvetica-Narrow def
+/Hi /Helvetica-Narrow-Oblique def
+/Hb /Helvetica-Narrow-Bold def
+/Hx /Helvetica-Narrow-BoldOblique def
+/KR /Bookman-Light def
+/KI /Bookman-LightItalic def
+/KB /Bookman-Demi def
+/KX /Bookman-DemiItalic def
+/AR /AvantGarde-Book def
+/AI /AvantGarde-BookOblique def
+/AB /AvantGarde-Demi def
+/AX /AvantGarde-DemiOblique def
+/NR /NewCenturySchlbk-Roman def
+/NI /NewCenturySchlbk-Italic def
+/NB /NewCenturySchlbk-Bold def
+/NX /NewCenturySchlbk-BoldItalic def
+/ZD /ZapfDingbats def
+/ZI /ZapfChancery-MediumItalic def
+/S  /S def
+/S1 /S1 def
+/GR /Symbol def
+
+/inch {72 mul} bind def
+/min {2 copy gt {exch} if pop} bind def
+
+/show {{//show} 0 get exec} bind def	% so later references don't bind
+/widthshow {{//widthshow} 0 get exec} bind def
+/stringwidth {{//stringwidth} 0 get exec} bind def
+
+/setup {
+	counttomark 2 idiv {def} repeat pop
+
+	landscape {/orientation 90 orientation add def} if
+	/scaling 72 resolution div def
+	linewidth setlinewidth
+	1 setlinecap
+
+	pagedimensions
+	xcenter ycenter translate
+	orientation rotation mul rotate
+	width 2 div neg height 2 div translate
+	xoffset inch yoffset inch neg translate
+	margin 2 div dup neg translate
+	magnification dup aspectratio mul scale
+	scaling scaling scale
+
+	addmetrics
+	0 0 moveto
+} def
+
+/pagedimensions {
+	useclippath userdict /gotpagebbox known not and {
+		/pagebbox [clippath pathbbox newpath] def
+		roundpage currentdict /roundpagebbox known and {roundpagebbox} if
+	} if
+	pagebbox aload pop
+	4 -1 roll exch 4 1 roll 4 copy
+	landscape {4 2 roll} if
+	sub /width exch def
+	sub /height exch def
+	add 2 div /xcenter exch def
+	add 2 div /ycenter exch def
+	userdict /gotpagebbox true put
+} def
+
+/addmetrics {
+	/Symbol /S null Sdefs cf
+	/Times-Roman /S1 StandardEncoding dup length array copy S1defs cf
+} def
+
+/pagesetup {
+	/page exch def
+	currentdict /pagedict known currentdict page known and {
+		page load pagedict exch get cvx exec
+	} if
+} def
+
+/decodingdefs [
+	{counttomark 2 idiv {y moveto show} repeat}
+	{neg /y exch def counttomark 2 idiv {y moveto show} repeat}
+	{neg moveto {2 index stringwidth pop sub exch div 0 32 4 -1 roll widthshow} repeat}
+	{neg moveto {spacewidth sub 0.0 32 4 -1 roll widthshow} repeat}
+	{counttomark 2 idiv {y moveto show} repeat}
+	{neg setfunnytext}
+] def
+
+/setdecoding {/t decodingdefs 3 -1 roll get bind def} bind def
+
+/w {neg moveto show} bind def
+/m {neg dup /y exch def moveto} bind def
+/done {/lastpage where {pop lastpage} if} def
+
+/f {
+	dup /font exch def findfont exch
+	dup /ptsize exch def scaling div dup /size exch def scalefont setfont
+	linewidth ptsize mul scaling 10 mul div setlinewidth
+	/spacewidth ( ) stringwidth pop def
+} bind def
+
+/changefont {
+	/fontheight exch def
+	/fontslant exch def
+	currentfont [
+		1 0
+		fontheight ptsize div fontslant sin mul fontslant cos div
+		fontheight ptsize div
+		0 0
+	] makefont setfont
+} bind def
+
+/sf {f} bind def
+
+/cf {
+	dup length 2 idiv
+	/entries exch def
+	/chtab exch def
+	/newencoding exch def
+	/newfont exch def
+
+	findfont dup length 1 add dict
+	/newdict exch def
+	{1 index /FID ne {newdict 3 1 roll put}{pop pop} ifelse} forall
+
+	newencoding type /arraytype eq {newdict /Encoding newencoding put} if
+
+	newdict /Metrics entries dict put
+	newdict /Metrics get
+	begin
+		chtab aload pop
+		1 1 entries {pop def} for
+		newfont newdict definefont pop
+	end
+} bind def
+
+%
+% A few arrays used to adjust reference points and character widths in some
+% of the printer resident fonts. If square roots are too high try changing
+% the lines describing /radical and /radicalex to,
+%
+%	/radical	[0 -75 550 0]
+%	/radicalex	[-50 -75 500 0]
+%
+% Move braceleftbt a bit - default PostScript character is off a bit.
+%
+
+/Sdefs [
+	/bracketlefttp		[201 500]
+	/bracketleftbt		[201 500]
+	/bracketrighttp		[-81 380]
+	/bracketrightbt		[-83 380]
+	/braceleftbt		[203 490]
+	/bracketrightex		[220 -125 500 0]
+	/radical		[0 0 550 0]
+	/radicalex		[-50 0 500 0]
+	/parenleftex		[-20 -170 0 0]
+	/integral		[100 -50 500 0]
+	/infinity		[10 -75 730 0]
+] def
+
+/S1defs [
+	/underscore		[0 80 500 0]
+	/endash			[7 90 650 0]
+] def
+%
+% Tries to round clipping path dimensions, as stored in array pagebbox, so they
+% match one of the known sizes in the papersizes array. Lower left coordinates
+% are always set to 0.
+%
+
+/roundpagebbox {
+    7 dict begin
+	/papersizes [8.5 inch 11 inch 14 inch 17 inch] def
+
+	/mappapersize {
+		/val exch def
+		/slop .5 inch def
+		/diff slop def
+		/j 0 def
+		0 1 papersizes length 1 sub {
+			/i exch def
+			papersizes i get val sub abs
+			dup diff le {/diff exch def /j i def} {pop} ifelse
+		} for
+		diff slop lt {papersizes j get} {val} ifelse
+	} def
+
+	pagebbox 0 0 put
+	pagebbox 1 0 put
+	pagebbox dup 2 get mappapersize 2 exch put
+	pagebbox dup 3 get mappapersize 3 exch put
+    end
+} bind def
+
+%%EndProlog
+%%BeginSetup
+mark
+/linewidth 0.5 def
+/#copies 1 store
+/landscape false def
+/resolution 720 def
+%
+% Encoding vector and redefinition of findfont for the ISO Latin1 standard.
+% The 18 characters missing from ROM based fonts on older printers are noted
+% below.
+%
+
+/ISOLatin1Encoding [
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/space
+	/exclam
+	/quotedbl
+	/numbersign
+	/dollar
+	/percent
+	/ampersand
+	/quoteright
+	/parenleft
+	/parenright
+	/asterisk
+	/plus
+	/comma
+	/minus
+	/period
+	/slash
+	/zero
+	/one
+	/two
+	/three
+	/four
+	/five
+	/six
+	/seven
+	/eight
+	/nine
+	/colon
+	/semicolon
+	/less
+	/equal
+	/greater
+	/question
+	/at
+	/A
+	/B
+	/C
+	/D
+	/E
+	/F
+	/G
+	/H
+	/I
+	/J
+	/K
+	/L
+	/M
+	/N
+	/O
+	/P
+	/Q
+	/R
+	/S
+	/T
+	/U
+	/V
+	/W
+	/X
+	/Y
+	/Z
+	/bracketleft
+	/backslash
+	/bracketright
+	/asciicircum
+	/underscore
+	/quoteleft
+	/a
+	/b
+	/c
+	/d
+	/e
+	/f
+	/g
+	/h
+	/i
+	/j
+	/k
+	/l
+	/m
+	/n
+	/o
+	/p
+	/q
+	/r
+	/s
+	/t
+	/u
+	/v
+	/w
+	/x
+	/y
+	/z
+	/braceleft
+	/bar
+	/braceright
+	/asciitilde
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/.notdef
+	/dotlessi
+	/grave
+	/acute
+	/circumflex
+	/tilde
+	/macron
+	/breve
+	/dotaccent
+	/dieresis
+	/.notdef
+	/ring
+	/cedilla
+	/.notdef
+	/hungarumlaut
+	/ogonek
+	/caron
+	/space
+	/exclamdown
+	/cent
+	/sterling
+	/currency
+	/yen
+	/brokenbar		% missing
+	/section
+	/dieresis
+	/copyright
+	/ordfeminine
+	/guillemotleft
+	/logicalnot
+	/hyphen
+	/registered
+	/macron
+	/degree			% missing
+	/plusminus		% missing
+	/twosuperior		% missing
+	/threesuperior		% missing
+	/acute
+	/mu			% missing
+	/paragraph
+	/periodcentered
+	/cedilla
+	/onesuperior		% missing
+	/ordmasculine
+	/guillemotright
+	/onequarter		% missing
+	/onehalf		% missing
+	/threequarters		% missing
+	/questiondown
+	/Agrave
+	/Aacute
+	/Acircumflex
+	/Atilde
+	/Adieresis
+	/Aring
+	/AE
+	/Ccedilla
+	/Egrave
+	/Eacute
+	/Ecircumflex
+	/Edieresis
+	/Igrave
+	/Iacute
+	/Icircumflex
+	/Idieresis
+	/Eth			% missing
+	/Ntilde
+	/Ograve
+	/Oacute
+	/Ocircumflex
+	/Otilde
+	/Odieresis
+	/multiply		% missing
+	/Oslash
+	/Ugrave
+	/Uacute
+	/Ucircumflex
+	/Udieresis
+	/Yacute			% missing
+	/Thorn			% missing
+	/germandbls
+	/agrave
+	/aacute
+	/acircumflex
+	/atilde
+	/adieresis
+	/aring
+	/ae
+	/ccedilla
+	/egrave
+	/eacute
+	/ecircumflex
+	/edieresis
+	/igrave
+	/iacute
+	/icircumflex
+	/idieresis
+	/eth			% missing
+	/ntilde
+	/ograve
+	/oacute
+	/ocircumflex
+	/otilde
+	/odieresis
+	/divide			% missing
+	/oslash
+	/ugrave
+	/uacute
+	/ucircumflex
+	/udieresis
+	/yacute			% missing
+	/thorn			% missing
+	/ydieresis
+] def
+
+/NewFontDirectory FontDirectory maxlength dict def
+
+%
+% Apparently no guarantee findfont is defined in systemdict so the obvious
+%
+%	systemdict /findfont get exec
+%
+% can generate an error. So far the only exception is a VT600 (version 48.0).
+%
+
+userdict /@RealFindfont known not {
+	userdict begin
+		/@RealFindfont systemdict begin /findfont load end def
+	end
+} if
+
+/findfont {
+	dup NewFontDirectory exch known not {
+		dup
+		%dup systemdict /findfont get exec	% not always in systemdict
+		dup userdict /@RealFindfont get exec
+		dup /Encoding get StandardEncoding eq {
+			dup length dict begin
+				{1 index /FID ne {def}{pop pop} ifelse} forall
+				/Encoding ISOLatin1Encoding def
+				currentdict
+			end
+			/DummyFontName exch definefont
+		} if
+		NewFontDirectory 3 1 roll put
+	} if
+	NewFontDirectory exch get
+} bind def
+
+setup
+2 setdecoding
+%%EndSetup
+%%Page: 0 1
+/saveobj save def
+mark
+1 pagesetup
+10 NR f
+(Computing Science Technical Report No. 143)5 2086 1 1837 3000 t
+12 NB f
+(Newsqueak: A Language)2 1524 1 2118 3270 t
+(for)2789 3420 w
+(Communicating with Mice)2 1652 1 2054 3570 t
+10 NI f
+(Rob Pike)1 408 1 2676 3810 t
+10 NR f
+(April 9, 1994)2 601 1 720 6240 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 0 1
+%%Page: 0 2
+/saveobj save def
+mark
+2 pagesetup
+12 NB f
+(Newsqueak: A Language)2 1524 1 2118 1230 t
+(for)2789 1380 w
+(Communicating with Mice)2 1652 1 2054 1530 t
+10 NI f
+(Rob Pike)1 408 1 2676 1770 t
+(ABSTRACT)2598 2330 w
+10 NR f
+( revised Squeak language, a concur\255)5 1678(This is the reference manual for the)6 1672 2 1330 2590 t
+( lan\255)1 221( The)1 245( programs.)1 507(rent language designed for writing interactive graphics)6 2627 4 1080 2710 t
+( manual defines the)3 930( This)1 266( applicable.)1 532(guage is, however, much more generally)5 1872 4 1080 2830 t
+( ratio\255)1 297( documents will describe the libraries and give a)8 2364(language. Separate)1 939 3 1080 2950 t
+(nale for the design.)3 888 1 1080 3070 t
+(April 9, 1994)2 601 1 720 3550 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 0 2
+%%Page: 1 3
+/saveobj save def
+mark
+3 pagesetup
+12 NB f
+(Newsqueak: A Language)2 1524 1 2118 1230 t
+(for)2789 1380 w
+(Communicating with Mice)2 1652 1 2054 1530 t
+10 NI f
+(Rob Pike)1 408 1 2676 1770 t
+10 NR f
+( manual for the concurrent language Newsqueak.)6 2558(This is an informal reference)4 1512 2 970 2106 t
+( language designed a few years ago by Luca Cardelli and)10 2655(Newsqueak's roots are in Squeak, a)5 1665 2 720 2226 t
+( Newsqueak)1 599( in user interface design.)4 1163(Rob Pike to illustrate concurrent solutions to problems)7 2558 3 720 2346 t
+( was for designing devices)4 1267(addresses the same problems but in a broader context: Squeak)9 3053 2 720 2466 t
+( and in particu\255)3 735(such as menus and scroll bars; Newsqueak is for writing entire applications,)11 3585 2 720 2586 t
+( therefore)1 449( a wholesale redesign of Squeak's syntax, Newsqueak)7 2478( Besides)1 410(lar a window system.)3 983 4 720 2706 t
+( creation,)1 446(has several major components absent in Squeak: a type system, dynamic process)11 3874 2 720 2826 t
+( Squeak deferred most mundane programming details to)7 2616( Also,)1 284(and dynamic channel creation.)3 1420 3 720 2946 t
+( inter\255)1 290( An)1 192( is instead a self\255contained language.)5 1726( Newsqueak)1 596(the language it compiled into, C.)5 1516 5 720 3066 t
+(preter for it, called squint, has been implemented.)7 2314 1 720 3186 t
+( C, and the discussion that follows assumes)7 2110(Newsqueak draws heavily from CSP and)5 1960 2 970 3342 t
+( basic semantics)2 797( the syntax and)3 787( Roughly,)1 491(modest familiarity with both these languages.)5 2245 4 720 3462 t
+( put)1 193( way these are)3 689( The)1 241(come from C, while the message\255passing primitives come from CSP.)9 3197 4 720 3582 t
+(together is, however, unique to Newsqueak.)5 2024 1 720 3702 t
+10 NB f
+(1. Text)1 376 1 720 3942 t
+10 NR f
+( consists of alphanumeric characters, including under\255)6 2552( identifier)1 464( An)1 195(Input is free\255form.)2 859 4 970 4098 t
+( sharp character)2 764( A)1 131(score, and does not begin with a number.)7 1914 3 720 4218 t
+10 CW f
+(#)3560 4218 w
+10 NR f
+(begins a comment, which con\255)4 1389 1 3651 4218 t
+( may be included; an occurrence of)6 1587( Files)1 283(tinues until a new\255line character.)4 1545 3 720 4338 t
+9 CW f
+(include ")1 486 1 1440 4508 t
+9 NI f
+(file name)1 381 1 1926 4508 t
+9 CW f
+(")2307 4508 w
+10 NR f
+( this manual, italic text distinguishes syntactic con\255)7 2401( \(In)1 192( the contents of the file.)5 1093(is replaced by)2 634 4 720 4688 t
+(structions from literal text.\))3 1290 1 720 4808 t
+(An)970 4964 w
+10 CW f
+(include)1143 4964 w
+10 NR f
+(may occur anywhere the word)4 1439 1 1603 4964 t
+10 CW f
+(include)3083 4964 w
+10 NR f
+(is recognizable as an identifier;)4 1496 1 3544 4964 t
+10 CW f
+(include)720 5084 w
+10 NR f
+( the file)2 353( If)1 130(does not need to begin a line.)6 1340 3 1168 5084 t
+10 CW f
+(twentythree)3019 5084 w
+10 NR f
+(contains the text)2 777 1 3707 5084 t
+10 CW f
+(23)4512 5084 w
+10 NR f
+(then)4660 5084 w
+9 CW f
+(x=include "twentythree";)1 1296 1 1440 5254 t
+10 NR f
+(sets)720 5434 w
+10 CW f
+(x)929 5434 w
+10 NR f
+(to 23.)1 257 1 1017 5434 t
+( with a slash)3 612(If the named file is not found in the current directory, and does not begin)14 3458 2 970 5590 t
+(or period, it is sought in a standard repository.)8 2155 1 720 5710 t
+10 NB f
+( Types)1 336(2. Simple)1 502 2 720 5950 t
+10 NR f
+(Three basic types exist:)3 1085 1 970 6106 t
+10 CW f
+(unit)720 6262 w
+10 NR f
+(is a type with exactly one entry, itself named)8 2079 1 988 6262 t
+10 CW f
+(unit)3095 6262 w
+10 NR f
+( prints as)2 437(. It)1 164 2 3335 6262 t
+9 CW f
+(\(unit\))1008 6432 w
+10 CW f
+(int)720 6648 w
+10 NR f
+(is the basic signed integer type, typically 32 bits long.)9 2482 1 928 6648 t
+10 CW f
+(char)720 6804 w
+10 NR f
+(is an unsigned character, 8 bits long.)6 1801 1 1004 6804 t
+10 CW f
+(chars)2877 6804 w
+10 NR f
+(and)3221 6804 w
+10 CW f
+(ints)3439 6804 w
+10 S1 f
+(\320)3724 6804 w
+10 NR f
+(the)3869 6804 w
+10 NI f
+(integral types)1 636 1 4064 6804 t
+10 S1 f
+(\320)4745 6804 w
+10 NR f
+(are)4890 6804 w
+(interchangeable as in C, but, when printed, an)7 2212 1 720 6924 t
+10 CW f
+(int)2968 6924 w
+10 NR f
+(is a numeric value and a)5 1178 1 3184 6924 t
+10 CW f
+(char)4398 6924 w
+10 NR f
+(appears)4674 6924 w
+(as its output form \(the letter A, new\255line, etc.\).)8 2150 1 720 7044 t
+( constants are of)3 789( Character)1 532( and character constants is as in C.)7 1693(The syntax for integer)3 1056 4 970 7200 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 1 3
+%%Page: 2 4
+/saveobj save def
+mark
+4 pagesetup
+10 NR f
+(\255 2 \255)2 178 1 2791 480 t
+(type)720 840 w
+10 CW f
+(int)948 840 w
+10 NR f
+(.)1128 840 w
+10 NB f
+( Types)1 336(3. Compound)1 711 2 720 1080 t
+10 NR f
+(Four type constructors build compound types.)5 2111 1 970 1236 t
+10 CW f
+(array)720 1392 w
+10 NR f
+( syntax is)2 444( The)1 234(builds an array of objects, indexed by integral values starting at zero.)11 3213 3 1048 1392 t
+9 CW f
+(array[)1008 1562 w
+9 NI f
+(size)1332 1562 w
+9 CW f
+(] of)1 216 1 1483 1562 t
+9 NI f
+(type)1753 1562 w
+10 NR f
+(where)720 1742 w
+10 NI f
+(size)1037 1742 w
+10 NR f
+(is an integral expression that is evaluated to determine the number of elements.)12 3801 1 1239 1742 t
+(Thus the type)2 641 1 720 1862 t
+9 CW f
+(array[10] of int)2 864 1 1008 2032 t
+10 NR f
+(is an array of ten integers,)5 1226 1 720 2212 t
+10 CW f
+(a[0])1974 2212 w
+10 NR f
+(through)2242 2212 w
+10 CW f
+(a[9])2640 2212 w
+10 NR f
+(.)2880 2212 w
+( If)1 141( change on assignment.)3 1116(The size of an array is not part of its type, so the size may)14 2813 3 970 2368 t
+10 CW f
+(a10)720 2488 w
+10 NR f
+(is an array of ten objects, and)6 1367 1 928 2488 t
+10 CW f
+(a5)2323 2488 w
+10 NR f
+(is an array of five, after executing)6 1564 1 2471 2488 t
+9 CW f
+(a5=a10)1440 2658 w
+10 CW f
+(a5)720 2838 w
+10 NR f
+( the size may be omitted from the declaration \(e.g.)9 2328( Moreover,)1 521(has ten elements.)2 816 3 869 2838 t
+10 CW f
+(array of)1 449 1 4591 2838 t
+(int)720 2958 w
+10 NR f
+( the size is to be determined later or is implicit, for instance in the declaration of for\255)17 4007(\) if)1 133 2 900 2958 t
+(mal parameters.)1 764 1 720 3078 t
+10 CW f
+(struct)720 3234 w
+10 NR f
+(builds a compound data structure:)4 1585 1 1108 3234 t
+9 CW f
+(struct of {)2 594 1 1008 3404 t
+9 NI f
+(list of element declarations)3 1108 1 1656 3404 t
+9 CW f
+(})2818 3404 w
+10 NR f
+(where the list has the normal declaration syntax, described below.)9 3068 1 720 3584 t
+10 CW f
+(prog)720 3740 w
+10 NR f
+( syntax is)2 444( The)1 234(declares a program, much as in lambda calculus.)7 2253 3 988 3740 t
+9 CW f
+(prog\()1008 3910 w
+9 NI f
+(list of formals)2 573 1 1278 3910 t
+9 CW f
+(\) of)1 216 1 1851 3910 t
+9 NI f
+(type)2121 3910 w
+10 NR f
+( several)1 369(where the formals may be empty, a single declaration, or a comma\255separated list of)13 3951 2 720 4090 t
+( is that of the expression yielded by the)8 1932( final type)2 502(declarations. The)1 845 3 720 4210 t
+10 CW f
+(prog)4042 4210 w
+10 NR f
+(when it is exe\255)3 715 1 4325 4210 t
+( between functions and procedures; a procedure corresponds to)8 2931( is no distinction)3 778(cuted. There)1 611 3 720 4330 t
+(a function returning)2 939 1 720 4450 t
+10 CW f
+(unit)1687 4450 w
+10 NR f
+( the return type is)4 839(. If)1 158 2 1927 4450 t
+10 CW f
+(unit)2952 4450 w
+10 NR f
+(, the)1 206 1 3192 4450 t
+10 CW f
+(of)3426 4450 w
+10 NR f
+(clause may be elided.)3 984 1 3574 4450 t
+10 CW f
+(chan)720 4606 w
+10 NR f
+( syntax is)2 444( The)1 234(defines a bufferless communication channel.)4 2049 3 988 4606 t
+9 CW f
+(chan of)1 378 1 1008 4776 t
+9 NI f
+(type)1440 4776 w
+10 NR f
+(Channels are discussed below, in the section on communications.)8 3004 1 720 4956 t
+10 NB f
+(4. Strings)1 522 1 720 5196 t
+10 NR f
+( constants are written as in C, so)7 1522( String)1 349(Arrays of characters are also called strings.)6 2006 3 970 5352 t
+9 CW f
+("hello")1008 5522 w
+10 NR f
+( not null\255terminated, but rather have a known)7 2286( are)1 197( Strings)1 414(is a string with 5 characters.)5 1423 4 720 5702 t
+( Section 8, on expressions.\))4 1243(length. \(See)1 577 2 720 5822 t
+10 NB f
+(5.)720 6062 w
+10 CW f
+(mk)863 6062 w
+10 NR f
+(Newsqueak has an object constructor, called)5 2048 1 970 6218 t
+10 CW f
+(mk)3046 6218 w
+10 NR f
+(:)3166 6218 w
+9 CW f
+(mk\()1008 6388 w
+9 NI f
+(type)1170 6388 w
+9 CW f
+(\))1338 6388 w
+10 NR f
+(returns an uninitialized object of the named type.)7 2294 1 720 6568 t
+9 CW f
+(mk\()1008 6738 w
+9 NI f
+(type)1170 6738 w
+9 CW f
+(=)1392 6738 w
+9 NI f
+(initial value)1 506 1 1500 6738 t
+9 NR f
+(\))2006 6738 w
+10 NR f
+( instance,)1 445( For)1 217(gives the object a value.)4 1104 3 720 6918 t
+9 CW f
+(mk\(int=10\))1008 7088 w
+10 NR f
+( compound objects,)2 892( For)1 229( integer 10.)2 550(creates a storage cell holding the)5 1574 4 720 7268 t
+10 CW f
+(mk)4005 7268 w
+10 NR f
+(creates storage for)2 875 1 4165 7268 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 2 4
+%%Page: 3 5
+/saveobj save def
+mark
+5 pagesetup
+10 NR f
+(\255 3 \255)2 178 1 2791 480 t
+( Thus)1 291(only the outermost type.)3 1127 2 720 840 t
+9 CW f
+(mk\(array[3] of array[2] of int\))4 1674 1 1008 1010 t
+10 NR f
+( 2\255element arrays are still)4 1235(creates a 3\255element array of 2\255element arrays of integers, but the)10 3085 2 720 1190 t
+(undefined, so attempting to access them will yield an error.)9 2744 1 720 1310 t
+( initializers for compound)3 1250( The)1 256( allows more complicated initializations.)4 1953(Some syntax)1 611 4 970 1466 t
+(objects must be enclosed in braces, as in)7 1854 1 720 1586 t
+9 CW f
+(mk\(array[2] of int={1,2}\))2 1350 1 1008 1756 t
+10 NR f
+(or, recursively,)1 689 1 720 1936 t
+9 CW f
+(mk\(array[2] of array[3] of int={{1,2,3},{4,5,6}}\))4 2646 1 1008 2106 t
+10 NR f
+(Any object of compatible type may be used in a)9 2218 1 720 2286 t
+10 CW f
+(mk)2972 2286 w
+10 NR f
+( example, the following two)4 1291(. For)1 251 2 3092 2286 t
+10 CW f
+(mk)4669 2286 w
+10 NR f
+('s are)1 251 1 4789 2286 t
+(equivalent:)720 2406 w
+9 CW f
+(mk\(array of char={'h','e','l','l','o'}\))2 2106 1 1008 2576 t
+(mk\(array of char="hello"\).)2 1404 1 1008 2686 t
+10 NR f
+( evaluation of ini\255)3 825( order of)2 388( The)1 236(\(The size of these arrays will be derived from the initializers.\))10 2871 4 720 2866 t
+( also Section 7, on deriving type.\))6 1531( \(See)1 252(tializers is undefined.)2 1003 3 720 2986 t
+10 NB f
+(6. Declarations)1 808 1 720 3226 t
+10 NR f
+( a comma\255separated list of identifiers, a colon, an optional type,)10 3011(Declarations consist of)2 1059 2 970 3382 t
+( instance,)1 445( For)1 217(and an optional equals sign and initial expression.)7 2334 3 720 3502 t
+9 CW f
+(o:int)1008 3672 w
+10 NR f
+(declares)720 3852 w
+10 CW f
+(o)1127 3852 w
+10 NR f
+(to be an integer,)3 754 1 1215 3852 t
+9 CW f
+(p,q:int)1008 4022 w
+10 NR f
+(declares two more integer variables, and)5 1877 1 720 4202 t
+9 CW f
+(nl:char='\\n')1008 4372 w
+10 NR f
+(defines)720 4552 w
+10 CW f
+(nl)1077 4552 w
+10 NR f
+( declaration)1 549( The)1 234(to be a character with initial value new\255line.)7 2057 3 1225 4552 t
+9 CW f
+(p,q:int=1)1008 4722 w
+10 NR f
+(is identical to the two declarations)5 1594 1 720 4902 t
+9 CW f
+(p:int=1)1008 5072 w
+(q:int=1)1008 5182 w
+10 NR f
+( part of the declaration)4 1122( Any)1 258( once.)1 276(except that the initializing expression is evaluated only)7 2664 4 720 5362 t
+( instance, the following are all equivalent:)6 1946( For)1 217(may be elided if its form is clear.)7 1509 3 720 5482 t
+9 CW f
+(i:int=mk\(int=100\))1008 5652 w
+(i:=mk\(int=100\))1008 5762 w
+(i:int=100)1008 5872 w
+(i:=100)1008 5982 w
+10 NR f
+(When compound objects are being created, the most convenient form is often)11 3536 1 720 6162 t
+9 CW f
+(a:=mk\(array[10] of int\))2 1242 1 1008 6332 t
+10 NR f
+(Observe that)1 603 1 720 6512 t
+10 CW f
+(:=)1353 6512 w
+10 NR f
+(is)1503 6512 w
+10 NI f
+(not)1611 6512 w
+10 NR f
+( is two operators, one to declare and one to)9 1986( It)1 138(an assignment operator.)2 1129 3 1787 6512 t
+(assign.)720 6632 w
+(Variables may be declared constant by prefixing the declaration with)9 3195 1 970 6788 t
+10 CW f
+(const)4193 6788 w
+10 NR f
+(, so)1 152 1 4493 6788 t
+9 CW f
+(const NBUF:int=200)1 972 1 1008 6958 t
+10 NR f
+(declares)720 7138 w
+10 CW f
+(NBUF)1127 7138 w
+10 NR f
+( is an error to change the value of a constant object.)11 2385( It)1 136(to be the constant 200.)4 1049 3 1395 7138 t
+(An identifier may be used to identify a type, using the)10 2497 1 970 7294 t
+10 CW f
+(type)3495 7294 w
+10 NR f
+( example,)1 444(keyword. For)1 637 2 3763 7294 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 3 5
+%%Page: 4 6
+/saveobj save def
+mark
+6 pagesetup
+10 NR f
+(\255 4 \255)2 178 1 2791 480 t
+9 CW f
+(type point: struct of{ x, y: int; })7 1890 1 1008 830 t
+10 NR f
+(defines a data type to represent coordinates in Z)8 2230 1 720 1010 t
+10 S f
+(\264)2950 1010 w
+10 NR f
+(Z.)3005 1010 w
+( declarations are one form, are terminated by semicolons, so the)10 3073(Statements, of which)2 997 2 970 1166 t
+( semicolon appears in)3 1015( is why a)3 432( This)1 269(declarations above must all be followed by a semicolon.)8 2604 4 720 1286 t
+(the declaration of type)3 1038 1 720 1406 t
+10 CW f
+(point.)1786 1406 w
+10 NR f
+( syntax)1 367(Declarations may appear anywhere a statement is legal, except where the)10 3703 2 970 1562 t
+(explicitly mentions)1 882 1 720 1682 t
+10 NI f
+(executable statement.)1 968 1 1630 1682 t
+10 NB f
+( type)1 257(7. Deriving)1 600 2 720 1922 t
+10 NR f
+( infers type in declarations and)5 1450( Newsqueak)1 596(The type of an object may often be inferred.)8 2024 3 970 2078 t
+( the binding of actual parameters to formals in)8 2193(assignments, including)1 1075 2 720 2198 t
+10 CW f
+(progs)4020 2198 w
+10 NR f
+(and in the val\255)3 688 1 4352 2198 t
+(ues returned by)2 769 1 720 2318 t
+10 CW f
+(progs)1537 2318 w
+10 NR f
+( therefore, the type may be left off if it may be)11 2354( declarations,)1 643(. In)1 206 3 1837 2318 t
+(implied from an initializing expression, as in the declaration from above)10 3339 1 720 2438 t
+9 CW f
+(i:=100;)1008 2608 w
+10 NR f
+(which declares)1 691 1 720 2788 t
+10 CW f
+(i)1447 2788 w
+10 NR f
+( Given)1 340( 100.)1 233(to be an integer with initial value)6 1605 3 1543 2788 t
+10 CW f
+(i)3758 2788 w
+10 NR f
+(, another variable may be)4 1222 1 3818 2788 t
+(declared using the value of i:)5 1330 1 720 2908 t
+9 CW f
+(i_plus_one:=i+1)1008 3078 w
+9 NR f
+(.)1818 3078 w
+10 NR f
+(and so on.)2 465 1 720 3258 t
+( objects, initializations may be provided by grouping the initializing)9 3385(For compound)1 685 2 970 3414 t
+(expressions, element by element, in braces:)5 2001 1 720 3534 t
+9 CW f
+(p:point={2, 3})1 756 1 1008 3704 t
+9 NR f
+(.)1764 3704 w
+10 NR f
+( matters only)2 620(If a type is given, it overrides the type of the initializing expression, which)13 3450 2 970 3920 t
+(in cases related to these:)4 1138 1 720 4040 t
+9 CW f
+( '\\n' is of type int)5 1080(c:char='\\n' #)1 1620 2 1008 4210 t
+( remaining elements of a are undefined)6 2052( #)1 270(a:array[10] of int={1,2,3})2 1404 3 1008 4320 t
+(b:array of int=1)2 864 1 1008 4430 t
+10 NR f
+(Type is also derived in assignments \(described below\), so given)9 2902 1 970 4646 t
+9 CW f
+(p:point)1008 4816 w
+10 NR f
+(the assignment)1 712 1 720 4996 t
+9 CW f
+(p={5,6})1008 5166 w
+10 NR f
+(is equivalent to)2 714 1 720 5346 t
+9 CW f
+(p=mk\(point={5,6}\).)1008 5516 w
+10 NR f
+(Similarly, if)1 555 1 720 5696 t
+10 CW f
+(f)1303 5696 w
+10 NR f
+(is a)1 162 1 1391 5696 t
+10 CW f
+(prog)1581 5696 w
+10 NR f
+(that acts on)2 547 1 1849 5696 t
+10 CW f
+(points)2424 5696 w
+10 NR f
+(, it may be called as)5 917 1 2784 5696 t
+9 CW f
+(f\({2,3}\).)1008 5866 w
+10 NR f
+(When type may be derived,)4 1259 1 970 6082 t
+10 CW f
+(mk)2257 6082 w
+10 NR f
+( Thus)1 291(needs no explicit type.)3 1027 2 2405 6082 t
+9 CW f
+(c:chan of int;)2 756 1 1008 6252 t
+(c=mk\(\);)1008 6362 w
+10 NR f
+(defines a new channel and assigns it to)7 1810 1 720 6542 t
+10 CW f
+(c)2558 6542 w
+10 NR f
+(.)2618 6542 w
+( An)1 207( a value to it.)4 681(It is an error to reference an undefined variable, except to assign)11 3182 3 970 6698 t
+(undefined integer, however, has value zero, and it is not an error to access it.)14 3559 1 720 6818 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 4 6
+%%Page: 5 7
+/saveobj save def
+mark
+7 pagesetup
+10 NR f
+(\255 5 \255)2 178 1 2791 480 t
+10 NB f
+(8. Expressions)1 773 1 720 840 t
+10 NR f
+( include)1 380( They)1 303( C.)1 143(Expressions are syntactically and semantically much as they are in)9 3244 4 970 996 t
+(the assignment operator)2 1142 1 720 1116 t
+10 CW f
+(=)1896 1116 w
+10 NR f
+( operators)1 469(, the arithmetic)2 732 2 1956 1116 t
+10 CW f
+(+ \255 * / %)4 432 1 3190 1116 t
+10 NR f
+(, the bitwise operators)3 1046 1 3622 1116 t
+10 CW f
+(& | ^ ~)3 339 1 4701 1116 t
+(<< >>)1 282 1 720 1236 t
+10 NR f
+(, the logical operators)3 1040 1 1002 1236 t
+10 CW f
+(! && ||)2 386 1 2084 1236 t
+10 NR f
+(. The)1 277 1 2470 1236 t
+10 CW f
+(.)2790 1236 w
+10 NR f
+(\(dot\) operator accesses elements of)4 1656 1 2893 1236 t
+10 CW f
+(structs)4592 1236 w
+10 NR f
+(.)5012 1236 w
+(Newsqueak does not have the)4 1418 1 720 1356 t
+10 CW f
+(?:)2177 1356 w
+10 NR f
+( also does not have the)5 1098( It)1 146(operator or pointer indirection.)3 1461 3 2335 1356 t
+(augmented assignment operators)2 1547 1 720 1476 t
+10 CW f
+(+=)2297 1476 w
+10 NR f
+( does, however, have postfix)4 1298( It)1 138(and its ilk.)2 502 3 2447 1476 t
+10 CW f
+(++)4415 1476 w
+10 NR f
+(and prefix)1 475 1 4565 1476 t
+10 CW f
+(\255\255)720 1596 w
+10 NR f
+(, which operate only on)4 1102 1 840 1596 t
+10 CW f
+(ints)1978 1596 w
+10 NR f
+( are)1 185( They)1 295( to be atomic in their update.)6 1382(and are guaranteed)2 924 4 2254 1596 t
+(therefore useful for synchronizing shared variables.)5 2387 1 720 1716 t
+(The comparison operators)2 1199 1 970 1872 t
+10 CW f
+(== >= <= != < >)5 740 1 2197 1872 t
+10 NR f
+(may be applied to integral types, and \(lexico\255)7 2075 1 2965 1872 t
+( in C, zero is a false)6 952( As)1 182( and one for success.)4 971(graphically\) to strings, yielding zero for failure)6 2215 4 720 1992 t
+(Boolean value and non\255zero true.)4 1529 1 720 2112 t
+( first are the unary)4 970( The)1 256( Newsqueak.)1 616(Finally, there are several operators unique to)6 2228 4 970 2268 t
+(operators)720 2388 w
+10 CW f
+(def)1184 2388 w
+10 NR f
+(and)1392 2388 w
+10 CW f
+(len)1594 2388 w
+10 NR f
+(.)1774 2388 w
+9 CW f
+(def a)1 270 1 1008 2558 t
+10 NR f
+(tells if the object)3 767 1 720 2738 t
+10 CW f
+(a)1515 2738 w
+10 NR f
+( example, given)2 723( For)1 217(is defined, that is, if it has storage allocated.)8 2053 3 1603 2738 t
+9 CW f
+(a:=mk\(array[2] of point\);)2 1350 1 1008 2908 t
+10 CW f
+(def a)1 268 1 720 3088 t
+10 NR f
+(yields 1 \(true\), but)3 855 1 1016 3088 t
+10 CW f
+(def a[0])1 448 1 1899 3088 t
+10 NR f
+(yields 0 \(false\).)2 694 1 2375 3088 t
+9 CW f
+(len a)1 270 1 1008 3258 t
+10 NR f
+(for an array)2 554 1 720 3438 t
+10 CW f
+(a)1302 3438 w
+10 NR f
+(tells how many elements \(defined or not\) the array contains.)9 2788 1 1390 3438 t
+(There are two infix array operators.)5 1659 1 970 3594 t
+9 CW f
+(a del n)2 378 1 1008 3764 t
+10 NR f
+(where)720 3944 w
+10 CW f
+(a)1031 3944 w
+10 NR f
+(is an array and)3 707 1 1119 3944 t
+10 CW f
+(n)1854 3944 w
+10 NR f
+(an integer, yields)2 802 1 1942 3944 t
+10 CW f
+(a)2772 3944 w
+10 NR f
+(with the first)2 610 1 2860 3944 t
+10 CW f
+(n)3498 3944 w
+10 NR f
+( Therefore)1 505(elements dropped.)1 845 2 3586 3944 t
+9 CW f
+(a=a del 1)2 486 1 1008 4114 t
+10 NR f
+(shortens)720 4294 w
+10 CW f
+(a)1145 4294 w
+10 NR f
+( If)1 130(by deleting the first element.)4 1340 2 1233 4294 t
+10 CW f
+(n)2731 4294 w
+10 NR f
+(is negative, the last)3 909 1 2819 4294 t
+10 CW f
+(n)3756 4294 w
+10 NR f
+(elements are dropped.)2 1023 1 3844 4294 t
+9 CW f
+(a1 cat a2)2 486 1 1008 4464 t
+10 NR f
+(yields the concatenation of the arrays)5 1737 1 720 4644 t
+10 CW f
+(a1)2485 4644 w
+10 NR f
+(and)2633 4644 w
+10 CW f
+(a2)2835 4644 w
+10 NR f
+(.)2955 4644 w
+(The communications operator)2 1378 1 970 4800 t
+10 CW f
+(<\255)2376 4800 w
+10 NR f
+(is discussed in Section 14, on communications.)6 2150 1 2524 4800 t
+10 NB f
+(9.)720 5040 w
+10 CW f
+(progs)863 5040 w
+10 NR f
+(A)970 5196 w
+10 CW f
+(prog)1075 5196 w
+10 NR f
+( body of executable code that may be assigned to a variable and)12 3002(expression is a)2 690 2 1348 5196 t
+(executed. A)1 561 1 720 5316 t
+10 CW f
+(prog)1309 5316 w
+10 NR f
+(expression is a)2 680 1 1577 5316 t
+10 CW f
+(prog)2285 5316 w
+10 NR f
+(type followed by a brace\255enclosed body:)5 1806 1 2553 5316 t
+9 CW f
+(prog\()1008 5486 w
+9 NI f
+(formals)1278 5486 w
+9 CW f
+(\) of)1 216 1 1594 5486 t
+9 NI f
+(type)1864 5486 w
+9 NR f
+({)2057 5486 w
+9 NI f
+(body)2112 5486 w
+9 NR f
+(})2332 5486 w
+10 NR f
+(where)720 5666 w
+10 NI f
+(formals)1031 5666 w
+10 NR f
+( of declarations of formal parameters and the)7 2095(is a comma\255separated list)3 1183 2 1409 5666 t
+10 NI f
+(body)4716 5666 w
+10 NR f
+(is)4962 5666 w
+( lone type is that of the resulting value,)8 1887( The)1 242( of statements, defined below.)4 1404(a sequence)1 511 4 720 5786 t
+10 CW f
+(unit)4800 5786 w
+10 NR f
+(by default.)1 494 1 720 5906 t
+(The value returned to the caller of a)7 1739 1 970 6062 t
+10 CW f
+(prog)2747 6062 w
+10 NR f
+( the)1 189(is produced by)2 684 2 3025 6062 t
+10 CW f
+(become)3937 6062 w
+10 NR f
+(statement, dis\255)1 704 1 4336 6062 t
+( is a)2 190( Here)1 283(cussed in the section on statements.)5 1663 3 720 6182 t
+10 CW f
+(prog)2884 6182 w
+10 NR f
+(that adds its two integer arguments:)5 1693 1 3152 6182 t
+9 CW f
+(prog\(a,b:int\) of int{)2 1134 1 1008 6352 t
+(become a+b;)1 594 1 1440 6462 t
+(})1008 6572 w
+10 NR f
+(To bind this program to a variable, declare one, say)9 2378 1 720 6752 t
+10 CW f
+(add)3126 6752 w
+10 NR f
+(, and assign to it:)4 797 1 3306 6752 t
+9 CW f
+(add:=prog\(a,b:int\) of int{)2 1404 1 1008 6922 t
+(become a+b;)1 594 1 1440 7032 t
+(};)1008 7142 w
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 5 7
+%%Page: 6 8
+/saveobj save def
+mark
+8 pagesetup
+10 NR f
+(\255 6 \255)2 178 1 2791 480 t
+(Now)720 840 w
+10 CW f
+(add)973 840 w
+10 NR f
+( the tradi\255)2 499(may be called anywhere an expression of integral type is legal, using)11 3345 2 1196 840 t
+(tional syntax, for example as)4 1337 1 720 960 t
+9 CW f
+(twoplusthree:=add\(2, 3\);)1 1296 1 1008 1130 t
+10 NR f
+(Note, however, that a)3 1020 1 720 1310 t
+10 CW f
+(prog)1776 1310 w
+10 NR f
+( the declara\255)2 594( Thus)1 299(is an expression, and may be called directly.)7 2095 3 2052 1310 t
+(tion of)1 293 1 720 1430 t
+10 CW f
+(twoplusthree)1041 1430 w
+10 NR f
+(may be equivalently written)3 1309 1 1789 1430 t
+9 CW f
+(twoplusthree:=prog\(a:int, b:int\) of int{)3 2160 1 1008 1600 t
+(become a+b;)1 594 1 1440 1710 t
+(}\(2, 3\);)1 432 1 1008 1820 t
+10 NB f
+(10.)720 2120 w
+10 CW f
+(rec)920 2120 w
+10 NR f
+(The)970 2276 w
+10 CW f
+(rec)1184 2276 w
+10 NR f
+( declaration or brace\255enclosed group of declarations, per\255)7 2675(keyword, prefixing a)2 965 2 1400 2276 t
+( fac\255)1 200( example, the)2 636( For)1 224(mits declarations of self\255 and mutually\255recursive variables and types.)8 3260 4 720 2396 t
+(torial function can be written)4 1356 1 720 2516 t
+9 CW f
+(rec fact:=prog\(n:int\) of int{)3 1566 1 1008 2686 t
+(if\(n==0\) become 1;)2 972 1 1440 2796 t
+(become n*fact\(n\2551\);)1 1026 1 1440 2906 t
+(};)1008 3016 w
+10 NR f
+(A tree may be declared as a recursive type:)8 1985 1 720 3196 t
+9 CW f
+(rec type tree: struct of{)4 1350 1 1008 3366 t
+(value: int;)1 594 1 1440 3476 t
+(left,right: tree;)1 918 1 1440 3586 t
+(};)1008 3696 w
+10 NB f
+(11. Data)1 448 1 720 3996 t
+10 NR f
+( compound objects, are manipulated entirely by value.)7 2620(Variables in Newsqueak, even)3 1450 2 970 4152 t
+(For instance, after the declarations)4 1629 1 720 4272 t
+9 CW f
+(a:="hello";)1008 4442 w
+(b:=a;)1008 4552 w
+10 CW f
+(a)720 4732 w
+10 NR f
+(and)808 4732 w
+10 CW f
+(b)1010 4732 w
+10 NR f
+( the assignment)2 740( After)1 294(have the same value, but they do not share storage.)9 2386 3 1098 4732 t
+9 CW f
+(a[0]='j';)1008 4902 w
+10 CW f
+(a)720 5082 w
+10 NR f
+(now has the value)3 872 1 819 5082 t
+10 CW f
+(jello)1730 5082 w
+10 NR f
+(but)2069 5082 w
+10 CW f
+(b)2264 5082 w
+10 NR f
+(is still)1 298 1 2363 5082 t
+10 CW f
+(hello)2700 5082 w
+10 NR f
+( rule applies to all handling of data,)7 1739(. This)1 301 2 3000 5082 t
+(including passing variables to)3 1409 1 720 5202 t
+10 CW f
+(progs)2165 5202 w
+10 NR f
+(, so if a)3 353 1 2465 5202 t
+10 CW f
+(prog)2854 5202 w
+10 NR f
+( an)1 152(wishes to overwrite some elements of)5 1758 2 3130 5202 t
+( arrange to return the array to its caller, using a global variable or by using an)16 3674(array, it must)2 646 2 720 5322 t
+(appropriate return \()2 932 1 720 5442 t
+10 CW f
+(become)1652 5442 w
+10 NR f
+( implementation only creates copies of)5 1765( efficiency, the)2 669( \(For)1 251(\) value.)1 343 4 2012 5442 t
+( so data are shared as long as possible, but the semantics is)12 2809(variables when they are needed,)4 1511 2 720 5562 t
+(as described here.\))2 860 1 720 5682 t
+10 NB f
+(12. Scope)1 508 1 720 5922 t
+10 NR f
+( the brace\255enclosed block of state\255)5 1610(A variable, once declared, is visible until the end of)9 2460 2 970 6078 t
+( defined)1 369( variable)1 410( A)1 130( value may, however, be passed outside.)6 1856( Its)1 184(ments in which it is declared.)5 1371 6 720 6198 t
+( were enclosed in a set of)6 1207(outside any block is a global object, as though the entire program)11 3113 2 720 6318 t
+(braces.)720 6438 w
+10 NB f
+(13. Statements)1 786 1 720 6678 t
+10 NR f
+( to)1 129( is equivalent)2 647( It)1 147(The simplest statement is the empty statement, a bare semicolon.)9 3147 4 970 6834 t
+(the empty compound statement)3 1461 1 720 6954 t
+10 CW f
+({})2209 6954 w
+10 NR f
+(.)2329 6954 w
+(A compound statement is one of)5 1472 1 970 7110 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 6 8
+%%Page: 7 9
+/saveobj save def
+mark
+9 pagesetup
+10 NR f
+(\255 7 \255)2 178 1 2791 480 t
+9 CW f
+({})1008 830 w
+({)1008 940 w
+9 NI f
+(list of statements)2 699 1 1062 940 t
+9 CW f
+(})1761 940 w
+10 NR f
+(where a list of statements is a concatenation of one or more statements.)12 3313 1 720 1120 t
+( assignment to a)3 778( instance,)1 449( For)1 221(Any expression, followed by a semicolon, is a statement.)8 2622 4 970 1276 t
+(variable is an expression that yields the value assigned:)8 2588 1 720 1396 t
+9 CW f
+(b=2)1008 1566 w
+10 NR f
+(sets)720 1746 w
+10 CW f
+(b)929 1746 w
+10 NR f
+( allows chains of assignments:)4 1397( This)1 262(to 2 and yields 2 as its value.)7 1342 3 1017 1746 t
+9 CW f
+(a=b=2;)1008 1916 w
+10 NR f
+(is a statement that assigns 2 to)6 1464 1 720 2096 t
+10 CW f
+(b)2214 2096 w
+10 NR f
+(and then to)2 534 1 2304 2096 t
+10 CW f
+(a)2869 2096 w
+10 NR f
+( handles this differently; it assigns 2 to)7 1828(. \(C)1 192 2 2929 2096 t
+10 CW f
+(b)4980 2096 w
+10 NR f
+(and then)1 413 1 720 2216 t
+10 CW f
+(b)1161 2216 w
+10 NR f
+(to)1249 2216 w
+10 CW f
+(a)1366 2216 w
+10 NR f
+(.\))1426 2216 w
+(A declaration is a statement.)4 1336 1 970 2372 t
+( The)1 234(Control statements are much as in C.)6 1731 2 970 2528 t
+10 CW f
+(if)2963 2528 w
+10 NR f
+(statement has form:)2 932 1 3111 2528 t
+9 CW f
+(if\()1008 2698 w
+9 NI f
+(expression)1170 2698 w
+9 CW f
+(\))1596 2698 w
+9 NI f
+(executable statement)1 850 1 1440 2808 t
+10 NR f
+(or)720 2988 w
+9 CW f
+(if\()1008 3158 w
+9 NI f
+(expression)1170 3158 w
+9 CW f
+(\))1596 3158 w
+9 NI f
+(executable statement)1 850 1 1440 3268 t
+9 CW f
+(else)1008 3378 w
+9 NI f
+(executable statement)1 850 1 1440 3488 t
+10 NR f
+( is non\255zero, the first statement is)6 1580( the result)2 482( If)1 132(The expression \(of integral type\) is evaluated.)6 2126 4 720 3668 t
+( zero and an)3 597(executed; if)1 537 2 720 3788 t
+10 CW f
+(else)1892 3788 w
+10 NR f
+( exe\255)1 225( An)1 199(clause is present, its statement is instead executed.)7 2446 3 2170 3788 t
+(cutable statement is any statement except a declaration.)7 2620 1 720 3908 t
+(The)970 4064 w
+10 CW f
+(for)1176 4064 w
+10 NR f
+(loop is)1 295 1 1384 4064 t
+9 CW f
+(for\()1008 4234 w
+9 NI f
+(expr1)1224 4234 w
+9 CW f
+(;)1504 4234 w
+9 NI f
+(expr2)1612 4234 w
+9 CW f
+(;)1892 4234 w
+9 NI f
+(expr3)2000 4234 w
+9 CW f
+(\))2226 4234 w
+9 NI f
+(executable statement)1 850 1 1440 4344 t
+10 NR f
+( is non\255zero, the state\255)4 1068( while the second expression)4 1349( Then,)1 332(The first expression is evaluated.)4 1571 4 720 4524 t
+( of the expressions in parenthe\255)5 1478( Any)1 248(ment is executed and the third expression is evaluated.)8 2594 3 720 4644 t
+(ses may be elided; if the second is missing, it is taken to be 1.)14 2827 1 720 4764 t
+(The)970 4920 w
+10 CW f
+(break)1176 4920 w
+10 NR f
+(statement,)1504 4920 w
+9 CW f
+(break;)1008 5090 w
+10 NR f
+( The)1 250( loop, terminates the loop immediately.)5 1890(which is legal only within a)5 1349 3 720 5270 t
+10 CW f
+(continue)4253 5270 w
+10 NR f
+(state\255)4777 5270 w
+(ment,)720 5390 w
+9 CW f
+(continue;)1008 5560 w
+10 NR f
+( bypassing the remaining body)4 1432(transfers the loop control immediately to the third expression,)8 2888 2 720 5740 t
+(of the loop.)2 506 1 720 5860 t
+(The)970 6016 w
+10 CW f
+(while)1176 6016 w
+10 NR f
+(loop)1504 6016 w
+9 CW f
+(while\()1008 6186 w
+9 NI f
+(expression)1332 6186 w
+9 CW f
+(\))1758 6186 w
+9 NI f
+(executable statement)1 850 1 1440 6296 t
+10 NR f
+(is equivalent to)2 714 1 720 6476 t
+9 CW f
+(for\(;)1008 6646 w
+9 NI f
+(expression)1278 6646 w
+9 CW f
+(;\))1704 6646 w
+9 NI f
+(executable statement)1 850 1 1440 6756 t
+10 NR f
+(The)970 6972 w
+10 CW f
+(do)1176 6972 w
+10 NR f
+(loop)1324 6972 w
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 7 9
+%%Page: 8 10
+/saveobj save def
+mark
+10 pagesetup
+10 NR f
+(\255 8 \255)2 178 1 2791 480 t
+9 CW f
+(do)1008 830 w
+9 NI f
+(executable statement)1 850 1 1170 830 t
+9 CW f
+(while\()1008 940 w
+9 NI f
+(expression)1332 940 w
+9 CW f
+(\);)1758 940 w
+10 NR f
+(is equivalent to)2 714 1 720 1120 t
+9 NI f
+(executable\255statement)1008 1290 w
+9 CW f
+(while\()1008 1400 w
+9 NI f
+(expression)1332 1400 w
+9 CW f
+(\))1758 1400 w
+9 NI f
+(executable statement)1 850 1 1440 1510 t
+10 NR f
+(The)970 1726 w
+10 CW f
+(switch)1176 1726 w
+10 NR f
+(statement)1564 1726 w
+9 CW f
+(switch\()1008 1896 w
+9 NI f
+(expression)1386 1896 w
+9 CW f
+(\){)1812 1896 w
+(case)1008 2006 w
+9 NI f
+(expression)1278 2006 w
+9 CW f
+(:)1704 2006 w
+9 NI f
+(list of executable statements)3 1147 1 1440 2116 t
+9 CW f
+(case)1008 2226 w
+9 NI f
+(expression)1278 2226 w
+9 CW f
+(:)1704 2226 w
+9 NI f
+(list of executable statements)3 1147 1 1440 2336 t
+9 CW f
+(default:)1008 2446 w
+9 NI f
+(list of executable statements)3 1147 1 1440 2556 t
+9 CW f
+(})1008 2666 w
+10 NR f
+( top\255to\255bottom with the expres\255)4 1478(evaluates the first expression, and then compares the value)8 2842 2 720 2846 t
+( a particular)2 593( When)1 334( cases.)1 306(sions \(which need not be constants\) in the various)8 2375 4 720 2966 t
+10 CW f
+(case)4364 2966 w
+10 NR f
+('s expres\255)1 436 1 4604 2966 t
+( the)1 184(sion equals)1 523 2 720 3086 t
+10 CW f
+(switch)1461 3086 w
+10 NR f
+(expression, the corresponding statement list is executed, and execu\255)8 3185 1 1855 3086 t
+(tion then continues after the)4 1345 1 720 3206 t
+10 CW f
+(switch)2099 3206 w
+10 NR f
+( no earlier)2 485( If)1 135( most one case is executed.)5 1257(statement. At)1 670 4 2493 3206 t
+10 CW f
+(case)720 3326 w
+10 NR f
+( a)1 108(matches, and)1 638 2 1011 3326 t
+10 CW f
+(default)1809 3326 w
+10 NR f
+(is present \(it is optional\), its statement list is executed.)9 2759 1 2281 3326 t
+( logical operators,)2 846(Because strings may be compared using the)6 2109 2 720 3446 t
+10 CW f
+(switch)3716 3446 w
+10 NR f
+(expressions may be)2 923 1 4117 3446 t
+(strings as well as integers.)4 1234 1 720 3566 t
+(The)970 3722 w
+10 CW f
+(become)1176 3722 w
+10 NR f
+(statement)1564 3722 w
+9 CW f
+(become)1008 3892 w
+9 NI f
+(expression)1386 3892 w
+9 CW f
+(;)1812 3892 w
+10 NR f
+(is legal only inside a)4 977 1 720 4072 t
+10 CW f
+(prog)1733 4072 w
+10 NR f
+( effect is to replace the execution of the)8 1861(. Its)1 218 2 1973 4072 t
+10 CW f
+(prog)4088 4072 w
+10 NR f
+(by the evalua\255)2 676 1 4364 4072 t
+( of the)2 297( resulting value is returned to the caller)7 1884( The)1 239(tion of the expression.)3 1032 4 720 4192 t
+10 CW f
+(prog)4204 4192 w
+10 NR f
+(as its value.)2 564 1 4476 4192 t
+(For example, consider the)3 1195 1 720 4312 t
+10 CW f
+(prog)1943 4312 w
+9 CW f
+(rec sumorial:=prog\(n,sum:int\) of int{)3 1998 1 1008 4482 t
+(if\(n==0\) become sum;)2 1080 1 1440 4592 t
+(become sumorial\(n\2551, sum+n\);)2 1512 1 1440 4702 t
+(};)1008 4812 w
+10 NR f
+(If)720 4992 w
+10 CW f
+(n)836 4992 w
+10 NR f
+(is zero, the first)3 771 1 939 4992 t
+10 CW f
+(become)1753 4992 w
+10 NR f
+(yields to the caller the value of)6 1512 1 2156 4992 t
+10 CW f
+(sum)3711 4992 w
+10 NR f
+( the second)2 544(. Otherwise,)1 605 2 3891 4992 t
+10 CW f
+(become)720 5112 w
+10 NR f
+(replaces the executing)2 1040 1 1114 5112 t
+10 CW f
+(prog)2187 5112 w
+10 NR f
+( gen\255)1 231( In)1 163(by a version of itself with different arguments.)7 2186 3 2460 5112 t
+(eral, when a)2 572 1 720 5232 t
+10 CW f
+(prog P)1 328 1 1320 5232 t
+10 NR f
+(executes a)1 478 1 1676 5232 t
+10 CW f
+(become)2182 5232 w
+10 NR f
+( is a call of)4 497(whose expression)1 803 2 2570 5232 t
+10 CW f
+(Q)3899 5232 w
+10 NR f
+(, the effect is exactly as)5 1081 1 3959 5232 t
+(if the caller of)3 646 1 720 5352 t
+10 CW f
+(P)1396 5352 w
+10 NR f
+(had instead called)2 846 1 1486 5352 t
+10 CW f
+(Q)2362 5352 w
+10 NR f
+( new stack space is)4 880( No)1 189( arguments.)1 557(with the appropriate)2 962 4 2452 5352 t
+(consumed;)720 5472 w
+10 CW f
+(become)1234 5472 w
+10 NR f
+(is a form of process call.)5 1102 1 1622 5472 t
+(The)970 5628 w
+10 CW f
+(begin)1177 5628 w
+10 NR f
+(statement starts a process)3 1219 1 1506 5628 t
+10 S1 f
+(\320)2755 5628 w
+10 NR f
+( The)1 236(an independently executing computation.)3 1919 2 2885 5628 t
+(syntax is)1 416 1 720 5748 t
+9 CW f
+(begin)1008 5918 w
+9 NI f
+(prog)1332 5918 w
+9 CW f
+(\()1517 5918 w
+9 NI f
+(parameters)1571 5918 w
+9 NR f
+(\);)2036 5918 w
+10 NR f
+(so it may begin only a)5 1087 1 720 6098 t
+10 CW f
+(prog)1850 6098 w
+10 NR f
+( return value of the)4 957( \(The)1 282(as a separate process.)3 1050 3 2133 6098 t
+10 CW f
+(prog)4466 6098 w
+10 NR f
+(is dis\255)1 290 1 4750 6098 t
+(carded if the)2 587 1 720 6218 t
+10 CW f
+(prog)1339 6218 w
+10 NR f
+( concurrently; the current implementation)4 1966( processes execute)2 845(finishes.\) All)1 618 3 1611 6218 t
+( further in the next)4 895( are discussed)2 645( Processes)1 499(interleaves the execution of processes very finely.)6 2281 4 720 6338 t
+(section.)720 6458 w
+10 NB f
+(14. Communications)1 1083 1 720 6698 t
+10 NR f
+( with channels acting as ren\255)5 1387(Newsqueak's communication mechanisms are as in CSP,)6 2683 2 970 6854 t
+( have explicit type:)3 873( Channels)1 495(dezvous points for processes.)3 1323 3 720 6974 t
+9 CW f
+(c:=mk\(chan of int\);)2 1026 1 1008 7144 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 8 10
+%%Page: 9 11
+/saveobj save def
+mark
+11 pagesetup
+10 NR f
+(\255 9 \255)2 178 1 2791 480 t
+(creates a channel)2 806 1 720 840 t
+10 CW f
+(c)1554 840 w
+10 NR f
+(that may be used to send integers.)6 1589 1 1642 840 t
+(The communication operator is)3 1453 1 970 996 t
+10 CW f
+(<\255)2456 996 w
+10 NR f
+( pre\255)1 218( The)1 240( form.)1 278(and exists as a prefix and postscript)6 1695 4 2609 996 t
+(fix form is a receipt:)4 925 1 720 1116 t
+9 CW f
+(<\255c)1008 1286 w
+10 NR f
+( postfix form is legal only on the left)8 1737( The)1 243( transmitted on the channel.)4 1354(yields the next value)3 986 4 720 1466 t
+(side of an assignment:)3 1031 1 720 1586 t
+9 CW f
+(c<\255 = 3;)2 432 1 1008 1756 t
+10 NR f
+(sends the integer 3 on)4 1027 1 720 1936 t
+10 CW f
+(c)1777 1936 w
+10 NR f
+( type of the channel is)5 1031( the)1 180(.* \(If)1 243 3 1837 1936 t
+10 CW f
+(unit)3322 1936 w
+10 NR f
+(, the assignment may be elided;)5 1478 1 3562 1936 t
+10 CW f
+(unitchan<\255)720 2056 w
+10 NR f
+(sends)1361 2056 w
+10 CW f
+(unit)1662 2056 w
+10 NR f
+( channels)1 451( example, given two integer)4 1328( For)1 230(on such a channel.\))3 928 4 1943 2056 t
+10 CW f
+(c1)4920 2056 w
+10 NR f
+(and)720 2176 w
+10 CW f
+(c2)922 2176 w
+10 NR f
+(the loop)1 367 1 1070 2176 t
+9 CW f
+(for\(;;\) c1<\255 = <\255c2;)3 1080 1 1008 2346 t
+10 NR f
+(receives integers on)2 913 1 720 2526 t
+10 CW f
+(c2)1661 2526 w
+10 NR f
+(and sends them out on)4 1046 1 1809 2526 t
+10 CW f
+(c1)2883 2526 w
+10 NR f
+(.)3003 2526 w
+( processes must simultaneously be able)5 1872(For a communication to complete, two distinct)6 2198 2 970 2682 t
+( a channel)2 501( Given)1 343( receive.)1 392(to communicate on the stated channel, one to send and one to)11 2984 4 720 2802 t
+10 CW f
+(c)4980 2802 w
+10 NR f
+(shared by two processes, when one process executes)7 2390 1 720 2922 t
+9 CW f
+(c<\255 = 3;)2 432 1 1008 3092 t
+10 NR f
+(it blocks \(suspends execution\) until another process executes)7 2802 1 720 3272 t
+9 CW f
+(<\255c;)1008 3442 w
+10 NR f
+( process evaluates the expression to send,)6 1962( both are ready, the sending)5 1326( When)1 332(and vice versa.)2 700 4 720 3622 t
+( that the)2 415( Note)1 284( processes then resume execution.)4 1593( Both)1 285( the receiving process.)3 1041(and sends it to)3 702 6 720 3742 t
+(rendezvous is done before the expression to be sent is evaluated, so in)12 3217 1 720 3862 t
+9 CW f
+(c1<\255 = <\255c2;)2 648 1 1008 4032 t
+10 NR f
+(the rendezvous on)2 858 1 720 4212 t
+10 CW f
+(c1)1616 4212 w
+10 NR f
+(occurs before the rendezvous on)4 1506 1 1774 4212 t
+10 CW f
+(c2)3318 4212 w
+10 NR f
+( the other order is required to)6 1434(. If)1 168 2 3438 4212 t
+(avoid deadlock, the statement can be rewritten as)7 2303 1 720 4332 t
+9 CW f
+({a:= <\255c2; c1<\255 = a;})4 1134 1 1008 4502 t
+10 NR f
+(The)970 4718 w
+10 CW f
+(select)1182 4718 w
+10 NR f
+( of channels on which to)5 1145(statement allows a process to choose among a set)8 2319 2 1576 4718 t
+( syntax is)2 444(communicate. The)1 877 2 720 4838 t
+9 CW f
+(select{)1008 5008 w
+(case)1008 5118 w
+9 NI f
+(communication)1278 5118 w
+9 CW f
+(:)1916 5118 w
+9 NI f
+(list of executable statements)3 1147 1 1440 5228 t
+9 CW f
+(...)1008 5338 w
+(})1008 5448 w
+10 NR f
+( no)1 145(There is)1 383 2 720 5628 t
+10 CW f
+(default)1282 5628 w
+10 NR f
+(in a)1 183 1 1736 5628 t
+10 CW f
+(select.)1953 5628 w
+10 NR f
+(The communications in the)3 1277 1 2407 5628 t
+10 CW f
+(cases)3718 5628 w
+10 NR f
+(are one of the follow\255)4 988 1 4052 5628 t
+(ing:)720 5748 w
+9 CW f
+(<\255)1008 5918 w
+9 NI f
+(channel)1170 5918 w
+(variable)1008 6028 w
+9 CW f
+(= <\255)1 216 1 1401 6028 t
+9 NI f
+(channel)1671 6028 w
+(channel)1008 6138 w
+9 CW f
+(<\255 =)1 216 1 1334 6138 t
+9 NI f
+(expression)1604 6138 w
+10 NR f
+( array expression of one of the forms)7 1707(where a channel is either a simple channel or an)9 2275 2 720 6318 t
+10 CW f
+(a[])4734 6318 w
+10 NR f
+(or)4946 6318 w
+10 CW f
+(a[)720 6438 w
+10 NI f
+(variable)840 6438 w
+10 CW f
+(=])1216 6438 w
+10 NR f
+(, and)1 248 1 1336 6438 t
+10 CW f
+(a)1630 6438 w
+10 NR f
+(is an array of channels and)5 1347 1 1736 6438 t
+10 NI f
+(variable)3129 6438 w
+10 NR f
+( the)1 195( In)1 175(is an assignable object.)3 1119 3 3551 6438 t
+( the last)2 389( If)1 135( communication.)1 769(array forms, all the channels in the array are made available for)11 3027 4 720 6558 t
+(form is used, and that case proceeds, the index in the array of the channel that communi\255)16 4320 1 720 6678 t
+(cated is assigned to the indexing variable.)6 1942 1 720 6798 t
+8 S1 f
+(__________________)720 6898 w
+8 NR f
+(* Mnemonic:)1 478 1 720 6998 t
+8 CW f
+(c<\255)1229 6998 w
+8 NR f
+(is a send because the arrow points to the channel;)9 1922 1 1404 6998 t
+8 CW f
+(<\255c)3357 6998 w
+8 NR f
+( receipt because the arrow)4 1009(is a)1 139 2 3532 6998 t
+(points from the channel.)3 902 1 720 7098 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 9 11
+%%Page: 10 12
+/saveobj save def
+mark
+12 pagesetup
+10 NR f
+(\255 10 \255)2 234 1 2763 480 t
+(The execution of a)3 866 1 970 840 t
+10 CW f
+(select)1872 840 w
+10 NR f
+( all the channels named, includ\255)5 1527( First,)1 321(proceeds as follows.)2 923 3 2269 840 t
+( are)1 181( one or more channels)4 1027( If)1 134(ing all the channels in arrays, are evaluated in the order listed.)11 2978 4 720 960 t
+( at random \(by calling a)5 1147(free to communicate immediately, one of those available is selected)9 3173 2 720 1080 t
+( Other\255)1 373( proceeds.)1 466(pseudo\255random number generator\) and the corresponding communication)6 3481 3 720 1200 t
+( one)1 192( some can,)2 484( When)1 328(wise, the process blocks until one or more communications can proceed.)10 3316 4 720 1320 t
+( is selected at random, and the appropriate)7 2002(of those available)2 815 2 720 1440 t
+10 CW f
+(case)3567 1440 w
+10 NR f
+( it is a send,)4 567( If)1 132(is selected.)1 504 3 3837 1440 t
+( the)1 192( If)1 144( be sent is next evaluated.)5 1277(the expression to)2 811 4 720 1560 t
+10 CW f
+(case)3186 1560 w
+10 NR f
+(is an indexed array, the index is)6 1572 1 3468 1560 t
+( the communication is a receipt)5 1498( If)1 140( passed as appropriate.)3 1098( value is then)3 659( The)1 245(then assigned.)1 680 6 720 1680 t
+(with a variable named to receive the value \(the case)9 2469 1 720 1800 t
+10 CW f
+(a=<\255c)3224 1800 w
+10 NR f
+(\) the variable receives the value)5 1516 1 3524 1800 t
+( then proceeds with the statement list attached to the successful case, after)12 3569(sent. Execution)1 751 2 720 1920 t
+(which execution resumes after the)4 1587 1 720 2040 t
+10 CW f
+(select)2335 2040 w
+10 NR f
+(statement.)2723 2040 w
+(For example, the following)3 1248 1 970 2196 t
+10 CW f
+(prog)2251 2196 w
+10 NR f
+( and array index of the first receiving)7 1768(prints the value)2 748 2 2524 2196 t
+(communication to proceed on any of the channels in its argument:)10 3047 1 720 2316 t
+9 CW f
+(prog\(a:array of chan of int\){)4 1566 1 1008 2486 t
+(i,v: int;)1 486 1 1440 2596 t
+(select{)1440 2706 w
+(case v=<\255a[i=]:)1 810 1 1440 2816 t
+(print\("chan index ", i, " result ", v, "\\n"\);)8 2430 1 1872 2926 t
+(})1440 3036 w
+(})1008 3146 w
+10 NR f
+(\(The)720 3326 w
+10 CW f
+(print)959 3326 w
+10 NR f
+(expression is discussed below.\))3 1418 1 1287 3326 t
+10 NB f
+(15.)720 3566 w
+10 CW f
+(val)920 3566 w
+10 NR f
+(The)970 3722 w
+10 CW f
+(val)1176 3722 w
+10 NR f
+(expression has syntax)2 1019 1 1384 3722 t
+9 CW f
+(val {)1 270 1 1008 3892 t
+9 NI f
+(list of statements)2 699 1 1332 3892 t
+9 CW f
+(})2085 3892 w
+10 NR f
+(One or more of the statements in the statement list is a)11 2567 1 720 4072 t
+10 CW f
+(result)3315 4072 w
+10 NR f
+(statement:)3703 4072 w
+9 CW f
+(result)1008 4242 w
+9 NI f
+(expression)1386 4242 w
+9 CW f
+(;)1812 4242 w
+10 NR f
+(The semantics of)2 780 1 720 4422 t
+10 CW f
+(val)1529 4422 w
+10 NR f
+(is to execute the statement list, and to yield the value of the expression)13 3302 1 1738 4422 t
+(associated with the first)3 1129 1 720 4542 t
+10 CW f
+(result)1882 4542 w
+10 NR f
+( is an error to complete a)6 1181( It)1 141(statement executed.)1 935 3 2275 4542 t
+10 CW f
+(val)4565 4542 w
+10 NR f
+(state\255)4777 4542 w
+(ment without executing a)3 1196 1 720 4662 t
+10 CW f
+(result)1948 4662 w
+10 NR f
+( sets)1 214( example, this)2 658(statement. For)1 718 3 2340 4662 t
+10 CW f
+(c)3963 4662 w
+10 NR f
+(to the maximum of)3 891 1 4056 4662 t
+10 CW f
+(a)4980 4662 w
+10 NR f
+(and)720 4782 w
+10 CW f
+(b)922 4782 w
+10 NR f
+(:)982 4782 w
+9 CW f
+(c = val{)2 432 1 1008 4952 t
+(if\(a>=b\) result a;)2 972 1 1440 5062 t
+(result b;)1 486 1 1440 5172 t
+(})1008 5282 w
+10 NB f
+(16. Printing)1 644 1 720 5582 t
+10 NR f
+(The)970 5738 w
+10 CW f
+(print)1176 5738 w
+10 NR f
+(expression, with syntax)2 1094 1 1504 5738 t
+9 CW f
+(print\()1008 5908 w
+9 NI f
+(list of expressions)2 723 1 1332 5908 t
+9 CW f
+(\))2055 5908 w
+10 NR f
+( formatted represen\255)2 968(where the expressions are comma\255separated, yields a string containing)8 3352 2 720 6088 t
+( this expression is promoted directly to a state\255)8 2262( If)1 142( the expressions, concatenated.)3 1469(tations of)1 447 4 720 6208 t
+( example:)1 444( For)1 217(ment, without being stored or evaluated, it is written to the standard output.)12 3561 3 720 6328 t
+9 CW f
+(print\("23+45=", 23+54, "\\n"\);)2 1566 1 1008 6498 t
+10 NR f
+(prints)720 6678 w
+9 CW f
+(23+45=77)1008 6848 w
+10 NR f
+(but)720 7028 w
+9 CW f
+(x:=print\("23+45=", 23+54, "\\n"\);)2 1728 1 1008 7198 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 10 12
+%%Page: 11 13
+/saveobj save def
+mark
+13 pagesetup
+10 NR f
+(\255 11 \255)2 234 1 2763 480 t
+(saves the resulting string in)4 1302 1 720 840 t
+10 CW f
+(x)2050 840 w
+10 NR f
+(and produces no output.)3 1113 1 2138 840 t
+10 NB f
+( interpreter)1 615(17. The)1 398 2 720 1080 t
+10 NR f
+( Its)1 209( language described above.)3 1319(The Newsqueak interpreter, squint, implements the)5 2542 3 970 1236 t
+( the top level of)4 721( at)1 127( Expressions)1 618(input is a list of statements, executed in the order presented.)10 2854 4 720 1356 t
+( a statement by a following semicolon, have their values)9 2701(the interpreter, when promoted to)4 1619 2 720 1476 t
+( typical pro\255)2 568( A)1 135( a sort of calculator.)4 944(printed automatically, so the interpreter may be used as)8 2673 4 720 1596 t
+(gram defines several)2 960 1 720 1716 t
+10 CW f
+(progs)1708 1716 w
+10 NR f
+(, then)1 267 1 2008 1716 t
+10 CW f
+(begins)2303 1716 w
+10 NR f
+(them and starts some communication.)4 1766 1 2691 1716 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 11 13
+%%Page: 12 14
+/saveobj save def
+mark
+14 pagesetup
+10 NR f
+(\255 12 \255)2 234 1 2763 480 t
+10 NB f
+(18. Example)1 653 1 720 840 t
+10 NR f
+(The following program comprises several)4 1896 1 970 996 t
+10 CW f
+(progs)2894 996 w
+10 NR f
+( last,)1 230(. The)1 262 2 3194 996 t
+10 CW f
+(sieve,)3715 996 w
+10 NR f
+(returns a channel of)3 936 1 4104 996 t
+(integers that produces the successive prime numbers.)6 2478 1 720 1116 t
+9 CW f
+(counter:=prog\(c:chan of int\))2 1512 1 1008 1286 t
+({)1008 1396 w
+(i:=2;)1440 1506 w
+(for\(;;\))1440 1616 w
+(c<\255=i++;)1872 1726 w
+(};)1008 1836 w
+(filter:=prog\(prime:int, listen,send:chan of int\))3 2592 1 1008 1946 t
+({)1008 2056 w
+(i:int;)1440 2166 w
+(for\(;;\))1440 2276 w
+(if\(\(i=<\255listen\)%prime\))1872 2386 w
+(send<\255=i;)2304 2496 w
+(};)1008 2606 w
+(sieve:=prog\(\) of chan of int)4 1512 1 1008 2716 t
+({)1008 2826 w
+(c:=mk\(chan of int\);)2 1026 1 1440 2936 t
+(begin counter\(c\);)1 918 1 1440 3046 t
+(prime:=mk\(chan of int\);)2 1242 1 1440 3156 t
+(begin prog\(\){)1 702 1 1440 3266 t
+(p:int;)1872 3376 w
+(newc:chan of int;)2 918 1 1872 3486 t
+(for\(;;\){)1872 3596 w
+(prime<\255=p=<\255c;)2304 3706 w
+(newc=mk\(\);)2304 3816 w
+(begin filter\(p, c, newc\);)3 1350 1 2304 3926 t
+(c=newc;)2304 4036 w
+(})1872 4146 w
+(}\(\);)1440 4256 w
+(become prime;)1 702 1 1440 4366 t
+(};)1008 4476 w
+(prime:=sieve\(\);)1008 4586 w
+10 NR f
+(This program may be run by typing)6 1646 1 720 4766 t
+9 NI f
+($)1008 4936 w
+9 CW f
+(squint)1112 4936 w
+(include "sieve")1 810 1 1008 5046 t
+(<\255prime;)1008 5156 w
+9 NI f
+(2)1008 5266 w
+9 CW f
+(<\255prime;)1008 5376 w
+9 NI f
+(3)1008 5486 w
+9 CW f
+(i:int;)1008 5596 w
+(for\(i=0; i<10; i++\) print\(<\255prime, " "\);)5 2160 1 1008 5706 t
+9 NI f
+(5 7 11 13 17 19 23 29 31 37)9 1125 1 1008 5816 t
+10 NR f
+(\()720 5996 w
+10 CW f
+($)753 5996 w
+10 NR f
+( interpreter may also be)4 1147( The)1 243( is in italics.\))3 624(is the prompt from the Unix shell, and output)8 2177 4 849 5996 t
+(invoked)720 6116 w
+9 NI f
+($)1008 6286 w
+9 CW f
+(squint sieve /dev/stdin)2 1242 1 1112 6286 t
+10 NB f
+( bugs)1 274(19. Implementation)1 1035 2 720 6586 t
+10 NR f
+( exist past the lifetime of)5 1194(The current implementation does not allow local variables to)8 2876 2 970 6742 t
+(the)720 6862 w
+10 CW f
+(prog)913 6862 w
+10 NR f
+( created)1 382( causes problems when local progs are)6 1850( This)1 277(in which they were created.)4 1335 4 1196 6862 t
+( situation is flagged as an)5 1244( The)1 245(that access variables neither global nor local to themselves.)8 2831 3 720 6982 t
+( example,)1 444(error. For)1 477 2 720 7102 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 12 14
+%%Page: 13 15
+/saveobj save def
+mark
+15 pagesetup
+10 NR f
+(\255 13 \255)2 234 1 2763 480 t
+9 CW f
+(bad1:=prog\(\){)1008 830 w
+(a:int;)1440 940 w
+(p:=prog\(\){)1440 1050 w
+(a=1;)1872 1160 w
+(};)1440 1270 w
+(};)1008 1380 w
+10 NR f
+( mitigate the problem somewhat, squint internally rewrites the program)9 3351( To)1 173(draws an error.)2 714 3 720 1560 t
+9 CW f
+(bad2:=prog\(\){)1008 1730 w
+(a:int;)1440 1840 w
+(begin prog\(\){)1 702 1 1440 1950 t
+(a=1;)1872 2060 w
+(}\(\);)1440 2170 w
+(};)1008 2280 w
+10 NR f
+(into the form)2 604 1 720 2460 t
+9 CW f
+(bad2:=prog\(\){)1008 2630 w
+(a:int;)1440 2740 w
+(begin prog\(a:int\){)1 972 1 1440 2850 t
+(a=1;)1872 2960 w
+(}\(a\);)1440 3070 w
+(};)1008 3180 w
+10 NR f
+(since the argument list for a)5 1349 1 720 3360 t
+10 CW f
+(begin)2105 3360 w
+10 NR f
+( local)1 250( Thus)1 299(is always present.)2 847 3 2441 3360 t
+10 CW f
+(progs)3874 3360 w
+10 NR f
+(not begun as pro\255)3 829 1 4211 3360 t
+(cesses must access only globals and variables local to themselves.)9 3026 1 720 3480 t
+10 NB f
+(20. Future)1 562 1 720 3720 t
+10 NR f
+( should be tidied up: type derivation should be formalized, and the)11 3208(A couple of things)3 862 2 970 3876 t
+(array forms of communication should be applicable outside select statements.)9 3583 1 720 3996 t
+( considered for Newsqueak include buffered channels and environ\255)8 3127(Developments being)1 943 2 970 4152 t
+( channels would have syntax)4 1332(ments. Buffered)1 769 2 720 4272 t
+9 CW f
+(chan[10] of int)2 810 1 1008 4442 t
+10 NR f
+( synchronous channel, as currently imple\255)5 1995( A)1 140( a buffer.)2 441(with the number defining the size of)6 1744 4 720 4622 t
+(mented, would be equivalent to)4 1450 1 720 4742 t
+9 CW f
+(chan[0].)1008 4912 w
+10 NR f
+( They)1 307( code.)1 276(Environments are a way to specify the variables accessible to a body of)12 3487 3 970 5128 t
+( be accepted as)3 695(make it possible to maintain strong typing while allowing arbitrary strings to)11 3625 2 720 5248 t
+( other words, they make a sort of)7 1519(programs. In)1 626 2 720 5368 t
+10 CW f
+(eval)2893 5368 w
+10 NR f
+(or compile\255on\255the\255fly operator type safe.)4 1842 1 3161 5368 t
+cleartomark
+showpage
+saveobj restore
+%%EndPage: 13 15
+%%Trailer
+done
+%%Pages: 15
+%%DocumentFonts: Times-Roman Symbol NewCenturySchlbk-Bold NewCenturySchlbk-Italic Courier NewCenturySchlbk-Roman

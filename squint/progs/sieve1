@@ -1,0 +1,37 @@
+counter:=prog(c: chan of int)
+{
+	i:=1;
+	for(;;)
+		c<-=(i=i+1);
+};
+
+filter:=prog(prime: int, listen: chan of int, send: chan of int)
+{
+	i:int;
+	for(;;)
+		if((i=<-listen)%prime)
+			send<-=i;
+};
+
+sieve:=prog(prime: chan of int)
+{
+	c:=mk(chan of int);
+	begin counter(c);
+	newc:chan of int;
+	p:int;
+	for(;;){
+		prime<-=p=<-c;
+		newc=mk();
+		begin filter(p, c, newc);
+		c=newc;
+	}
+};
+
+prime:=mk(chan of int);
+
+begin sieve(prime);
+
+<-prime;
+<-prime;
+<-prime;
+<-prime;

@@ -1,0 +1,12 @@
+rec{
+	type T: struct of{ i:int; x: U;};
+	type U: struct of{ i:int; x: T;};
+}
+help:=mk(T={1});
+help;
+help.x=mk(U={2});
+help;
+
+def help;
+def help.x;
+def help.x.x;

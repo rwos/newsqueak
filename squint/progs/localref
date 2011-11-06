@@ -1,0 +1,14 @@
+p:=prog(){
+	i:int;
+	for(i=0; i<10; i=i+1){
+		a:="now is the time";
+		if(ref a!=2)
+			print("bad ref a\n");
+		b:=mk(array[2] of array of char={a,"ho"});
+		if(ref b[0]!=3)
+			print("bad ref b[0]\n");
+		if(ref b[1]!=2)
+			print("bad ref b[1]\n");
+	}
+};
+p();

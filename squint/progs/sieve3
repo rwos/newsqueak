@@ -1,0 +1,24 @@
+counter:=prog(end: int, c: chan of int)
+{
+	i:int;
+	for(i=2; i<end; i++)
+		c<-=i;
+};
+
+rec filter:=prog(listen: chan of int)
+{
+	i:int;
+	prime:=<-listen;
+	print(prime, " ");
+	send:=mk(chan of int);
+	begin filter(send);
+	for(;;)
+		if((i=<-listen)%prime)
+			send<-=i;
+};
+
+count:=mk(chan of int);
+
+begin counter(100, count);
+begin filter(count);
+"";

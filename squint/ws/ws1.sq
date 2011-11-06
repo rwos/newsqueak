@@ -1,0 +1,294 @@
+include "lib.h"
+include "nspace.h"
+include "gnot.h"
+include "layer.h"
+include "gnotio.h"
+include "lmenu.h"
+include "cursor/box.h"
+include "cursor/arrow.h"
+
+S:=getscreen();
+{
+	mousectl(Cursorinhibit);
+	mousectl(Cursorallow);
+	nsinit();
+}
+
+include "/usr/rob/squint/gnotio.sq"
+
+type Wprog:prog(S:Bitmap, M:chan of Mouse, K:chan of array of char);
+type Wargs:struct of{
+	success:int;
+	R:Rectangle;
+	M:chan of Mouse;
+	K:chan of array of char;
+	cover:Cover;
+};
+type Child:struct of{
+	S: Bitmap;
+	K: chan of array of char;
+	M: chan of Mouse;
+	seq: int;
+};
+
+ground:Texture={
+	0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777,
+	0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777, 0xDDDD, 0x7777
+};
+
+rc:Wprog;
+
+const WS:=0;
+const RC:=1;
+const EX:=2;
+menu:Menu={{"new ws", "new rc", "exit"}, 0};
+
+const MARGIN:=3;
+
+frame:=prog(S:Bitmap, solid:int){
+	border(S, S.r, MARGIN, XXX);
+	if(!solid)
+		border(S, rectinset(S.r, 1, 1), MARGIN-1, 0);
+};
+
+sweep:=prog(S:Bitmap, M:chan of Mouse) of Rectangle{
+	m:Mouse;
+	cursorswitch(Cbox);
+	do
+		m=<-M;
+	while((m.but&4)==0);
+	r:Rectangle={m.xy, m.xy};
+	mousectl(Cursorinhibit);
+	for(;;){
+		border(S, r, MARGIN, XXX&~DST);
+		mousectl(Cursorallow);
+		m=<-M;
+		if((m.but&4)==0){
+			border(S, r, MARGIN, XXX&~DST);
+			cursorswitch(Carrow);
+			become r;
+		}
+		mousectl(Cursorinhibit);
+			border(S, r, MARGIN, XXX&~DST);
+		r.max=m.xy;
+	}
+};
+
+which:=prog(cover:Cover, child:array of Child, n:int, p:Point) of int{
+	i,j,k:int;
+	for(i=0; i<n; i++)
+		if(ptinrect(p, cover.layer[i].r)){
+			k=cover.layer[i].seq;
+			for(j=0; j<n; j++)
+				if(child[j].seq==k)
+					become j;
+			print("i,j: ", i, " ", j, "\n");
+			abort("missing child");
+		}
+	become -1;
+};
+
+spawn:=prog(wp:Wprog, cover:Cover, M:chan of Mouse) of Wargs{
+	w:=mk(Wargs);
+	w.success=0;
+	w.R=sweep(S, M);
+	if(w.R.max.x>w.R.min.x+30 && w.R.max.y>w.R.min.x+30){
+		mousectl(Cursorinhibit);
+		if(len cover.layer)
+			frame(cover.layer[0], 0);
+		cover=lalloc(cover, w.R);
+		bitblt(cover.cover, w.R.min, cover.cover, w.R, 0);
+		frame(cover.layer[0], 1);
+		mousectl(Cursorallow);
+		w.M=mk(chan of Mouse);
+		w.K=mk(chan of array of char);
+		w.cover=cover;
+		w.success=1;
+		begin wp(w.cover.layer[0], w.M, w.K);
+	}
+	become w;
+};
+
+rec
+ws:=prog(S: Bitmap, M: chan of Mouse, K:chan of array of char){
+	r:=S.r;
+	mousectl(Cursorinhibit);
+	r=rectinset(r, MARGIN, MARGIN);
+	bitblt(S, r.min, S, r, 0);
+
+	cover:=mkcover(S, ground);
+	texture(S, r, ground, SRC);
+	mousectl(Cursorallow);
+
+	const Nc:=32;
+	child:=mk(array[Nc] of Child);
+	nc:=0;
+	cur:=-1;
+	ncur:=-1;
+	newcur:=0;
+
+	m:Mouse;
+	k:array of char;
+	w:Wargs;
+	
+	for(;;){
+		select{
+		case m=<-M:
+			ncur=which(cover, child, nc, m.xy);
+			if(m.but&1){
+				if(ncur>=0 && !newcur){
+					if(cur==ncur)
+						child[cur].M<-=m;
+					else{
+						newcur=1;
+						mousectl(Cursorinhibit);
+						if(cur>=0)
+							frame(child[cur].S, 0);
+						cover=ltofront(cover, child[ncur].seq);
+						frame(child[ncur].S, 1);
+						mousectl(Cursorallow);
+						cur=ncur;
+					}
+				}
+				if(newcur)
+					continue;
+			}
+			newcur=0;
+			if(cur>=0 && ncur==cur){
+				child[cur].M<-=m;
+				continue;
+			}
+			if((m.but&4)==0)
+				continue;
+
+			switch(menuhit(cover, M, m, menu, 4)){
+			case -1:
+				continue;
+			case WS:
+				w=spawn(ws, cover, M);
+			case RC:
+				w=spawn(rc, cover, M);
+			case EX:
+				abort("exit");
+			}
+			if(w.success){
+				cover=w.cover;
+				child[nc]={cover.layer[0], w.K, w.M, cover.layer[0].seq};
+				cur=nc++;
+				
+			}
+		case k=<-K:
+			if(cur>=0)
+				child[cur].K<-=k;
+		}
+	}
+};
+
+rcP:=prog(S:Bitmap, out:chan of array of char){
+	r:=rectinset(S.r, 4, 4);
+	p:=r.min;
+	a:array of char;
+	lineout:=mk(chan of array of char);
+	begin prog(){
+		a:array of char;
+		i:int;
+		for(;;){
+			a=<-out;
+			while((i=strchr(a, '\n'))!=-1){
+				if(i==len a)
+					break;
+				i++;
+				lineout<-=substr(a, 0, i);
+				a=substr(a, i, len a);
+			}
+			lineout<-=a;
+		}
+	}();
+	for(;;){
+		a=<-lineout;
+		if(len a==0)
+			continue;
+		if(a=="\b"){
+			if(p.x>r.min.x){
+				p.x=p.x-strsize(defont, " ").x;
+				mousectl(Cursorinhibit);
+				string(S, p, defont, " ", SRC);
+				mousectl(Cursorallow);
+			}
+			continue;
+		}
+		mousectl(Cursorinhibit);
+		string(S, p, defont, a, SRC);
+		p.x=p.x+strsize(defont, a).x;
+		if(a[len a-1]=='\n'){
+			p.x=r.min.x;
+			if(p.y>=r.max.y-2*14){
+				r1:=r;
+				r1.min.y=r.min.y+14;
+				bitblt(S, r.min, S, r1, SRC);
+				r1.min=p;
+				bitblt(S, p, S, r1, 0);
+			}else
+				p.y=p.y+14;
+		}
+		mousectl(Cursorallow);
+	}
+};
+
+rcM:=prog(M:chan of Mouse){
+	for(;;)
+		<-M;
+};
+
+rcK:=prog(in,out,echo:chan of array of char){
+	a, buf:array of char;
+	i,c:int;
+	a="";
+	buf="";
+	for(;;){
+		if(len a==0){
+			a=<-in;
+			if(len a==0)
+				abort("eof");
+			while((i=strchr(a, '\r'))!=-1)
+				a[i]='\n';
+			echo<-=a;
+		}
+		c=a[0];
+		if(c==0x04)
+			abort("eof");
+		a=substr(a, 1, len a);
+		if(c=='\n'){
+			out<-=strappend(buf, '\n');
+			buf="";
+			continue;
+		}
+		if(c=='\b'){
+			if(len buf>0)
+				buf=substr(buf, 0, len buf-1);
+			continue;
+		}
+		buf=strappend(buf, c);
+	}
+};
+
+rc=prog(S: Bitmap, M: chan of Mouse, K:chan of array of char){
+	r:=S.r;
+	r=rectinset(r, MARGIN, MARGIN);
+
+	rcns:=nsnew();
+	rcc:=mk(array[2] of chan of array of char);
+	rcc[0]=mk();
+	rcc[1]=mk();
+	nsbind(rcns, "cons", 0666, rcc);
+
+	begin nsproc(rcns, {"/bin/rc", "-c", "mount /ns/cons /dev/cons; prompt='@'; exec rc </dev/cons >/dev/cons >[2]/dev/cons"});
+	begin rcP(S, rcc[0]);
+	begin rcM(M);
+	begin rcK(K, rcc[1], rcc[0]);
+};
+
+{
+begin gnotiosrv();
+begin ws(S, M[0], K[0]);
+}

@@ -1,0 +1,36 @@
+type Point: struct of{
+	x, y: int;
+};
+type Rectangle: struct of{
+	min, max: Point;
+};
+type Bitmap: struct of{
+	c: array of char;
+	r: Rectangle;
+};
+
+p:=mk(Point);
+q:=p;
+ref p;
+ref q;
+p;
+q;
+p.x=1;
+ref p;
+ref q;
+p;
+q;
+
+r:=mk(Rectangle={p, p});
+r;
+r.min.x=23;
+r;
+p;
+
+b:=mk(Bitmap={"hello", r});
+ref r;
+b;
+b.r.min.y=7;
+b;
+r;
+ref r;

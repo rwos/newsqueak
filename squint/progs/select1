@@ -1,0 +1,29 @@
+c:= prog(c1: chan of int, c2: chan of int){
+	i,j: int;
+#	a,b,c:array[4] of chan of int=mk();
+	for(;;)
+		select{
+		case i=<-c1:	print("(case 1 ", i, ")\n");
+		case i=<-c2:	print("(case 2 ", i, ")\n");
+		case i=<-c1:	print("(case 3 ", i+1, ")\n");
+		case i=<-c2:	print("(case 4 ", i+1, ")\n");
+		}
+#	select{
+#		case <-a[]:	print("(case A)");
+#		case i=<-a[]:	print("(case B ", i, ")");
+#		case <-a[i=]:	print("(case A)");
+#		case i=<-a[j=]:	print("(case A)");
+#	}
+};
+p:= prog(n: int, c: chan of int){
+	i:int;
+	for(i=0; i<10; i=i+1)
+		c<-=n;
+};
+
+c1:= mk(chan of int);
+c2:= mk(chan of int);
+
+begin p(111111, c1);
+begin p(222222, c2);
+begin c(c1,c2);

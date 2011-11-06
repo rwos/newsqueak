@@ -1,0 +1,31 @@
+type q:struct of{
+	x:int;
+	y:int;
+	c:array of char;
+};
+a:q;
+a={2,3, "hello"};
+a;
+b:array[2] of array[3] of int;
+b={{1,2,3},{4,5,6}};
+b;
+type p:struct of{
+	x:int;
+	y:int;
+};
+
+add:=prog(a:p, b:p) of p{
+	become {a.x+b.x, a.y+b.y};
+};
+
+add({2,3}, {4,5});
+
+type r:struct of{
+	min: p;
+	max: p;
+};
+
+z:r={{2,3},{4,5}};
+z;
+
+mk(array[3] of array[2] of int={{1,2},{3,4},{5,6}});

@@ -1,0 +1,17 @@
+rec ack:=prog(a: int, b: int) of int{
+	if(a==0)
+		become b+1;
+	if(b==0)
+		become ack(a-1, 1);
+	become ack(a-1, ack(a, b-1));
+};
+pack:=prog(a: int, b: int){
+	print(ack(a,b));
+	print("\n");
+};
+{
+begin pack(3,4);
+begin pack(1,2);
+begin pack(3,4);
+begin prog(){i:int; for(i=0; i<1000; i=i+1) ; i=val{ if(0) result 1; }; }();
+}

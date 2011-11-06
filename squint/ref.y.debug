@@ -1,0 +1,408 @@
+char*	yytoknames[] =
+{
+	"$end",
+	"error",
+	"$unk",
+	"ID",
+	"NUM",
+	"STRING",
+	"UNIT",
+	"INT",
+	"CHAR",
+	"CONST",
+	"BUILTIN",
+	"ARRAY",
+	"OF",
+	"CHAN",
+	"STRUCT",
+	"PROG",
+	"TYPE",
+	"IF",
+	"ELSE",
+	"FOR",
+	"WHILE",
+	"DO",
+	"SELECT",
+	"SWITCH",
+	"CASE",
+	"DEFAULT",
+	"PRINT",
+	"REC",
+	"BEGIN",
+	"BECOME",
+	"RESULT",
+	"MK",
+	"LEN",
+	"REF",
+	"DEF",
+	"BREAK",
+	"CONTINUE",
+	"VAL",
+	" =",
+	"ANDAND",
+	"OROR",
+	"CAT",
+	"DEL",
+	" &",
+	" |",
+	" ^",
+	"EQ",
+	"NE",
+	"LE",
+	" <",
+	"GE",
+	" >",
+	" +",
+	" -",
+	"LSH",
+	"RSH",
+	" *",
+	" /",
+	" %",
+	" ~",
+	" !",
+	"UMINUS",
+	"ARROW",
+	"SND",
+	"RCV",
+	"DEC",
+	"INC",
+	" [",
+	" .",
+	" :",
+	" {",
+	" }",
+	" ;",
+	" (",
+	" )",
+	" ,",
+	" ]",
+};
+char*	yystates[] =
+{
+	0, /*0*/
+	"$accept:  program.$end \n", /*1*/
+	0, /*2*/
+	0, /*3*/
+	0, /*4*/
+	"stmt:  sdecl.; \n", /*5*/
+	0, /*6*/
+	0, /*7*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  expr.; \n", /*8*/
+	"execstmt:  BEGIN.call ; \n", /*9*/
+	"execstmt:  BECOME.expr ; \nexecstmt:  BECOME.{ exprlist } ; \n", /*10*/
+	"execstmt:  RESULT.expr ; \n", /*11*/
+	"execstmt:  BREAK.; \n", /*12*/
+	"execstmt:  CONTINUE.; \n", /*13*/
+	"execstmt:  DO.execstmt WHILE ( expr ) ; \n", /*14*/
+	0, /*15*/
+	"execstmt:  IF.( expr ) execstmt \nexecstmt:  IF.( expr ) execstmt ELSE execstmt \n", /*16*/
+	"execstmt:  WHILE.( expr ) execstmt \n", /*17*/
+	"execstmt:  FOR.( forexpr ; forexpr ; forexpr ) execstmt \n", /*18*/
+	"execstmt:  SWITCH.( expr ) { caselist } \n", /*19*/
+	"execstmt:  SELECT.{ commcaselist } \n", /*20*/
+	0, /*21*/
+	"sdecl:  stclass.ncdecl \nstclass:  stclass.stclass1 \n", /*22*/
+	"sdecl:  TYPE.idlist : type \n", /*23*/
+	"sdecl:  REC.sdecl \ncdecl:  REC.{ decllist } \n", /*24*/
+	0, /*25*/
+	0, /*26*/
+	0, /*27*/
+	"expr:  PRINT.( exprlist ) \n", /*28*/
+	0, /*29*/
+	"expr:  ARROW.expr \n", /*30*/
+	"expr:  LEN.expr \n", /*31*/
+	"expr:  REF.expr \n", /*32*/
+	"expr:  DEF.expr \n", /*33*/
+	"expr:  DEC.expr \n", /*34*/
+	"expr:  -.expr \n", /*35*/
+	"expr:  !.expr \n", /*36*/
+	"expr:  ~.expr \n", /*37*/
+	0, /*38*/
+	0, /*39*/
+	"expr:  MK.( type ) \nexpr:  MK.( type = initexpr ) \n", /*40*/
+	"expr:  VAL.compstmt \n", /*41*/
+	"compstmt:  {.} \ncompstmt:  {.stmtlist } \n", /*42*/
+	"ncdecl:  idlist.: type \nncdecl:  idlist.: = initexpr \nncdecl:  idlist.: type = initexpr \nncdecl:  idlist.: type = MK ( ) \nidlist:  idlist., ID \n", /*43*/
+	0, /*44*/
+	0, /*45*/
+	"expr1:  (.expr ) \n", /*46*/
+	0, /*47*/
+	0, /*48*/
+	0, /*49*/
+	"prog:  PROG.( formals ) oftype compstmt \n", /*50*/
+	0, /*51*/
+	0, /*52*/
+	"expr:  expr +.expr \n", /*53*/
+	"expr:  expr -.expr \n", /*54*/
+	"expr:  expr *.expr \n", /*55*/
+	"expr:  expr /.expr \n", /*56*/
+	"expr:  expr %.expr \n", /*57*/
+	"expr:  expr &.expr \n", /*58*/
+	"expr:  expr |.expr \n", /*59*/
+	"expr:  expr ^.expr \n", /*60*/
+	"expr:  expr ANDAND.expr \n", /*61*/
+	"expr:  expr OROR.expr \n", /*62*/
+	"expr:  expr CAT.expr \n", /*63*/
+	"expr:  expr DEL.expr \n", /*64*/
+	"expr:  expr EQ.expr \n", /*65*/
+	"expr:  expr NE.expr \n", /*66*/
+	"expr:  expr <.expr \n", /*67*/
+	"expr:  expr >.expr \n", /*68*/
+	"expr:  expr LE.expr \n", /*69*/
+	"expr:  expr GE.expr \n", /*70*/
+	"expr:  expr LSH.expr \n", /*71*/
+	"expr:  expr RSH.expr \n", /*72*/
+	0, /*73*/
+	0, /*74*/
+	"lval:  expr [.expr ] \n", /*75*/
+	"lval:  expr ..ID \n", /*76*/
+	0, /*77*/
+	0, /*78*/
+	0, /*79*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \n", /*80*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  BECOME expr.; \n", /*81*/
+	"execstmt:  BECOME {.exprlist } ; \n", /*82*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  RESULT expr.; \n", /*83*/
+	0, /*84*/
+	0, /*85*/
+	"execstmt:  DO execstmt.WHILE ( expr ) ; \n", /*86*/
+	"execstmt:  IF (.expr ) execstmt \nexecstmt:  IF (.expr ) execstmt ELSE execstmt \n", /*87*/
+	"execstmt:  WHILE (.expr ) execstmt \n", /*88*/
+	0, /*89*/
+	"execstmt:  SWITCH (.expr ) { caselist } \n", /*90*/
+	"execstmt:  SELECT {.commcaselist } \n", /*91*/
+	0, /*92*/
+	0, /*93*/
+	0, /*94*/
+	"sdecl:  TYPE idlist.: type \nidlist:  idlist., ID \n", /*95*/
+	0, /*96*/
+	"cdecl:  REC {.decllist } \n", /*97*/
+	"sdecl:  REC.sdecl \n", /*98*/
+	"expr:  PRINT (.exprlist ) \n", /*99*/
+	"call:  expr1 (.) \ncall:  expr1 (.exprlist ) \n", /*100*/
+	0, /*101*/
+	0, /*102*/
+	0, /*103*/
+	0, /*104*/
+	0, /*105*/
+	0, /*106*/
+	0, /*107*/
+	0, /*108*/
+	"expr:  lval =.expr \nexpr:  lval =.MK ( ) \nexpr:  lval =.{ exprlist } \n", /*109*/
+	"expr:  MK (.type ) \nexpr:  MK (.type = initexpr ) \n", /*110*/
+	0, /*111*/
+	0, /*112*/
+	"stmtlist:  stmtlist.stmt \ncompstmt:  { stmtlist.} \n", /*113*/
+	0, /*114*/
+	"ncdecl:  idlist :.type \nncdecl:  idlist :.= initexpr \nncdecl:  idlist :.type = initexpr \nncdecl:  idlist :.type = MK ( ) \n", /*115*/
+	"idlist:  idlist ,.ID \n", /*116*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexpr1:  ( expr.) \n", /*117*/
+	0, /*118*/
+	0, /*119*/
+	0, /*120*/
+	0, /*121*/
+	0, /*122*/
+	0, /*123*/
+	0, /*124*/
+	0, /*125*/
+	0, /*126*/
+	0, /*127*/
+	0, /*128*/
+	0, /*129*/
+	0, /*130*/
+	0, /*131*/
+	0, /*132*/
+	0, /*133*/
+	0, /*134*/
+	0, /*135*/
+	0, /*136*/
+	0, /*137*/
+	0, /*138*/
+	"expr:  expr ARROW =.expr \n", /*139*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr [ expr.] \nlval:  expr.. ID \n", /*140*/
+	0, /*141*/
+	0, /*142*/
+	0, /*143*/
+	"exprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \nexecstmt:  BECOME { exprlist.} ; \n", /*144*/
+	0, /*145*/
+	"exprlist:  {.exprlist } \n", /*146*/
+	0, /*147*/
+	"execstmt:  DO execstmt WHILE.( expr ) ; \n", /*148*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  IF ( expr.) execstmt \nexecstmt:  IF ( expr.) execstmt ELSE execstmt \n", /*149*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  WHILE ( expr.) execstmt \n", /*150*/
+	"execstmt:  FOR ( forexpr.; forexpr ; forexpr ) execstmt \n", /*151*/
+	0, /*152*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  SWITCH ( expr.) { caselist } \n", /*153*/
+	"execstmt:  SELECT { commcaselist.} \ncommcaselist:  commcaselist.commlabel execstmtlist \n", /*154*/
+	"commcaselist:  commlabel.execstmtlist \ncommlabel:  commlabel.CASE commexpr : \n", /*155*/
+	"commlabel:  CASE.commexpr : \n", /*156*/
+	"sdecl:  TYPE idlist :.type \n", /*157*/
+	"cdecl:  REC { decllist.} \ndecllist:  decllist.sdecl ; \ndecllist:  decllist.cdecl \n", /*158*/
+	"decllist:  sdecl.; \n", /*159*/
+	0, /*160*/
+	"expr:  PRINT ( exprlist.) \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*161*/
+	0, /*162*/
+	"call:  expr1 ( exprlist.) \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*163*/
+	0, /*164*/
+	"expr:  lval = MK.( ) \nexpr:  MK.( type ) \nexpr:  MK.( type = initexpr ) \n", /*165*/
+	"expr:  lval = {.exprlist } \n", /*166*/
+	"expr:  MK ( type.) \nexpr:  MK ( type.= initexpr ) \n", /*167*/
+	0, /*168*/
+	0, /*169*/
+	"type:  CHAN.OF type \n", /*170*/
+	"type:  STRUCT.OF { elemlist } \n", /*171*/
+	"type:  PROG.( formals ) oftype \n", /*172*/
+	0, /*173*/
+	0, /*174*/
+	0, /*175*/
+	0, /*176*/
+	0, /*177*/
+	0, /*178*/
+	0, /*179*/
+	"ncdecl:  idlist : =.initexpr \n", /*180*/
+	0, /*181*/
+	0, /*182*/
+	"prog:  PROG ( formals.) oftype compstmt \n", /*183*/
+	0, /*184*/
+	"idlist:  idlist., ID \ntypevarlist:  idlist.: type \n", /*185*/
+	0, /*186*/
+	0, /*187*/
+	"exprlist:  exprlist ,.expr \nexprlist:  exprlist ,.{ exprlist } \n", /*188*/
+	"execstmt:  BECOME { exprlist }.; \n", /*189*/
+	"exprlist:  { exprlist.} \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*190*/
+	"execstmt:  DO execstmt WHILE (.expr ) ; \n", /*191*/
+	"execstmt:  IF ( expr ).execstmt \nexecstmt:  IF ( expr ).execstmt ELSE execstmt \n", /*192*/
+	"execstmt:  WHILE ( expr ).execstmt \n", /*193*/
+	0, /*194*/
+	"execstmt:  SWITCH ( expr ).{ caselist } \n", /*195*/
+	0, /*196*/
+	"commcaselist:  commcaselist commlabel.execstmtlist \ncommlabel:  commlabel.CASE commexpr : \n", /*197*/
+	0, /*198*/
+	"commlabel:  commlabel CASE.commexpr : \n", /*199*/
+	0, /*200*/
+	"commlabel:  CASE commexpr.: \n", /*201*/
+	"expr:  ARROW.expr \ncommexpr:  ARROW.expr \ncommexpr:  ARROW.expr [ save ] \n", /*202*/
+	0, /*203*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \ncommexpr:  expr.ARROW = expr \ncommexpr:  expr.[ save ] ARROW = expr \n", /*204*/
+	0, /*205*/
+	0, /*206*/
+	"decllist:  decllist sdecl.; \n", /*207*/
+	0, /*208*/
+	0, /*209*/
+	0, /*210*/
+	0, /*211*/
+	"expr:  lval = MK (.) \nexpr:  MK (.type ) \nexpr:  MK (.type = initexpr ) \n", /*212*/
+	"expr:  lval = { exprlist.} \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*213*/
+	0, /*214*/
+	"expr:  MK ( type =.initexpr ) \n", /*215*/
+	"type:  ARRAY arraysize.OF type \n", /*216*/
+	"arraysize:  [.expr ] \n", /*217*/
+	"type:  CHAN OF.type \n", /*218*/
+	"type:  STRUCT OF.{ elemlist } \n", /*219*/
+	0, /*220*/
+	"ncdecl:  idlist : type =.initexpr \nncdecl:  idlist : type =.MK ( ) \n", /*221*/
+	0, /*222*/
+	0, /*223*/
+	"initexpr:  {.exprlist } \n", /*224*/
+	0, /*225*/
+	"typevarlist:  typevarlist ,.idlist : type \n", /*226*/
+	"typevarlist:  idlist :.type \n", /*227*/
+	0, /*228*/
+	"exprlist:  exprlist , {.exprlist } \n", /*229*/
+	0, /*230*/
+	0, /*231*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nexecstmt:  DO execstmt WHILE ( expr.) ; \n", /*232*/
+	0, /*233*/
+	0, /*234*/
+	"execstmt:  FOR ( forexpr ; forexpr.; forexpr ) execstmt \n", /*235*/
+	"execstmt:  SWITCH ( expr ) {.caselist } \n", /*236*/
+	0, /*237*/
+	0, /*238*/
+	"commlabel:  commlabel CASE commexpr.: \n", /*239*/
+	0, /*240*/
+	0, /*241*/
+	"expr:  lval =.expr \nexpr:  lval =.MK ( ) \nexpr:  lval =.{ exprlist } \ncommexpr:  lval =.ARROW expr \ncommexpr:  lval =.ARROW expr [ save ] \n", /*242*/
+	0, /*243*/
+	0, /*244*/
+	0, /*245*/
+	0, /*246*/
+	0, /*247*/
+	"expr:  MK ( type = initexpr.) \n", /*248*/
+	"type:  ARRAY arraysize OF.type \n", /*249*/
+	"arraysize:  [ expr.] \nexpr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \n", /*250*/
+	0, /*251*/
+	"type:  STRUCT OF {.elemlist } \n", /*252*/
+	"type:  PROG ( formals.) oftype \n", /*253*/
+	0, /*254*/
+	"ncdecl:  idlist : type = MK.( ) \nexpr:  MK.( type ) \nexpr:  MK.( type = initexpr ) \n", /*255*/
+	"initexpr:  { exprlist.} \nexprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \n", /*256*/
+	"prog:  PROG ( formals ) oftype.compstmt \n", /*257*/
+	"oftype:  OF.type \n", /*258*/
+	"idlist:  idlist., ID \ntypevarlist:  typevarlist , idlist.: type \n", /*259*/
+	0, /*260*/
+	"exprlist:  exprlist., expr \nexprlist:  exprlist., { exprlist } \nexprlist:  exprlist , { exprlist.} \n", /*261*/
+	"execstmt:  DO execstmt WHILE ( expr ).; \n", /*262*/
+	"execstmt:  IF ( expr ) execstmt ELSE.execstmt \n", /*263*/
+	0, /*264*/
+	"execstmt:  SWITCH ( expr ) { caselist.} \ncaselist:  caselist.label execstmtlist \n", /*265*/
+	"caselist:  label.execstmtlist \nlabel:  label.CASE expr : \n", /*266*/
+	"label:  CASE.expr : \n", /*267*/
+	"label:  DEFAULT.: \n", /*268*/
+	0, /*269*/
+	0, /*270*/
+	"expr:  ARROW.expr \ncommexpr:  lval = ARROW.expr \ncommexpr:  lval = ARROW.expr [ save ] \n", /*271*/
+	"expr:  expr ARROW =.expr \ncommexpr:  expr ARROW =.expr \n", /*272*/
+	"commexpr:  expr [ save.] ARROW = expr \n", /*273*/
+	0, /*274*/
+	0, /*275*/
+	0, /*276*/
+	0, /*277*/
+	"type:  STRUCT OF { elemlist.} \nelemlist:  elemlist.idlist : type ; \n", /*278*/
+	"idlist:  idlist., ID \nelemlist:  idlist.: type ; \n", /*279*/
+	0, /*280*/
+	"ncdecl:  idlist : type = MK (.) \nexpr:  MK (.type ) \nexpr:  MK (.type = initexpr ) \n", /*281*/
+	0, /*282*/
+	0, /*283*/
+	0, /*284*/
+	"typevarlist:  typevarlist , idlist :.type \n", /*285*/
+	0, /*286*/
+	0, /*287*/
+	0, /*288*/
+	"execstmt:  FOR ( forexpr ; forexpr ; forexpr.) execstmt \n", /*289*/
+	0, /*290*/
+	"caselist:  caselist label.execstmtlist \nlabel:  label.CASE expr : \n", /*291*/
+	0, /*292*/
+	"label:  label CASE.expr : \n", /*293*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nlabel:  CASE expr.: \n", /*294*/
+	0, /*295*/
+	"commexpr:  ARROW expr [ save.] \n", /*296*/
+	0, /*297*/
+	0, /*298*/
+	"commexpr:  expr [ save ].ARROW = expr \n", /*299*/
+	0, /*300*/
+	0, /*301*/
+	"idlist:  idlist., ID \nelemlist:  elemlist idlist.: type ; \n", /*302*/
+	"elemlist:  idlist :.type ; \n", /*303*/
+	0, /*304*/
+	0, /*305*/
+	0, /*306*/
+	"execstmt:  FOR ( forexpr ; forexpr ; forexpr ).execstmt \n", /*307*/
+	0, /*308*/
+	"expr:  expr.+ expr \nexpr:  expr.- expr \nexpr:  expr.* expr \nexpr:  expr./ expr \nexpr:  expr.% expr \nexpr:  expr.& expr \nexpr:  expr.| expr \nexpr:  expr.^ expr \nexpr:  expr.ANDAND expr \nexpr:  expr.OROR expr \nexpr:  expr.CAT expr \nexpr:  expr.DEL expr \nexpr:  expr.EQ expr \nexpr:  expr.NE expr \nexpr:  expr.< expr \nexpr:  expr.> expr \nexpr:  expr.LE expr \nexpr:  expr.GE expr \nexpr:  expr.LSH expr \nexpr:  expr.RSH expr \nexpr:  expr.INC \nexpr:  expr.ARROW = expr \nexpr:  expr.ARROW \nlval:  expr.[ expr ] \nlval:  expr.. ID \nlabel:  label CASE expr.: \n", /*309*/
+	0, /*310*/
+	0, /*311*/
+	0, /*312*/
+	"commexpr:  expr [ save ] ARROW.= expr \n", /*313*/
+	"elemlist:  elemlist idlist :.type ; \n", /*314*/
+	"elemlist:  idlist : type.; \n", /*315*/
+	0, /*316*/
+	0, /*317*/
+	"commexpr:  lval = ARROW expr [ save.] \n", /*318*/
+	"commexpr:  expr [ save ] ARROW =.expr \n", /*319*/
+	"elemlist:  elemlist idlist : type.; \n", /*320*/
+	0, /*321*/
+	0, /*322*/
+	0, /*323*/
+	0, /*324*/
+};

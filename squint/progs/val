@@ -1,0 +1,9 @@
+a:=3;
+val{if(a==3) result "ok"; else result "nope";};
+val{
+	i:int;
+	for(i=0; i<10; i=i+1)
+		if(i==5)
+			result i;
+};
+"should be 5";

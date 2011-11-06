@@ -1,0 +1,4 @@
+s:struct of{
+	x, y: int;
+}=mk();
+s.x;

@@ -1,0 +1,14 @@
+#!/bin/rc
+x=0
+for(i in `{ls -p progs|grep -v '^(out|drat)$'}){
+	./squint progs/$i>regress.in
+	sed '/curproc.*:/q' regress.in>regress.out >[2] /dev/null
+	if(! cmp -s regress.out progs/out/$i){
+		echo $i failed
+		cmp regress.out progs/out/$i
+		diff regress.out progs/out/$i
+		x=1
+	}
+}
+rm regress.out
+exit $x
