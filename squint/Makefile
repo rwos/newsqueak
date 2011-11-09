@@ -57,9 +57,9 @@ inst:	$(CODE)
 	cat $(CODE) | grep '^i.*(Proc \*proc)' | sed 's/^i/I/; s/(.*//; s/.*/&/' | sort > ninst
 	cmp -s inst ninst || mv ninst inst
 
+.PHONY: regress
 regress:	squint
-	regress
-	touch regress
+	./regress
 
 install:	$(TARG)
 	# regress
