@@ -25,6 +25,9 @@ After building, cd squint and try
 	squint progs/sieve2
 You should see some prime numbers.
 
+Additionally, 'make regress' in the squint directory will run
+some tests and check the output.
+
 DOCUMENTATION
 
 The man directory contains information about the print library.

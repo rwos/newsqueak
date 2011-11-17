@@ -12,4 +12,5 @@ for i in `ls -p progs | grep -v '^drat$' | grep -v '/$'`; do
 	fi
 done
 rm regress.out
+rm regress.in
 exit $x
