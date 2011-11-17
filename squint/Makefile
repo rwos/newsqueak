@@ -1,3 +1,4 @@
+PREFIX      = /usr/local
 TARG		= squint
 INCLUDES	= -I../include
 LIBDIR		= ../lib
@@ -62,16 +63,21 @@ regress:	squint
 	./regress
 
 install:	$(TARG)
-	# regress
-	install -c $(TARG) /usr/local/bin
+	install -c $(TARG) $(PREFIX)/bin
+	mkdir -p $(PREFIX)/lib/newsqueak/include
+	install -c include/* $(PREFIX)/lib/newsqueak/include
 
 clean:
 	rm -rf $(OFILES)
 	rm -f $(TARG)
+	rm -f lex.c
 
 world:;		make depend; make $(TARG)
 
 depend:;	makedepend $(CPPFLAGS) $(INCLUDES) $(OFILES:.o=.c)
+
+lex.c:
+	sed 's!>>>PREFIX<<<!$(PREFIX)!' _lex.c > lex.c
 
 # DO NOT DELETE
 

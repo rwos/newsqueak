@@ -349,7 +349,7 @@ newfile(char *s, int stdin)
 		char buf[1024];
 		fd=open(s, 0);
 		if(fd<0 && s[0]!='/' && s[0]!='.'){
-			sprint(buf, "/usr/rob/src/squint/include/%s", s);
+			sprint(buf, "/usr/local/lib/newsqueak/include/%s", s);
 			fd=open(buf, 0);
 		}
 		if(fd<0)
