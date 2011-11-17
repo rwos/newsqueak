@@ -7,7 +7,7 @@ for i in `ls -p progs | grep -v '^drat$' | grep -v '/$'`; do
 	if [ $? -ne 0 ]; then
 		echo $i failed
 		cmp regress.out progs/out/$i
-		diff regress.out progs/out/$i
+		diff -u regress.out progs/out/$i
 		x=1
 	fi
 done

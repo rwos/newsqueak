@@ -7,7 +7,7 @@ type rat: struct of {
 };
 type item:rat;
 
-include "/usr/rob/src/squint/progs/drat"
+include "progs/drat"
 
 type PS: dch;	# power series
 type PS2: array[2] of dch; # pair of power series
