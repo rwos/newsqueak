@@ -1,6 +1,6 @@
 DIRS	=	lib9 libbio squint
 
-CFLAGS	= -g -Wall $(INCLUDES)
+CFLAGS	= -g -Wall -m32 $(INCLUDES)
 
 all:
 	mkdir -p lib

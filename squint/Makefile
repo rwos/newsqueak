@@ -9,6 +9,7 @@ CC		= gcc
 LD		= gcc
 
 CFLAGS += $(INCLUDES)
+LDFLAGS += -m32
 
 BUILTINS=
 
