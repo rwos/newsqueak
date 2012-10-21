@@ -349,11 +349,11 @@ newfile(char *s, int stdin)
 		char buf[1024];
 		fd=open(s, 0);
 		if(fd<0 && s[0]!='/' && s[0]!='.'){
-			sprint(buf, ">>>PREFIX<<</lib/newsqueak/include/%s", s);
+			sprint(buf, PREFIX "/lib/newsqueak/include/%s", s);
 			fd=open(buf, 0);
 		}
 		if(fd<0)
-			error("can't open %s\n", s);
+			error("can't open %s (%s)\n", s, buf);
 	}
 	fp=alloc(File);
 	fp->lbuf=0;

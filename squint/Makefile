@@ -8,7 +8,7 @@ LDFLAGS		= -L$(LIBDIR)
 CC		= gcc
 LD		= gcc
 
-CFLAGS += $(INCLUDES)
+CFLAGS += $(INCLUDES) -DPREFIX=\"$(PREFIX)\"
 LDFLAGS += -m32
 
 BUILTINS=
@@ -71,14 +71,10 @@ install:	$(TARG)
 clean:
 	rm -rf $(OFILES)
 	rm -f $(TARG)
-	rm -f lex.c
 
 world:;		make depend; make $(TARG)
 
 depend:;	makedepend $(CPPFLAGS) $(INCLUDES) $(OFILES:.o=.c)
-
-lex.c:
-	sed 's!>>>PREFIX<<<!$(PREFIX)!' _lex.c > lex.c
 
 # DO NOT DELETE
 
